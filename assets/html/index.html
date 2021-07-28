@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ACE in Action</title>
+<style type="text/css" media="screen">
+    #editor { 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+<script src="{{ static_url('js/jquery/jquery.min.js') }}" crossorigin="anonymous" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="></script>
+
+<!--ACE Code Editor-->
+<script src="{{ static_url('js/ace-src/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ static_url('js/ace-src/snippets/python.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ static_url('js/ace-src/mode-python.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ static_url('js/ace-src/theme-textmate.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ static_url('js/ace-src/ext-language_tools.js') }}" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+
+<div id="editor">
+def test():
+    print("Miau")
+</div>
+
+</body>
+</html>
+
+<script>
+ace.require("ace/ext/language_tools")
+var editor = ace.edit("editor");
+editor.setTheme("ace/theme/textmate");
+editor.session.setMode("ace/mode/python");
+editor.setOption({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: false
+})
+
+</script>
