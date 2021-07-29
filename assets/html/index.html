@@ -23,11 +23,11 @@
 </head>
 <body>
 
-<div id="editor">
-def test():
-    print("Miau")
+<div id="" style="width: 500px; height: 500px;">
+    <div id="editor" style="width: 500px; height: 500px;">
+    </div>
 </div>
-
+<button onclick="sendContent()">Eingabe senden</button>
 </body>
 </html>
 
@@ -41,5 +41,33 @@ editor.setOption({
     enableSnippets: true,
     enableLiveAutocompletion: false
 })
+
+function sendContent(){
+    var content = editor.getValue();
+
+    var sendObject = {
+        "type": "code",
+        "content": content
+    }
+
+    connection.send(JSON.stringify(sendObject))
+}
+
+
+var connection = new WebSocket('ws://localhost:8888/server');
+connection.onopen = function () {
+  //Senden von Nachrichten bei Verbindungsaufbau
+};
+
+// Log errors
+connection.onerror = function (error) {
+  console.log('WebSocket Error ' + error);
+};
+
+// Log messages from the server
+connection.onmessage = function (e) {
+  console.log('Server: ' + e.data);
+};
+
 
 </script>
