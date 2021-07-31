@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>ACE in Action</title>
+<title>Low-Code MESA</title>
 <style type="text/css" media="screen">
     #editor { 
         position: absolute;
@@ -11,36 +11,136 @@
         left: 0;
     }
 </style>
-<script src="{{ static_url('js/jquery/jquery.min.js') }}" crossorigin="anonymous" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="></script>
+<script src="{{ static_url('js/jquery/jquery-3.6.0.min.js') }}" type="text/javascript" charset="utf-8"></script>
 
-<!--ACE Code Editor-->
+<!-- Bootstrap -->
+<script src="{{ static_url('js/bootstrap/bootstrap.bundle.js') }}" type="text/javascript" charset="utf-8"></script>
+<link href="{{ static_url('css/bootstrap/bootstrap.css') }}" rel="stylesheet">
+<link href="{{ static_url('css/bootstrap/bootstrap-icons.css') }}" rel="stylesheet">
+
+<!-- Remixicons -->
+<link href="{{ static_url('css/remixicons/remixicon.css') }}" rel="stylesheet">
+
+<!-- ACE Code Editor -->
 <script src="{{ static_url('js/ace-src/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url('js/ace-src/snippets/python.js') }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url('js/ace-src/mode-python.js') }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url('js/ace-src/theme-textmate.js') }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url('js/ace-src/ext-language_tools.js') }}" type="text/javascript" charset="utf-8"></script>
 
+<!-- Custom Stylesheet -->
+<link href="{{ static_url('css/style.css') }}" rel="stylesheet">
+
 </head>
 <body>
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-tools me-2" viewBox="0 0 16 16">
+          <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.356 3.356a1 1 0 0 0 1.414 0l1.586-1.586a1 1 0 0 0 0-1.414l-3.356-3.356a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0zm9.646 10.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708zM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11z"/>
+        </svg>
+        <span class="ml-3 pl-3 fs-4">Low-Code MESA</span>
+      </a>
+  
+      <div class="text-end">
+        <button type="button" class="btn btn-light" title="Zum letzten Schritt"><i class="ri-arrow-left-line h4"></i></button>
+        <button type="button" class="btn btn-light" title="Zum nächsten Schritt"><i class="ri-arrow-right-line h4"></i></button>
+      </div>
+    </header>
+    
+    <div class="row" style="margin-left: 0px;">
+      <div class="col-3 d-flex flex-column flex-shrink-0 p-3 bg-light">
+        <p class="d-block align-items-center link-dark mb-0 text-center">
+          <span class="fs-4">Development phases</span>
+        </p>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="#" class="nav-link link-dark active">
+              <i class="ri-number-1 align-middle h4"></i>
+              <p class="align-middle d-inline">Model conditions</p>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link link-dark disabled">
+              <i class="ri-number-2 align-middle h4"></i>
+              <p class="align-middle d-inline">Agent types</p>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link link-dark disabled">
+              <i class="ri-number-3 align-middle h4"></i>
+              <p class="align-middle d-inline">Model process</p>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link link-dark disabled">
+              <i class="ri-number-4 align-middle h4"></i>
+              <p class="align-middle d-inline">Code export</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-9 bg-light-90">
+        <div class="card w-25">
+          <div class="pt-3 px-3">
+            <h5 class="card-title mb-3 text-center">Agent</h5>
+            <div class="input-group">
+              <button class="btn btn-outline-secondary" type="button" style="pointer-events: none;"><i class="ri-spy-fill"></i></button>
+              <input type="text" class="form-control" placeholder="Agent type" aria-label="Agent type" aria-describedby="addon-agenttypename">
+            </div>
+            <hr>
+          </div>
 
-<div id="" style="width: 500px; height: 500px;">
-    <div id="editor" style="width: 500px; height: 500px;">
+          <div class="card-body pt-0">
+            <h5 class="card-title mb-3 text-center">Properties</h5>
+            <div class="input-group mb-2">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ri-settings-4-fill"></i></button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <i class="ri-text align-middle"></i>
+                    <p class="align-middle d-inline mx-2">Text</p>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item active" href="#">
+                    <i class="ri-bubble-chart-fill align-middle"></i>
+                    <p class="align-middle d-inline mx-2">Integer</p>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <i class="ri-stack-fill align-middle"></i>
+                    <p class="align-middle d-inline mx-2">Float</p>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <i class="ri-contrast-fill align-middle"></i>
+                    <p class="align-middle d-inline mx-2">Boolean</p>
+                  </a>
+                </li>
+              </ul>
+              <input type="text" class="form-control" placeholder="Name" aria-label="Property name">
+              <input type="text" class="form-control bg-python-code" placeholder="Value" aria-label="Property value">
+            </div>
+
+            <a href="#" class="btn btn-primary"><i class="ri-add-circle-fill"></i></a>
+          </div>
+        </div>
+
+        <p class="text-center">
+          Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>Entwicklungsphasen<br>
+        </p>
+      </div>
     </div>
-</div>
-<button onclick="sendContent()">Eingabe senden</button>
+  </div>
 </body>
 </html>
 
 <script>
-ace.require("ace/ext/language_tools")
-var editor = ace.edit("editor");
-editor.setTheme("ace/theme/textmate");
-editor.session.setMode("ace/mode/python");
-editor.setOption({
-    enableBasicAutocompletion: true,
-    enableSnippets: true,
-    enableLiveAutocompletion: false
-})
+
 
 function sendContent(){
     var content = editor.getValue();
