@@ -3,5 +3,9 @@
 }
 
 .bg-python-code{
-    background-color: #fffbcc !important;
+    background-color: #ccebff !important;
+}
+
+.textarea-non-resize{
+    resize: none;
 }
