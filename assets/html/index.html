@@ -83,7 +83,16 @@
         </ul>
       </div>
       <div class="col-9 bg-light-90">
-        <div id="agent-types-container"></div>
+        <div id="agent-types-container" class="row">
+
+          <div class="m-4 col-4" id="add-agent-button">
+            <div class="card-body align-middle text-center">
+              <a onclick="agentTypesController.addAgentType(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i> Add agent type</a>
+            </div>
+          </div>
+
+
+        </div>
       </div>
     </div>
   </div>
@@ -109,52 +118,55 @@
   </div>
 
   <!--Agent type-->
-  <div class="card w-25 m-4 d-none agent-type-template">
-    <div class="pt-3 px-3">
-      <h5 class="card-title mb-3 text-center">Agent</h5>
-      <div class="input-group">
-        <button class="btn btn-outline-secondary" type="button" style="pointer-events: none;"><i class="ri-spy-fill"></i></button>
-        <input type="text" class="form-control" placeholder="Agent type name">
+    <div class="card m-4 col-5 d-none agent-type-template">
+      <div class="pt-3 px-3">
+        <h5 class="card-title mb-3 text-center">Agent</h5>
+        <div class="input-group">
+          <button class="btn btn-outline-secondary" type="button" style="pointer-events: none;"><i class="ri-spy-fill"></i></button>
+          <input type="text" class="form-control" placeholder="Agent type name">
+        </div>
+        <hr>
       </div>
-      <hr>
-    </div>
-    <div class="card-body pt-0">
-      <h5 class="card-title mb-3 text-center">Properties</h5>
-      <div class="input-group mb-2">
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="ri-settings-4-fill"></i></button>
-        <ul class="dropdown-menu">
-          <li>
-            <a class="dropdown-item" href="#">
-              <i class="ri-text align-middle"></i>
-              <p class="align-middle d-inline mx-2">Text</p>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item active" href="#">
-              <i class="ri-bubble-chart-fill align-middle"></i>
-              <p class="align-middle d-inline mx-2">Integer</p>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">
-              <i class="ri-stack-fill align-middle"></i>
-              <p class="align-middle d-inline mx-2">Float</p>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">
-              <i class="ri-contrast-fill align-middle"></i>
-              <p class="align-middle d-inline mx-2">Boolean</p>
-            </a>
-          </li>
-        </ul>
-        <input type="text" class="form-control" placeholder="Name"/>
-        <textarea class="form-control bg-python-code textarea-non-resize" placeholder="Value" ondblclick="codeEditor.openCodeEditor(this)" rows="1"></textarea>
+      <div class="card-body pt-0">
+        <h5 class="card-title mb-3 text-center">Properties</h5>
+        <div id="properties-container">
+        </div>
+        <a onclick="agentTypesController.__addProperty(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i> Add property</a>
       </div>
-      <a onclick="agentTypesController.__addProperty(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i></a>
     </div>
-  </div>
 
+<!-- Agent type porperties-->
+<div class="input-group mb-2 agent-type-template-properties d-none">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="ri-settings-4-fill"></i></button>
+  <ul class="dropdown-menu">
+    <li>
+      <a class="dropdown-item" href="#">
+        <i class="ri-text align-middle"></i>
+        <p class="align-middle d-inline mx-2">Text</p>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item active" href="#">
+        <i class="ri-bubble-chart-fill align-middle"></i>
+        <p class="align-middle d-inline mx-2">Integer</p>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="#">
+        <i class="ri-stack-fill align-middle"></i>
+        <p class="align-middle d-inline mx-2">Float</p>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="#">
+        <i class="ri-contrast-fill align-middle"></i>
+        <p class="align-middle d-inline mx-2">Boolean</p>
+      </a>
+    </li>
+  </ul>
+  <input type="text" class="form-control" placeholder="Name"/>
+  <textarea class="form-control bg-python-code textarea-non-resize" placeholder="Value" ondblclick="codeEditor.openCodeEditor(this)" rows="1"></textarea>
+</div>
 </body>
 </html>
 
