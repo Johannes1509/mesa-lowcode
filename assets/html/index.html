@@ -87,7 +87,7 @@
 
           <div class="m-4 col-4" id="add-agent-button">
             <div class="card-body align-middle text-center">
-              <a onclick="agentTypesController.addAgentType(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i> Add agent type</a>
+              <a onclick="main.agents.addAgentType(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i> Add agent type</a>
             </div>
           </div>
 
@@ -110,20 +110,20 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" onclick="codeEditor.closeCodeEditor()" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" onclick="codeEditor.closeCodeEditorAndSave()" class="btn btn-primary">Save changes</button>
+          <button type="button" onclick="main.editor.close()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" onclick="main.editor.closeAndSave()" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
   </div>
 
   <!--Agent type-->
-    <div class="card m-4 col-5 d-none agent-type-template">
+    <div class="card m-4 col-5 agent-type template">
       <div class="pt-3 px-3">
         <h5 class="card-title mb-3 text-center">Agent</h5>
         <div class="input-group">
           <button class="btn btn-outline-secondary" type="button" style="pointer-events: none;"><i class="ri-spy-fill"></i></button>
-          <input type="text" class="form-control" placeholder="Agent type name">
+          <input type="text" class="form-control agent-type-name" placeholder="Agent type name">
         </div>
         <hr>
       </div>
@@ -131,50 +131,55 @@
         <h5 class="card-title mb-3 text-center">Properties</h5>
         <div id="properties-container">
         </div>
-        <a onclick="agentTypesController.__addProperty(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i> Add property</a>
+        <a onclick="main.agents.addProp(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i> Add property</a>
       </div>
     </div>
 
 <!-- Agent type porperties-->
-<div class="input-group mb-2 agent-type-template-properties d-none">
-  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="ri-settings-4-fill"></i></button>
-  <ul class="dropdown-menu">
+<div class="input-group mb-2 agent-property template">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="ri-question-fill"></i></button>
+  <ul class="dropdown-menu" class="agent-property-type">
     <li>
-      <a class="dropdown-item" href="#">
-        <i class="ri-text align-middle"></i>
+      <a class="dropdown-item" onclick="main.agents.changePropType(this)" proptype="str">
+        <i class="ri-text"></i>
         <p class="align-middle d-inline mx-2">Text</p>
       </a>
     </li>
     <li>
-      <a class="dropdown-item active" href="#">
-        <i class="ri-bubble-chart-fill align-middle"></i>
+      <a class="dropdown-item" onclick="main.agents.changePropType(this)" proptype="int">
+        <i class="ri-bubble-chart-fill"></i>
         <p class="align-middle d-inline mx-2">Integer</p>
       </a>
     </li>
     <li>
-      <a class="dropdown-item" href="#">
-        <i class="ri-stack-fill align-middle"></i>
+      <a class="dropdown-item" onclick="main.agents.changePropType(this)" proptype="float">
+        <i class="ri-stack-fill"></i>
         <p class="align-middle d-inline mx-2">Float</p>
       </a>
     </li>
     <li>
-      <a class="dropdown-item" href="#">
-        <i class="ri-contrast-fill align-middle"></i>
+      <a class="dropdown-item" onclick="main.agents.changePropType(this)" proptype="bool">
+        <i class="ri-contrast-fill"></i>
         <p class="align-middle d-inline mx-2">Boolean</p>
       </a>
     </li>
   </ul>
-  <input type="text" class="form-control" placeholder="Name"/>
-  <textarea class="form-control bg-python-code textarea-non-resize" placeholder="Value" ondblclick="codeEditor.openCodeEditor(this)" rows="1"></textarea>
+  <input type="text" class="form-control agent-property-name" placeholder="Name"/>
+  <textarea class="form-control bg-python-code textarea-non-resize agent-property-value" placeholder="Value" ondblclick="main.editor.open(this)" rows="1"></textarea>
 </div>
 </body>
 </html>
 
 <script src="../js/code-editor.js" type="text/javascript"></script>
+<script src="../js/phase.js" type="text/javascript"></script>
 <script src="../js/agent-types.js" type="text/javascript"></script>
+<script src="../js/maincontroller.js" type="text/javascript"></script>
+
 <script>
+
+var main = new MainController()
+
 var codeEditor = new CodeEditor()
-var agentTypesController = new AgentTypesController()
 
 
 function sendContent(){
