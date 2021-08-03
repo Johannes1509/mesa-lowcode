@@ -9,3 +9,7 @@
 .textarea-non-resize{
     resize: none;
 }
+
+.template{
+    display: none !important;
+}
