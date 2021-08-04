@@ -44,8 +44,8 @@
       </a>
   
       <div class="text-end">
-        <button type="button" class="btn btn-light" title="Zum letzten Schritt"><i class="ri-arrow-left-line h4"></i></button>
-        <button type="button" class="btn btn-light" title="Zum nächsten Schritt"><i class="ri-arrow-right-line h4"></i></button>
+        <button type="button" class="btn btn-light" title="Zum letzten Schritt" onclick="main.changePhase(false)"><i class="ri-arrow-left-line h4"></i></button>
+        <button type="button" class="btn btn-light" title="Zum nächsten Schritt" onclick="main.changePhase(true)"><i class="ri-arrow-right-line h4"></i></button>
       </div>
     </header>
     
@@ -55,7 +55,7 @@
           <span class="fs-4">Development phases</span>
         </p>
         <hr>
-        <ul class="nav nav-pills flex-column mb-auto model-phases">
+        <ul class="nav nav-pills flex-column mb-auto model-phases-nav">
           <li class="nav-item">
             <a href="#" class="nav-link link-dark active">
               <i class="ri-number-1 align-middle h4"></i>
@@ -82,17 +82,18 @@
           </li>
         </ul>
       </div>
-      <div class="col-9 bg-light-90">
-        <div id="agent-types-container" class="row">
+      <div class="col-9 bg-light-90 phases">
+        <div class="phase-active" id="agent-types-container" class="row">
 
           <div class="m-4 col-4" id="add-agent-button">
             <div class="card-body align-middle text-center">
               <a onclick="main.agents.addAgentType(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i> Add agent type</a>
             </div>
           </div>
-
-
         </div>
+        <div id="model-type-container" class="d-none">t2</div>
+        <div id="model-process-container" class="d-none">t3</div>
+        <div id="code-export-container" class="d-none">t4</div>
       </div>
     </div>
   </div>
