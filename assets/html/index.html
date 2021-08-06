@@ -17,6 +17,7 @@
 <script src="../js/bootstrap/bootstrap.bundle.js" type="text/javascript" charset="utf-8"></script>
 <link href="../css/bootstrap/bootstrap.css" rel="stylesheet">
 <link href="../css/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<script src="../js/jquery/jquery.sortable.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- Remixicons -->
 <link href="../css/remixicons/remixicon.css" rel="stylesheet">
@@ -50,7 +51,7 @@
     </header>
     
     <div class="row mx-0">
-      <div class="col-3 d-flex flex-column flex-shrink-0 p-3 bg-light">
+      <div class="col-3 d-flex flex-column flex-shrink-0 p-3 bg-light" style="height: 850px">
         <p class="d-block align-items-center link-dark mb-0 text-center">
           <span class="fs-4">Development phases</span>
         </p>
@@ -83,7 +84,7 @@
         </ul>
       </div>
       <div class="col-9 bg-light-90 phases">
-        <div class="phase-active" id="agent-types-container" class="row">
+        <div id="agent-types-container" class="d-none row">
 
           <div class="m-4 col-4" id="add-agent-button">
             <div class="card-body align-middle text-center">
@@ -91,7 +92,92 @@
             </div>
           </div>
         </div>
-        <div id="model-type-container" class="d-none">t2</div>
+        <div id="model-type-container" class="phase-active row">
+          <div class="card m-4 col-11">
+            <div class="pt-3 px-3">
+              <h5 class="card-title mb-3 text-left">Model scheduler</h5>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Choose a scheduler
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="#">Basic/Ordered scheduler</a></li>
+                  <li><a class="dropdown-item" href="#">Random scheduler</a></li>
+                  <li><a class="dropdown-item" href="#">Simultaneous scheduler</a></li>
+                  <li><a class="dropdown-item" href="#">Staged scheduler</a></li>
+                </ul>
+              </div>
+              <hr>
+            </div>
+            <div class="card-body pt-0">
+              <h5 class="card-title mb-3 text-left">Order of agent activation</h5>
+              <p>Top agent is activated first.</p>
+              <table class="table table-sortable">
+                <thead>
+                  <tr>
+                      <th>Order</th>
+                      <th>Agent name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><i class="ri-drag-move-2-line"></i></td>
+                    <td>Customer agent</td>
+                  </tr>
+                  <tr>
+                    <td><i class="ri-drag-move-2-line"></i></td>
+                    <td>Seller agent</td>
+                  </tr>
+                  <tr>
+                    <td><i class="ri-drag-move-2-line"></i></td>
+                    <td>NGO agent</td>
+                  </tr>
+                </tbody>
+            </table>
+            </div>
+          </div>
+          <div class="card m-4 col-11">
+            <div class="pt-3 px-3">
+              <h5 class="card-title mb-3 text-left">Model space</h5>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Choose a space type
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="#">Single grid</a></li>
+                  <li><a class="dropdown-item" href="#">Multi grid</a></li>
+                  <li><a class="dropdown-item" href="#">Hex grid</a></li>
+                  <li><a class="dropdown-item" href="#">Network grid</a></li>
+                  <li><a class="dropdown-item" href="#">Continuous space</a></li>
+                </ul>
+              </div>
+              <hr>
+            </div>
+            <div class="card-body pt-0">
+              <h5 class="card-title mb-3 text-left">Agent placement</h5>
+              <p>Set the initial placement of the agents per type</p>
+              <div class="input-group mb-2">
+                <span class="input-group-text" id="basic-addon1">Customer Agent</span>
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="ri-question-fill"></i></button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item">
+                      <i class="ri-grid-fill"></i>
+                      <p class="align-middle d-inline mx-2">Random placement</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item">
+                      <i class="ri-code-line"></i>
+                      <p class="align-middle d-inline mx-2">Custom placement</p>
+                    </a>
+                  </li>
+                </ul>
+                <textarea class="form-control bg-python-code textarea-non-resize" placeholder="Custom code" ondblclick="main.editor.open(this)" rows="1"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
         <div id="model-process-container" class="d-none">t3</div>
         <div id="code-export-container" class="d-none">t4</div>
       </div>

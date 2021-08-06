@@ -9,6 +9,7 @@ from jinja2 import Template
 from jinja2 import Environment, FileSystemLoader
 import os, time, json
 
+import mesa.space
 
 define("port", default=8888, help="port to listen on")
 
