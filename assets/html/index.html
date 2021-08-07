@@ -36,8 +36,8 @@
       </a>
   
       <div class="text-end">
-        <button type="button" id="last-step-button" class="btn btn-light" title="To the last step" onclick="main.changePhase(false)" disabled><i class="ri-arrow-left-line h4"></i></button>
-        <button type="button" id="next-step-button" class="btn btn-light" title="To the next step" onclick="main.changePhase(true)"><i class="ri-arrow-right-line h4"></i></button>
+        <button type="button" id="last-step-button" class="btn btn-primary mx-1" title="To the last step" onclick="main.changePhase(false)" disabled><i class="ri-arrow-left-line h4"></i></button>
+        <button type="button" id="next-step-button" class="btn btn-primary" title="To the next step" onclick="main.changePhase(true)"><i class="ri-arrow-right-line h4"></i></button>
       </div>
     </header>
     
@@ -142,7 +142,21 @@
           </div>
         </div>
         <div id="model-process-container" class="d-none" phase="process">model-process</div>
-        <div id="code-export-container" class="d-none" phase="export">code-export</div>
+        <div id="code-export-container" class="d-none" phase="export">
+          <div class="card m-4 col-11">
+            <div class="card-body pt-3 px-3">
+              <button class="btn btn-primary" type="button" onclick="main.export.generateCode()">
+                Generate the model code
+              </button>
+              <p class="show-generating-message d-none">Please wait. Generating code files...</p>
+            </div>
+          </div>
+          <div class="card m-4 col-11 code-download-card d-none">
+            <div class="card-body pt-3 px-3">
+              <a class="btn btn-success code-download-button" href="">Download code files</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

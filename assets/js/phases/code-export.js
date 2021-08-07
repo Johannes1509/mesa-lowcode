@@ -8,10 +8,16 @@ class CodeExportController extends AbstractPhase{
     }
 
     stopPhase(){
-        
+        $(".show-generating-message").addClass("d-none")
+        $(".code-download-card").addClass("d-none") 
     }
 
-    getJSONData(){
+    getJSONData(){}
 
+    generateCode(){
+        $(".show-generating-message").removeClass("d-none")
+
+        $(".show-generating-message").addClass("d-none")
+        $(".code-download-card").removeClass("d-none")
     }
 }
