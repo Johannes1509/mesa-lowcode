@@ -2,6 +2,16 @@ class AgentTypesController extends AbstractPhase{
     init(){
         this.agentTypes = []
         this.rowCount = 0
+        this.phaseName = "agents"
+        this.agentId = 0
+    }
+
+    startPhase(){
+
+    }
+
+    stopPhase(){
+
     }
 
     addAgentType(){
@@ -27,16 +37,18 @@ class AgentTypesController extends AbstractPhase{
 
     getJSONData(){
         let currentAgentTypes = $(".agent-type:not(.template)")
-        let jsonResult = { "agentTypes": []}
+        let jsonResult = []
 
         for(let i = 0; i < currentAgentTypes.length; i++){
-            jsonResult.agentTypes.push(
+            jsonResult.push(
                 {
                     "name": $(currentAgentTypes[i]).find(".agent-type-name").val(),
+                    "id": this.agentId,
                     "properties": this.__getAgentPropertiesJSON(currentAgentTypes[i])
                 }
             )
 
+            this.agentId++
         }
 
         return jsonResult

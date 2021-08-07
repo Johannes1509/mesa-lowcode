@@ -10,6 +10,7 @@ from jinja2 import Environment, FileSystemLoader
 import os, time, json
 
 import mesa.space
+import asyncio # ONLY FOR PYTHON 3.8!
 
 define("port", default=8888, help="port to listen on")
 
@@ -86,7 +87,9 @@ class AssetsHandler(RequestHandler):
 
 def main():
     """Construct and serve the tornado application."""
-
+    
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy()) # ONLY FOR PYTHON 3.8!
+    
     app = Application([
         (r"/index.html", StartPage),
         (r"/server", WebSocketConnector),
