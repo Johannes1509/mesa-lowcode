@@ -17,6 +17,14 @@ class CodeExportController extends AbstractPhase{
     generateCode(){
         $(".show-generating-message").removeClass("d-none")
 
+        //sending data to backend
+        let sendObject = {
+            "type": "modelData",
+            "data": this.mainRef.data
+        }
+        
+        connection.send(JSON.stringify(sendObject))
+
         $(".show-generating-message").addClass("d-none")
         $(".code-download-card").removeClass("d-none")
     }
