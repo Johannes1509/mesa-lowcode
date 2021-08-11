@@ -8,3 +8,4 @@ class {{agentName}}(Agent):
 
     def step(self):
         {{agentStep}}
+    
