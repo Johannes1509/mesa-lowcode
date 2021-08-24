@@ -20,8 +20,12 @@
 <script src="../js/ace-src/theme-textmate.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/ace-src/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
 
+<!-- Flowy-->
+<link href="../css/flowy/flowy.css" rel="stylesheet">
+<script src="../js/flowy/flowy.js" type="text/javascript" charset="utf-8"></script>
+
 <!-- Custom Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
 
 </head>
 
@@ -141,7 +145,11 @@
             </div>
           </div>
         </div>
-        <div id="model-process-container" class="d-none" phase="process">model-process</div>
+        <div id="model-process-container" class="d-none" phase="process">
+          <div id="flowycanvas" style="width:640px;height:300px; background-color: yellowgreen;"></div>
+          <div class="create-flowy card"><div class="card-body"><p>Test</p></div></div>
+          <div class="create-flowy card">Model</div>
+        </div>
         <div id="code-export-container" class="d-none" phase="export">
           <div class="card m-4 col-11">
             <div class="card-body pt-3 px-3">
