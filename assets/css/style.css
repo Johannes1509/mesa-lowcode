@@ -14,3 +14,21 @@
     display: none !important;
 }
 
+.flowy-element{
+    cursor: pointer;
+    width: 310px;
+    display: inline-block;
+}
+
+.flowy-element-text {
+    width: 220px;
+}
+
+.flowy-element-text div {
+    font-weight: 500;
+}
+
+.flowy-element-text p {
+    line-height: 20px;
+}
+

@@ -17,6 +17,10 @@ class AssetsHandler(RequestHandler):
             header = "Content-Type"
             body = "text/css"
             self.set_header(header, body)
+        elif(requestType == ".svg"):
+            header = "Content-Type"
+            body = "image/svg+xml"
+            self.set_header(header, body)
 
     def get(self, *args):
         requestPath = self.request.uri[1:] if (self.request.uri[0] in (r"/", r"\\")) else self.request.uri

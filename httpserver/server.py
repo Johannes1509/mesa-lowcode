@@ -13,7 +13,7 @@ class FrontendServer(Application):
         (r"/index.html", StartPage),
         (r"/server", WebSocketConnector),
         (r"/resultfiles", ResultFilesHandler),
-        (r".*((.css)|(.js)|(.woff2)|(.woff)|(.ttf))", AssetsHandler)])
+        (r".*((.css)|(.js)|(.woff2)|(.woff)|(.ttf)|(.svg))", AssetsHandler)])
 
         assetsPath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../assets")
         AssetsHandler.setAssetsPath(assetsPath)
