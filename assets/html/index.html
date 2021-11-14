@@ -20,12 +20,9 @@
 <script src="../js/ace-src/theme-textmate.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/ace-src/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
 
-<!-- Flowy
-<link href="../css/flowy/flowy.css" rel="stylesheet">
-<script src="../js/flowy/flowy.js" type="text/javascript" charset="utf-8"></script>-->
-
 <!--Drawflow-->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
+<link href="../css/drawflow/custom-theme.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
 <script src="../js/jquery/jquery.mousewheel.js" type="text/javascript" charset="utf-8"></script>
 
@@ -152,73 +149,27 @@
         </div>
         <div id="model-process-container" class="d-none" phase="process">
           <div style="width:100%; height:660px; overflow-x:scroll" id="process-canvas-container">
-            <div id="process-canvas" style="width:500%;height:100%; background-color: yellowgreen;"></div>
+            <div id="process-canvas" style="width:500%;height:100%;" class="bg-light-90"></div>
           </div>
-          <div class="row">
-            <div class="pt-3 col-12 bg-light">
-              <h4>Interaction items</h4>
+          <div class="row bg-light">
+            <div class="pt-3 col-12 bg-light-70">
+              <h4>Agent interaction process</h4>
             </div>
-            <div class="col-12 p-3 flowy-elements-container bg-light" style="overflow-x: auto;">
-              <div style="min-width: 3000px;">
-                <div class="flowy-element p-2 me-2 create-flowy rounded bg-white">
-                  <div class="ms-2 mt-2 d-inline-block align-middle">                  
-                    <div class="text-center d-inline-block bg-light p-1 rounded">
-                      <i class="ri-spy-fill h3"></i>
-                    </div>
-                    <div class="flowy-element-text d-inline-block ms-2 align-top">                        
-                      <div class="m-0 p-0 flowy-element-title">Job agent</div>
-                      <p class="mt-1 text-secondary flowy-element-description">Individual added agent</p>        
-                    </div>
-                  </div>
-                </div>
-                <div class="p-2 me-2 flowy-element create-flowy rounded bg-white">
-                  <div class="ms-2 mt-2 d-inline-block align-middle">                  
-                    <div class="text-center d-inline-block bg-light p-1 rounded">
-                      <i class="ri-dashboard-fill h3"></i>
-                    </div>
-                    <div class="flowy-element-text d-inline-block ms-2 align-top">                        
-                      <div class="m-0 p-0">Model</div>
-                      <p class="mt-1 text-secondary">The overall model</p>        
-                    </div>
-                  </div>
-                </div>
-                <div class="p-2 me-2 flowy-element create-flowy rounded bg-white">
-                  <div class="ms-2 mt-2 d-inline-block align-middle">                  
-                    <div class="text-center d-inline-block bg-light p-1 rounded">
-                      <i class="ri-dashboard-fill h3"></i>
-                    </div>
-                    <div class="flowy-element-text d-inline-block ms-2 align-top">                        
-                      <div class="m-0 p-0">Model</div>
-                      <p class="mt-1 text-secondary">The overall model</p>        
-                    </div>
-                  </div>
-                </div>
-                <div class="p-2 me-2 flowy-element create-flowy rounded bg-white">
-                  <div class="ms-2 mt-2 d-inline-block align-middle">                  
-                    <div class="text-center d-inline-block bg-light p-1 rounded">
-                      <i class="ri-dashboard-fill h3"></i>
-                    </div>
-                    <div class="flowy-element-text d-inline-block ms-2 align-top">                        
-                      <div class="m-0 p-0">Model</div>
-                      <p class="mt-1 text-secondary">The overall model</p>        
-                    </div>
-                  </div>
-                </div>
-                <div class="p-2 me-2 flowy-element create-flowy rounded bg-white">
-                  <div class="ms-2 mt-2 d-inline-block align-middle">                  
-                    <div class="text-center d-inline-block bg-light p-1 rounded">
-                      <i class="ri-dashboard-fill h3"></i>
-                    </div>
-                    <div class="flowy-element-text d-inline-block ms-2 align-top">                        
-                      <div class="m-0 p-0">Model</div>
-                      <p class="mt-1 text-secondary">The overall model</p>        
-                    </div>
-                  </div>
-                </div>
+          </div>
+          <div class="row pt-4 pb-4 bg-light-70" style="height: 138px;">
+            <div class="col-8">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" id="model-process-agent-types-select-button">
+                  Select Agent type to model agent process
+                </button>
+                <ul class="dropdown-menu" id="model-process-agent-types-select">
+                </ul>
               </div>
-          </div>
-            
-          </div>
+            </div>
+            <div class="col-4">
+              <a onclick="main.process.addProcessStepElement()" class="btn btn-primary w-100"><i class="ri-add-circle-fill"></i> Add process step</a>
+            </div>
+          </div>           
         </div>
         <div id="code-export-container" class="d-none" phase="export">
           <div class="card m-4 col-11">
@@ -346,19 +297,32 @@
 <!--Agent process start element-->
 <div class="d-none" id="agent-process-start-element">
   <table>
-    <tbody><tr><td style="min-width: 40px;"><i class="ri-play-fill"></i></td><td>Start</td></tr></tbody>
+    <tbody><tr><td style="min-width: 40px;"><i class="ri-play-fill"></i></td><td class="fw-bold">Start</td></tr></tbody>
   </table>
 </div>
 <!--Agent process end element-->
-<div class="d-none" id="agent-process-end-element">
+<div class="d-none" id="agent-process-end-element" title="This is the end element">
   <table>
-    <tbody><tr><td style="min-width: 40px;"><i class="ri-stop-fill"></i></td><td>End</td></tr></tbody>
+    <tbody><tr><td style="min-width: 40px;"><i class="ri-stop-fill"></i></td><td class="fw-bold">End</td></tr></tbody>
   </table>
 </div>
 <!--Agent process codeblock element-->
 <div class="d-none" id="agent-process-block-element">
-  <input type="text" placeholder="Block name"/>
-  <textarea class="form-control bg-python-code textarea-non-resize agent-space-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom code" rows="1"></textarea>
+  <table>
+    <tbody>
+      <tr>
+        <td style="min-width: 40px;"><i class="ri-settings-3-fill"></i></td>
+        <td><input class="fw-bold" style="border: 1px #000 solid" type="text" placeholder="Process step name" df-stepname/></td>
+      </tr>
+    </tbody>
+  </table> 
+  <textarea class="mt-2 form-control bg-python-code textarea-non-resize agent-process-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom python code" rows="1" df-stepcode></textarea>
+</div>
+<!--Agent type change process element-->
+<div class="d-none">
+  <ul>
+    <li id="agent-type-element-process"><a class="dropdown-item" onclick="main.process.changeCanvasModule(this)">[AGENT_TYPE_NAME]</a></li>
+  </ul>
 </div>
 
 </body>
