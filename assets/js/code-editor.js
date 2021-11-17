@@ -25,10 +25,13 @@ class CodeEditor{
         if(this.currentCaller == undefined){
             throw new Error("Caller of ace code editor is not set! Can not send added coded to input field!")
         }
+        
         $(this.currentCaller).val(this.editor.getValue())
+
         $("#code-editor-modal").fadeOut()
         this.editor.setValue("")
         this.currentCaller = undefined
         
     }
+
 }
