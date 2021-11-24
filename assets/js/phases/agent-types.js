@@ -17,8 +17,10 @@ class AgentTypesController extends AbstractPhase{
     addAgentType(){
         let templateAgentType = $(".agent-type.template").clone()
         templateAgentType = $(templateAgentType).removeClass("template")
+        $(templateAgentType).attr("agentId", this.agentId)
         $("#add-agent-button").before($(templateAgentType))
         this.addProp($(templateAgentType).find("a.btn"))
+        this.agentId++
     }
 
     addProp(element){
@@ -43,12 +45,10 @@ class AgentTypesController extends AbstractPhase{
             jsonResult.push(
                 {
                     "name": $(currentAgentTypes[i]).find(".agent-type-name").val(),
-                    "id": this.agentId,
+                    "id": parseInt($(currentAgentTypes[i]).attr("agentId")),
                     "properties": this.__getAgentPropertiesJSON(currentAgentTypes[i])
                 }
             )
-
-            this.agentId++
         }
 
         return jsonResult
@@ -70,6 +70,14 @@ class AgentTypesController extends AbstractPhase{
         }
 
         return jsonResult
+    }
+
+    removeAgentType(triggerElement){
+        $(triggerElement).closest(".agent-type").remove()
+    }
+
+    removeAgentTypeProperty(triggerElement){
+        $(triggerElement).closest(".agent-property").remove()
     }
     
 }
