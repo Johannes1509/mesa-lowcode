@@ -37,21 +37,21 @@ class AgentTypesController extends AbstractPhase{
         $(element).parent().parent().prev().children().attr("class", $($(element).children()[0]).attr("class"))
     }
 
-    getJSONData(){
+    getJSONData(dataModel){
         let currentAgentTypes = $(".agent-type:not(.template)")
-        let jsonResult = []
+
 
         for(let i = 0; i < currentAgentTypes.length; i++){
-            jsonResult.push(
-                {
-                    "name": $(currentAgentTypes[i]).find(".agent-type-name").val(),
-                    "id": parseInt($(currentAgentTypes[i]).attr("agentId")),
-                    "properties": this.__getAgentPropertiesJSON(currentAgentTypes[i])
-                }
-            )
+            let currentAgent = JSON.parse(JSON.stringify(main.agent))
+            
+            currentAgent["id"] = parseInt($(currentAgentTypes[i]).attr("agentId"))
+            currentAgent["name"] = $(currentAgentTypes[i]).find(".agent-type-name").val()
+            currentAgent["properties"] = this.__getAgentPropertiesJSON(currentAgentTypes[i])
+            
+            dataModel.agents.push(currentAgent)
         }
 
-        return jsonResult
+        return dataModel
     }
 
     __getAgentPropertiesJSON(agentType){

@@ -3,16 +3,16 @@ class ModelConditionsController extends AbstractPhase{
         this.phaseName = "conditions"
     }
 
-    startPhase(phaseData){
+    startPhase(dataModel){
         //init model scheduler
         $('.scheduler-sort tbody').empty()
         let orderElement = $(".scheduler-order-element.template").clone()
         orderElement.removeClass("template")
 
-        for(var i = 0; i < phaseData["agents"].length; i++){
+        for(var i = 0; i < dataModel.agents.length; i++){
             let currentOrderElement = orderElement.clone()
-            currentOrderElement.children().next().text(phaseData["agents"][i]["name"])
-            currentOrderElement.children().next().attr("agent-type-id", phaseData["agents"][i]["id"])
+            currentOrderElement.children().next().text(dataModel.agents[i]["name"])
+            currentOrderElement.children().next().attr("agent-type-id", dataModel.agents[i]["id"])
             $('.scheduler-sort tbody').append(currentOrderElement)
         }
 
@@ -23,11 +23,11 @@ class ModelConditionsController extends AbstractPhase{
         //init model space
         $('.model-space-agent-placement-container').empty()
         let spacePlacementElement = $(".model-space-agent-conf").clone()
-        for(var i = 0; i < phaseData["agents"].length; i++){
+        for(var i = 0; i < dataModel.agents.length; i++){
             let newAgentSpaceConf = spacePlacementElement.clone()
             newAgentSpaceConf.removeClass("template")
-            newAgentSpaceConf.find(".model-space-agent-name").text(phaseData["agents"][i]["name"])
-            newAgentSpaceConf.attr("agent-type-id", phaseData["agents"][i]["id"])
+            newAgentSpaceConf.find(".model-space-agent-name").text(dataModel.agents[i]["name"])
+            newAgentSpaceConf.attr("agent-type-id", dataModel.agents[i]["id"])
             $(".model-space-agent-placement-container").append(newAgentSpaceConf)
         }
     }
@@ -37,12 +37,10 @@ class ModelConditionsController extends AbstractPhase{
         $('.scheduler-sort tbody').sortable('destroy')
     }
 
-    getJSONData(){
-        let jsonData = {"scheduler": {}, "space": {}}
-        
+    getJSONData(dataModel){        
         //model scheduler
         let schedulerType = $(".model-scheduler-type.active").attr("scheduler")
-        jsonData.scheduler.type = schedulerType
+        dataModel.model.scheduler.type = schedulerType
         
         if(schedulerType == "basic"){
             let orderElements = $("table.scheduler-sort tbody").children()
@@ -53,14 +51,13 @@ class ModelConditionsController extends AbstractPhase{
                     "name": $($("table.scheduler-sort tbody").children()[i]).children().next().text()
                 })
             }
-            jsonData.scheduler.order = agentOrder
+            dataModel.model.scheduler.order = agentOrder
         }else{
-            jsonData.scheduler.order = undefined
+            dataModel.model.scheduler.order = undefined
         }
 
         //model space
-        let spaceType = $(".model-space-type.active").attr("space")
-        jsonData.space.type = spaceType
+        dataModel.model.space.type = $(".model-space-type.active").attr("space")
 
         let agentPlacementsElements = $(".model-space-agent-conf:not(.template)")
         let agentsPlacements = []
@@ -83,9 +80,9 @@ class ModelConditionsController extends AbstractPhase{
             })
         }
 
-        jsonData.space.placement = agentsPlacements
+        dataModel.model.space.placement = agentsPlacements
 
-        return jsonData
+        return dataModel
     }
 
     changeScheduler(element){

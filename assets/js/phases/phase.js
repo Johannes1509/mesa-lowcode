@@ -11,15 +11,13 @@ class AbstractPhase{
         throw new Error("Not implemented")
     }
 
-    startPhase(){
+    startPhase(dataModel){
         throw new Error("Not implemented")
     }
 
-    endPhase(phaseData){
-        this.stopPhase()
-        let currentPhaseData = this.getJSONData()
-        phaseData[this.phaseName] = currentPhaseData
-        return phaseData
+    endPhase(dataModel){
+        this.stopPhase(dataModel)
+        return this.getJSONData(dataModel)
     }
 
     getJSONData(){

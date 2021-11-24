@@ -3,7 +3,7 @@ class CodeExportController extends AbstractPhase{
         this.phaseName = "export"
     }
 
-    startPhase(phaseData){
+    startPhase(){
 
     }
 
@@ -12,7 +12,9 @@ class CodeExportController extends AbstractPhase{
         $(".code-download-card").addClass("d-none") 
     }
 
-    getJSONData(){}
+    getJSONData(dataModel){
+        return dataModel
+    }
 
     generateCode(){
         $(".show-generating-message").removeClass("d-none")
@@ -20,7 +22,7 @@ class CodeExportController extends AbstractPhase{
         //sending data to backend
         let sendObject = {
             "type": "modelData",
-            "data": this.mainRef.data
+            "data": main.data
         }
         
         connection.send(JSON.stringify(sendObject))

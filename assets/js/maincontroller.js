@@ -5,7 +5,29 @@ class MainController{
         this.conditions = new ModelConditionsController(this)
         this.process = new ModelProcessController(this)
         this.export = new CodeExportController(this)
-        this.data = {}
+        this.data = {
+            "model":{
+                "scheduler": {
+                    "type": undefined,
+                    "order": undefined
+                },
+                "space": {
+                    "type": undefined,
+                    "placement": undefined
+                },
+                "drawflow": undefined
+            },
+            "agents": []
+        }
+        this.agent = {
+            "id" : undefined,
+            "name": undefined,
+            "properties": [],
+            "process": {},
+            "placement": {},
+            "nodes": {},
+            "drawflow-data": undefined
+        }
     }
 
 
