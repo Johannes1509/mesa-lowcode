@@ -1,5 +1,7 @@
 class MainController{
     constructor(){
+        this.mandatoryConditions = mandatoryConditions
+
         this.intro = new IntroductionController(this)
         this.agents = new AgentTypesController(this)
         this.editor = new CodeEditor()
@@ -29,6 +31,8 @@ class MainController{
             "orderNum": undefined,
             "description": undefined
         }
+
+        this.intro.beginPhase()
     }
 
 
@@ -37,6 +41,13 @@ class MainController{
         let currentElement =  $(".phases").children(".phase-active")
         let newElement = forward ? $(".phases").children(".phase-active").next() : $(".phases").children(".phase-active").prev() 
         
+        //mandatory conditions required check
+        if(this.mandatoryFieldsCheck && forward){
+            if(!this.__getPhaseByName(currentElement.attr("phase")).checkMandatoryConditions()){
+                return
+            }
+        }
+
         if(newElement.length != 0){
             newElement.addClass("phase-active")
             newElement.removeClass("d-none")
@@ -47,7 +58,7 @@ class MainController{
         let currentPhase = this.__getPhaseByName(currentElement.attr("phase"))
         this.data = currentPhase.endPhase(this.data)
         let newPhase = this.__getPhaseByName(newElement.attr("phase"))
-        newPhase.startPhase(this.data)
+        newPhase.beginPhase(this.data)
         console.log(JSON.parse(JSON.stringify(this.data)))
         
         
@@ -78,18 +89,19 @@ class MainController{
         switch(phaseName){
             case "intro":
                 phase = this.intro
+                break
             case "agents":
                 phase = this.agents
-                break;
+                break
             case "conditions":
                 phase = this.conditions
-                break;
+                break
             case "process":
                 phase = this.process
-                break;
+                break
             case "export":
                 phase = this.export
-                break;
+                break
             
         }
 
