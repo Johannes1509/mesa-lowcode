@@ -36,3 +36,11 @@
     line-height: 20px;
 }
 
+.mandatory-fields-badge{
+    align-self: baseline;
+    margin-left: 10px;
+}
+
+.mandatory-fields-badge-main{
+    float: right
+}

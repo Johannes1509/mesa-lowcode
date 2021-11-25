@@ -88,6 +88,16 @@
             </a>
           </li>
         </ul>
+        <div class="card m-1" id="mandatory-fields-container">
+          <div class="pt-2 px-2">
+            <h5 class="card-title mb-1 text-center">Mandatory fields<span class="badge bg-success rounded-pill mandatory-fields-badge-main"><i class="ri-check-line"></i></span></h5>
+            <hr>
+            <div class="card-body p-0" style="height:300px; overflow-y: auto;">
+              <ul class="list-group" id="mandatory-fields-condition-container">
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-9 bg-light-90 phases">
         <div id="intro-container" class="row phase-active" phase="intro">
@@ -400,6 +410,14 @@
 <div class="d-none">
   <ul>
     <li id="agent-type-element-process"><a class="dropdown-item" onclick="main.process.changeCanvasModule(this)">[AGENT_TYPE_NAME]</a></li>
+  </ul>
+</div>
+
+<div class="d-none">
+  <ul>
+    <li class="list-group-item d-flex justify-content-between align-items-center d-none mandatory-fields-condition">
+      <span class="badge bg-success rounded-pill mandatory-fields-badge"><i class="ri-check-line"></i></span>
+    </li>
   </ul>
 </div>
 
