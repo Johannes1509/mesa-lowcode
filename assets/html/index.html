@@ -91,7 +91,36 @@
       </div>
       <div class="col-9 bg-light-90 phases">
         <div id="intro-container" class="row phase-active" phase="intro">
-          <p>Test</p>
+          <div class="card m-4 col-11">
+            <div class="pt-3 px-3">
+              <h4 class="card-title mb-3 text-left">Tool options</h4>
+              <h5 class="card-title mb-3 text-left">Guided tour</h5>
+              <div class="row">
+                <div class="col-8">
+                  <label class="form-check-label" for="show-guided-tour">
+                    During model creation, the main input options are presented and explained.
+                  </label>
+                </div>
+                <div class="col-4">
+                  <input class="form-check-input float-end" type="checkbox" value="" id="show-guided-tour" onclick="main.switchGuidedTourState(this)" checked>
+                </div>
+              </div>
+              <hr>
+            </div>
+            <div class="px-3 mb-3">
+              <h5 class="card-title mb-3 text-left">Mandatory field check</h5>
+              <div class="row">
+                <div class="col-8">
+                  <label class="form-check-label" for="mandatory-fields-requiered">
+                    During the model creation the termination of a configuration phase is only possible after filling all mandatory fields of this.
+                  </label>
+                </div>
+                <div class="col-4">
+                  <input class="form-check-input float-end" type="checkbox" value="" id="mandatory-fields-requiered" onclick="main.switchMandatoryFieldsCheck(this)" checked>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="agent-types-container" class="d-none row" phase="agents">
           <div class="m-4 col-4" id="add-agent-button">
@@ -132,7 +161,7 @@
             </table>
             </div>
           </div>
-          <div class="card m-4 col-11">
+          <div class="card m-4 mt-0 col-11">
             <div class="pt-3 px-3">
               <h5 class="card-title mb-3 text-left">Model space</h5>
               <div class="dropdown">
@@ -153,8 +182,15 @@
               <h5 class="card-title mb-3 text-left">Agent placement</h5>
               <p>Set the initial placement of the agents per type</p>
               <div class="model-space-agent-placement-container">
-
               </div>
+            </div>
+          </div>
+          <div class="card m-4 mt-0 col-11">
+            <div class="pt-3 px-3">
+              <h5 class="card-title mb-3 text-left">Model description</h5>
+            </div>
+            <div class="card-body pt-0">
+              <textarea class="form-control textarea-non-resize" id="model-description-value" placeholder="Add a model description" ondblclick="main.editor.open(this, true)" rows="3"></textarea>
             </div>
           </div>
         </div>
@@ -206,7 +242,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Python code editor</h5>
+          <h5 class="modal-title" id="ace-editor-title">Python code editor</h5>
         </div>
         <div class="modal-body">
           <div class="w-75 mx-auto d-block">
@@ -275,6 +311,12 @@
         </div>
         <a onclick="main.agents.addProp(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i> Add property</a>
       </div>
+      <div class="card-body pt-0">
+        <h5 class="card-title mb-3 text-center">Description</h5>
+        <div class="agent-type-description-container">
+          <textarea class="form-control textarea-non-resize agent-description-value" placeholder="Add a description" ondblclick="main.editor.open(this, true)" rows="1"></textarea>
+        </div>
+      </div>
     </div>
 
 <!-- Agent type template -->
@@ -341,7 +383,18 @@
       </tr>
     </tbody>
   </table> 
-  <textarea class="mt-2 form-control bg-python-code textarea-non-resize agent-process-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom python code" rows="1"></textarea>
+  <div class="col-12 mt-3">
+    Python code
+  </div>
+  <div class="col-12">
+    <textarea class="form-control bg-python-code textarea-non-resize agent-process-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom python code" rows="1"></textarea>
+  </div>
+  <div class="col-12 mt-1">
+    Description
+  </div>
+  <div class="col-12">
+    <textarea class="form-control textarea-non-resize process-step-description" placeholder="Add a description" ondblclick="main.editor.open(this, true)" rows="1"></textarea>
+  </div>
 </div>
 <!--Agent type change process element-->
 <div class="d-none">

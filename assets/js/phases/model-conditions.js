@@ -86,6 +86,8 @@ class ModelConditionsController extends AbstractPhase{
             }
         }
 
+        dataModel.model.description = $("#model-description-value").val()
+
         return dataModel
     }
 

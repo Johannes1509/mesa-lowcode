@@ -50,7 +50,8 @@ class AgentTypesController extends AbstractPhase{
             
             dataModel.agents[currentAgentIndex]["id"] = parseInt($(currentAgentTypes[i]).attr("agentId"))
             dataModel.agents[currentAgentIndex]["name"] = $(currentAgentTypes[i]).find(".agent-type-name").val()
-            dataModel.agents[currentAgentIndex]["properties"] = this.__getAgentPropertiesJSON(currentAgentTypes[i])            
+            dataModel.agents[currentAgentIndex]["properties"] = this.__getAgentPropertiesJSON(currentAgentTypes[i]) 
+            dataModel.agents[currentAgentIndex]["description"] = $(currentAgentTypes[i]).find(".agent-description-value").val() 
         }
 
         //remove old agents 

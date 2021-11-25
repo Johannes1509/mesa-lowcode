@@ -120,6 +120,7 @@ class ModelProcessController extends AbstractPhase{
             resultData[currentNodeId] = {
                 "stepname": $("#node-"+currentNodeId).find(".agent-process-custom-name").val(),
                 "stepcode": $("#node-"+currentNodeId).find(".agent-process-custom-code").val(),
+                "description": $("#node-"+currentNodeId).find(".process-step-description").val(),
                 "stepnumber": undefined
             }
         }
@@ -134,6 +135,7 @@ class ModelProcessController extends AbstractPhase{
         for(let nodeId in nodeData){
             $("#node-"+nodeId).find(".agent-process-custom-name").val(nodeData[nodeId]["stepname"])
             $("#node-"+nodeId).find(".agent-process-custom-code").val(nodeData[nodeId]["stepcode"])
+            $("#node-"+nodeId).find(".process-step-description").val(nodeData[nodeId]["description"])
         }
     }
     

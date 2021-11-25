@@ -10,14 +10,24 @@ class CodeEditor{
         this.currentCaller = undefined
     }
 
-    open(caller){
+    open(caller, textEditorTitle){
+        if(textEditorTitle){
+            $("#ace-editor-title").text("Text editor")
+        }
+
         this.currentCaller = caller
-        this.editor.setValue($(this.currentCaller).val())
+        this.editor.setValue($(this.currentCaller).val(), 1)
         $("#code-editor-modal").fadeIn()
     }
 
     close(){
+        if(this.editor.getValue() != ""){
+            if(!confirm('Discard text changes?')){
+                return
+            }
+        }
         $("#code-editor-modal").fadeOut()
+        $("#ace-editor-title").text("Python code editor")
         this.editor.setValue("")
     }
 

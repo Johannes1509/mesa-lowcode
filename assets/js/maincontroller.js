@@ -6,12 +6,15 @@ class MainController{
         this.conditions = new ModelConditionsController(this)
         this.process = new ModelProcessController(this)
         this.export = new CodeExportController(this)
+        this.mandatoryFieldsCheck = true
+        this.guidedTour = true
 
         this.data = {
             "model":{
                 "scheduler": undefined,
                 "space": undefined,
-                "drawflow": undefined
+                "drawflow": undefined,
+                "description": undefined
             },
             "agents": []
         }
@@ -23,7 +26,8 @@ class MainController{
             "placement": {},
             "nodes": {},
             "drawflow-data": undefined,
-            "orderNum": undefined
+            "orderNum": undefined,
+            "description": undefined
         }
     }
 
@@ -101,6 +105,13 @@ class MainController{
         return undefined
     }
 
+    switchGuidedTourState(element){
+        main.guidedTour = element.checked
+    }
+
+    switchMandatoryFieldsCheck(element){
+        main.mandatoryFieldsCheck = element.checked
+    }
 
     
 }
