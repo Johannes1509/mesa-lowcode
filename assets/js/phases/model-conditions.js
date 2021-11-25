@@ -9,10 +9,14 @@ class ModelConditionsController extends AbstractPhase{
         let orderElement = $(".scheduler-order-element.template").clone()
         orderElement.removeClass("template")
 
-        for(var i = 0; i < dataModel.agents.length; i++){
+
+        //hier muss hinzufügen nach orderNum erfolgen, falls gesetzt
+        let agentsInOrder = _.sortBy(JSON.parse(JSON.stringify(dataModel.agents)), "orderNum");
+
+        for(var i = 0; i < agentsInOrder.length; i++){
             let currentOrderElement = orderElement.clone()
-            currentOrderElement.children().next().text(dataModel.agents[i]["name"])
-            currentOrderElement.children().next().attr("agent-type-id", dataModel.agents[i]["id"])
+            currentOrderElement.children().next().text(agentsInOrder[i]["name"])
+            currentOrderElement.children().next().attr("agent-type-id", agentsInOrder[i]["id"])
             $('.scheduler-sort tbody').append(currentOrderElement)
         }
 
@@ -28,7 +32,16 @@ class ModelConditionsController extends AbstractPhase{
             newAgentSpaceConf.removeClass("template")
             newAgentSpaceConf.find(".model-space-agent-name").text(dataModel.agents[i]["name"])
             newAgentSpaceConf.attr("agent-type-id", dataModel.agents[i]["id"])
+            
+            if(dataModel.agents[i].placement != undefined){
+                newAgentSpaceConf.find(".agent-space-custom-code").text(dataModel.agents[i].placement.code)
+            }
+
             $(".model-space-agent-placement-container").append(newAgentSpaceConf)
+
+            if(dataModel.agents[i].placement != undefined && dataModel.agents[i].placement.type != undefined){
+                this.changeAgentPlacement($(".model-space-agent-conf[agent-type-id='"+dataModel.agents[i].id+"']").find("a[agent-placement='"+dataModel.agents[i].placement.type+"']")[0])
+            }
         }
     }
 
@@ -40,47 +53,38 @@ class ModelConditionsController extends AbstractPhase{
     getJSONData(dataModel){        
         //model scheduler
         let schedulerType = $(".model-scheduler-type.active").attr("scheduler")
-        dataModel.model.scheduler.type = schedulerType
+        dataModel.model.scheduler = schedulerType
         
         if(schedulerType == "basic"){
             let orderElements = $("table.scheduler-sort tbody").children()
-            let agentOrder = []
-            for(var i = 0; i < orderElements.length; i++){
-                agentOrder.push({
-                    "id": $($("table.scheduler-sort tbody").children()[i]).children().next().attr("agent-type-id"), 
-                    "name": $($("table.scheduler-sort tbody").children()[i]).children().next().text()
-                })
+            let orderNum = 0
+
+            for(let i = 0; i < orderElements.length; i++){
+                let currentAgentId = $($("table.scheduler-sort tbody").children()[i]).children().next().attr("agent-type-id")
+                dataModel.agents[main.getAgentIndexById(currentAgentId)].orderNum = orderNum
+                orderNum++
             }
-            dataModel.model.scheduler.order = agentOrder
-        }else{
-            dataModel.model.scheduler.order = undefined
         }
 
         //model space
-        dataModel.model.space.type = $(".model-space-type.active").attr("space")
+        dataModel.model.space = $(".model-space-type.active").attr("space")
 
         let agentPlacementsElements = $(".model-space-agent-conf:not(.template)")
-        let agentsPlacements = []
 
         for(var i = 0; i < agentPlacementsElements.length; i++){
             let currentAgentId = $(agentPlacementsElements[i]).attr("agent-type-id")
-            let currentAgentName = $(agentPlacementsElements[i]).find(".model-space-agent-name").text()
             let currentAgentPlacementType = $(agentPlacementsElements[i]).children().find("a.active").attr("agent-placement")
             let currentAgentPlacementCode = $(agentPlacementsElements[i]).find(".agent-space-custom-code").val()
-            
+
             if(!currentAgentPlacementCode){
                 currentAgentPlacementCode = undefined
             }
 
-            agentsPlacements.push({
-                "id": currentAgentId,
-                "name": currentAgentName,
+            dataModel.agents[main.getAgentIndexById(currentAgentId)].placement = {
                 "type": currentAgentPlacementType,
                 "code": currentAgentPlacementCode
-            })
+            }
         }
-
-        dataModel.model.space.placement = agentsPlacements
 
         return dataModel
     }

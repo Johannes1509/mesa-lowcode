@@ -26,6 +26,9 @@
 <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
 <script src="../js/jquery/jquery.mousewheel.js" type="text/javascript" charset="utf-8"></script>
 
+<!-- Underscore.js -->
+<script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+
 <!-- Custom Stylesheet -->
 <link href="../css/style.css" rel="stylesheet">
 
@@ -56,6 +59,12 @@
         <ul class="nav nav-pills flex-column mb-auto model-phases-nav">
           <li class="nav-item">
             <a href="#" class="nav-link link-dark active">
+              <i class="ri-number-0 align-middle h4"></i>
+              <p class="align-middle d-inline">Introduction</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link link-dark disabled">
               <i class="ri-number-1 align-middle h4"></i>
               <p class="align-middle d-inline">Agent types</p>
             </a>
@@ -81,8 +90,10 @@
         </ul>
       </div>
       <div class="col-9 bg-light-90 phases">
-        <div id="agent-types-container" class="row phase-active" phase="agents">
-
+        <div id="intro-container" class="row phase-active" phase="intro">
+          <p>Test</p>
+        </div>
+        <div id="agent-types-container" class="d-none row" phase="agents">
           <div class="m-4 col-4" id="add-agent-button">
             <div class="card-body align-middle text-center">
               <a onclick="main.agents.addAgentType(this)" class="btn btn-primary"><i class="ri-add-circle-fill"></i> Add agent type</a>
@@ -167,7 +178,7 @@
               </div>
             </div>
             <div class="col-4">
-              <a onclick="main.process.addProcessStepElement()" class="btn btn-primary w-100"><i class="ri-add-circle-fill"></i> Add process step</a>
+              <a onclick="main.process.addProcessStepElement()" class="btn btn-primary w-100" id="process-add-step"><i class="ri-add-circle-fill"></i> Add process step</a>
             </div>
           </div>           
         </div>
@@ -344,6 +355,7 @@
 
 <script src="../js/code-editor.js" type="text/javascript"></script>
 <script src="../js/phases/phase.js" type="text/javascript"></script>
+<script src="../js/phases/intro.js" type="text/javascript"></script>
 <script src="../js/phases/agent-types.js" type="text/javascript"></script>
 <script src="../js/phases/model-conditions.js" type="text/javascript"></script>
 <script src="../js/phases/model-process.js" type="text/javascript"></script>

@@ -1,20 +1,16 @@
 class MainController{
     constructor(){
+        this.intro = new IntroductionController(this)
         this.agents = new AgentTypesController(this)
         this.editor = new CodeEditor()
         this.conditions = new ModelConditionsController(this)
         this.process = new ModelProcessController(this)
         this.export = new CodeExportController(this)
+
         this.data = {
             "model":{
-                "scheduler": {
-                    "type": undefined,
-                    "order": undefined
-                },
-                "space": {
-                    "type": undefined,
-                    "placement": undefined
-                },
+                "scheduler": undefined,
+                "space": undefined,
                 "drawflow": undefined
             },
             "agents": []
@@ -26,7 +22,8 @@ class MainController{
             "process": {},
             "placement": {},
             "nodes": {},
-            "drawflow-data": undefined
+            "drawflow-data": undefined,
+            "orderNum": undefined
         }
     }
 
@@ -47,7 +44,7 @@ class MainController{
         this.data = currentPhase.endPhase(this.data)
         let newPhase = this.__getPhaseByName(newElement.attr("phase"))
         newPhase.startPhase(this.data)
-        console.log(this.data)
+        console.log(JSON.parse(JSON.stringify(this.data)))
         
         
         //handling navigation phase change
@@ -75,6 +72,8 @@ class MainController{
     __getPhaseByName(phaseName){
         let phase = undefined
         switch(phaseName){
+            case "intro":
+                phase = this.intro
             case "agents":
                 phase = this.agents
                 break;
@@ -91,6 +90,15 @@ class MainController{
         }
 
         return phase
+    }
+
+    getAgentIndexById(agentId){
+        for(let i = 0; i < main.data.agents.length; i++){
+            if(parseInt(main.data.agents[i].id) == parseInt(agentId)){
+                return i
+            }
+        }
+        return undefined
     }
 
 

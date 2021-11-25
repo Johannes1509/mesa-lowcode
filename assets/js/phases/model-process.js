@@ -19,11 +19,11 @@ class ModelProcessController extends AbstractPhase{
 
     startPhase(dataModel){      
         for(var i = 0; i < dataModel.agents.length; i++){
-            let currentAgentId = dataModel.agents[i]["id"]
+            let curAgentId = dataModel.agents[i]["id"]
             let currentAgentTypeElement = $("#agent-type-element-process").clone()
             
             currentAgentTypeElement.children().text(dataModel.agents[i]["name"])
-            currentAgentTypeElement.children().attr("agent-type-id", currentAgentId)
+            currentAgentTypeElement.children().attr("agent-type-id", curAgentId)
             $('#model-process-agent-types-select').append(currentAgentTypeElement)
         }
 
@@ -40,6 +40,13 @@ class ModelProcessController extends AbstractPhase{
             }
         }
 
+        //if agents number is null disable add step button
+        if(dataModel.agents.length == 0){
+            $("#process-add-step").addClass("disabled")
+        }else{
+            $("#process-add-step").removeClass("disabled")
+        }
+
         this.canvas.changeModule("dummy")
     }
 
@@ -54,11 +61,16 @@ class ModelProcessController extends AbstractPhase{
         dataModel.model.drawflow = exportData
         for(let exportItem in exportData["drawflow"]){
             if(exportItem != "dummy" && exportItem != "Home"){
-                dataModel.agents[exportItem.replace('agent-','')]["drawflow-data"] = exportData["drawflow"][exportItem]
+                if(dataModel.agents[exportItem.replace('agent-','')] != undefined && !jQuery.isEmptyObject(dataModel.agents[exportItem.replace('agent-','')])){
+                    dataModel.agents[exportItem.replace('agent-','')]["drawflow-data"] = exportData["drawflow"][exportItem]
+                }
             }
         }
 
-        dataModel.agents[this.currentAgentId].nodes = this.getCurrentNodeData()
+        if(this.currentAgentId != undefined){
+            dataModel.agents[main.getAgentIndexById(this.currentAgentId)].nodes = this.getCurrentNodeData()
+        }
+
         this.canvas.clear()
         $('#model-process-agent-types-select-button').text("Select Agent type to model agent process")
         this.currentAgentId = undefined
@@ -73,15 +85,15 @@ class ModelProcessController extends AbstractPhase{
 
         //updateNodeData - save old
         if(this.currentAgentId != undefined){
-            main.data.agents[this.currentAgentId].nodes = this.getCurrentNodeData()
+            main.data.agents[main.getAgentIndexById(this.currentAgentId)].nodes = this.getCurrentNodeData()
         }
 
         //updateNodeData - place new
         this.currentAgentId = agentId
         this.canvas.changeModule("agent-"+this.currentAgentId)
         
-        if(!(main.data.agents[this.currentAgentId] == undefined) && !jQuery.isEmptyObject(main.data.agents[this.currentAgentId])){
-            this.setCurrentNodeData(main.data.agents[this.currentAgentId].nodes)
+        if(!(main.data.agents[main.getAgentIndexById(this.currentAgentId)] == undefined) && !jQuery.isEmptyObject(main.data.agents[main.getAgentIndexById(this.currentAgentId)])){
+            this.setCurrentNodeData(main.data.agents[main.getAgentIndexById(this.currentAgentId)].nodes)
         }
     }
 
@@ -108,11 +120,11 @@ class ModelProcessController extends AbstractPhase{
             resultData[currentNodeId] = {
                 "stepname": $("#node-"+currentNodeId).find(".agent-process-custom-name").val(),
                 "stepcode": $("#node-"+currentNodeId).find(".agent-process-custom-code").val(),
-                "stepnumber": -1
+                "stepnumber": undefined
             }
         }
 
-        this.__getStepNumbers(resultData)
+        resultData = main.process.__getStepNumbers(resultData)
 
         return resultData
      
@@ -126,12 +138,28 @@ class ModelProcessController extends AbstractPhase{
     }
     
     __getStepNumbers(resultData){
-        let stepNumber = 1
-        if(resultData.length > 0){
-            //ANHAND DER MODULE EXPORT DATEN DIE NUMMER BESTIMMEN!!!
+        if(!jQuery.isEmptyObject(resultData)){
+            for(let nodeId in resultData){
+                let currentNode = main.process.canvas.getNodeFromId(nodeId)
+                if(main.process.canvas.getNodeFromId(nodeId).inputs.input_1.connections.length == 0){
+                    resultData[nodeId].stepnumber = undefined
+                }else{
+                    let prevNode = main.process.canvas.getNodeFromId(nodeId).inputs.input_1.connections[0].node
+                    let stepNumber = 0
+                    while(prevNode != undefined){
+                        prevNode = main.process.canvas.getNodeFromId(prevNode)
+                        if(!jQuery.isEmptyObject(prevNode.inputs) && !jQuery.isEmptyObject(prevNode.inputs.input_1.connections)){
+                            prevNode = prevNode.inputs.input_1.connections[0].node
+                            stepNumber++
+                        }else{
+                            prevNode = undefined
+                        }
+                    }
+                    resultData[nodeId].stepnumber = stepNumber
+                }
+            }
         }
-
-        $("this.__getStepNumber(currentNodeId)")
+        return resultData
     }
 
     connectionCheck(){

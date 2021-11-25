@@ -40,15 +40,24 @@ class AgentTypesController extends AbstractPhase{
     getJSONData(dataModel){
         let currentAgentTypes = $(".agent-type:not(.template)")
 
-
         for(let i = 0; i < currentAgentTypes.length; i++){
-            let currentAgent = JSON.parse(JSON.stringify(main.agent))
+            let currentAgentIndex = main.getAgentIndexById($(currentAgentTypes[i]).attr("agentId"))
+            if(currentAgentIndex == undefined){
+                let currentAgent = JSON.parse(JSON.stringify(main.agent))
+                dataModel.agents.push(currentAgent)
+                currentAgentIndex = dataModel.agents.length-1
+            }
             
-            currentAgent["id"] = parseInt($(currentAgentTypes[i]).attr("agentId"))
-            currentAgent["name"] = $(currentAgentTypes[i]).find(".agent-type-name").val()
-            currentAgent["properties"] = this.__getAgentPropertiesJSON(currentAgentTypes[i])
-            
-            dataModel.agents.push(currentAgent)
+            dataModel.agents[currentAgentIndex]["id"] = parseInt($(currentAgentTypes[i]).attr("agentId"))
+            dataModel.agents[currentAgentIndex]["name"] = $(currentAgentTypes[i]).find(".agent-type-name").val()
+            dataModel.agents[currentAgentIndex]["properties"] = this.__getAgentPropertiesJSON(currentAgentTypes[i])            
+        }
+
+        //remove old agents 
+        for(let i = dataModel.agents.length-1; i >= 0; i--){
+            if($("div.agent-type[agentid='"+dataModel.agents[i].id+"']")[0] == undefined){
+                dataModel.agents.splice(i, 1)
+            }
         }
 
         return dataModel
