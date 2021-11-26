@@ -4,6 +4,14 @@ class AgentTypesController extends AbstractPhase{
         this.rowCount = 0
         this.phaseName = "agents"
         this.agentId = 0
+        this.phaseMandatories = [
+            {
+                "title": "At least one agent type was created",
+                "condition": function(){
+                    return ($(".agent-type:not(.template)")[0] != undefined)
+                }
+            }
+        ]
     }
 
     startPhase(){

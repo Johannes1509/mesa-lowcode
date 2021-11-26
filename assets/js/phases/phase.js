@@ -1,11 +1,11 @@
 class AbstractPhase{
     constructor(mainRef){
         this.mainRef = mainRef
+        this.phaseMandatories = []
         this.init()
         if(this.phaseName == undefined){
             throw new Error("Phase name not defined!")
         }
-        this.phaseMandatories = mainRef.mandatoryConditions[this.phaseName]
         this.currentConditionNumber = 0
         this.activeConditionChecker = undefined
     }
@@ -15,7 +15,12 @@ class AbstractPhase{
     }
 
     beginPhase(dataModel){
-        this.activeConditionChecker = setInterval(this.checkMandatoryConditions.bind(this), 2000)
+        if(this.phaseMandatories.length == 0){
+            $("#mandatory-fields-container").addClass("d-none")
+        }else{
+            $("#mandatory-fields-container").removeClass("d-none")
+            this.activeConditionChecker = setInterval(this.checkMandatoryConditions.bind(this), 2000)
+        }
         this.startPhase(dataModel)
         this.__addMandatoryConditions()
     }

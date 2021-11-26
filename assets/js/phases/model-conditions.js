@@ -1,6 +1,20 @@
 class ModelConditionsController extends AbstractPhase{
     init(){
         this.phaseName = "conditions"
+        this.phaseMandatories = [
+            {
+                "title": "The model scheduler type was chosen",
+                "condition": function(){
+                    return ($(".model-scheduler-type.active").attr("scheduler") != undefined)
+                }
+            },
+            {
+                "title": "The model space type was chosen",
+                "condition": function(){
+                    return ($(".model-space-type.active").attr("space") != undefined)
+                }
+            }
+        ]
     }
 
     startPhase(dataModel){

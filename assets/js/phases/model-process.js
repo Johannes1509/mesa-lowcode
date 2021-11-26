@@ -1,7 +1,96 @@
 class ModelProcessController extends AbstractPhase{
     init(){
         this.phaseName = "process"
-        this.canvas = new Drawflow($("#process-canvas")[0]);
+        this.phaseMandatories = [
+            {
+                "title": "Für jeden Agententyp ist mindestens ein Prozessschritt definiert",
+                "condition": function(){
+                    let blockNodes = main.process.canvas.getNodesFromName("block")
+                    let moduleWithBlockNodes = {}
+    
+                    if(blockNodes.length == 0){
+                        return false
+                    }
+    
+                    for(let i = 0; i < blockNodes.length; i++){
+                        let moduleName = main.process.canvas.getModuleFromNodeId(blockNodes[i])
+                        if(moduleName in moduleWithBlockNodes){
+                            moduleWithBlockNodes[moduleName].push(blockNodes[i])
+                        }else{
+                            moduleWithBlockNodes[moduleName] = []
+                            moduleWithBlockNodes[moduleName].push(blockNodes[i])
+                        }
+                    }
+    
+                    for(let moduleName in moduleWithBlockNodes){
+                        if(moduleWithBlockNodes[moduleName].length == 0){
+                            return false
+                        }
+                    }
+    
+                    return true
+                }
+            },
+            {
+                "title": "All process steps inputs and outputs are connected for all agent types",
+                "condition": function(){
+                    let blockNodes = main.process.canvas.getNodesFromName("block")
+    
+                    if(blockNodes.length == 0){
+                        return false
+                    }
+    
+                    for(let i = 0; i < blockNodes.length; i++){
+                        let currentBlockNode = main.process.canvas.getNodeFromId(blockNodes[i])
+                        if(currentBlockNode.outputs.output_1.connections.length == 0){
+                            return false
+                        }
+                        if(currentBlockNode.inputs.input_1.connections.length == 0){
+                            return false
+                        }
+                    }
+                    return true 
+                }
+            },
+            {
+                "title": "The start element is connected with the process steps for all agent types",
+                "condition": function(){
+                    let startNodes = main.process.canvas.getNodesFromName("start")
+    
+                    if(startNodes.length == 0){
+                        return false
+                    }
+    
+                    for(let i = 0; i < startNodes.length; i++){
+                        let currentStartNode = main.process.canvas.getNodeFromId(startNodes[i])
+                        if(currentStartNode.outputs.output_1.connections.length == 0){
+                            return false
+                        }
+                    }
+                    return true
+                }
+            },
+            {
+                "title": "The end element is connected with the process steps for all agent types",
+                "condition": function(){
+                    let endNodes = main.process.canvas.getNodesFromName("end")
+    
+                    if(endNodes.length == 0){
+                        return false
+                    }
+    
+                    for(let i = 0; i < endNodes.length; i++){
+                        let currentEndNode = main.process.canvas.getNodeFromId(endNodes[i])
+                        if(currentEndNode.inputs.input_1.connections.length == 0){
+                            return false
+                        }
+                    }  
+                    return true
+                }
+            }
+        ]
+        
+        this.canvas = new CustomDrawFlow($("#process-canvas")[0]);
         this.canvas.start()
         this.canvas.addModule("dummy")
         this.canvas.changeModule("dummy")
@@ -40,13 +129,7 @@ class ModelProcessController extends AbstractPhase{
             }
         }
 
-        //if agents number is null disable add step button
-        if(dataModel.agents.length == 0){
-            $("#process-add-step").addClass("disabled")
-        }else{
-            $("#process-add-step").removeClass("disabled")
-        }
-
+        $("#process-add-step").addClass("disabled")
         this.canvas.changeModule("dummy")
     }
 
@@ -78,6 +161,7 @@ class ModelProcessController extends AbstractPhase{
     }
 
     changeCanvasModule(triggerElement){
+        $("#process-add-step").removeClass("disabled")
         $('#model-process-agent-types-select-button').text($(triggerElement).text())
         $(triggerElement).parent().parent().find("a").removeClass("active")
         $(triggerElement).addClass("active")
@@ -99,12 +183,12 @@ class ModelProcessController extends AbstractPhase{
 
 
     addProcessStartStopElements(){
-        this.canvas.addNode('start', 0, 1, 150, 300, 'start-element', {}, $("#agent-process-start-element").html())
-        this.canvas.addNode('end', 1, 0, 600, 300, 'start-element', {}, $("#agent-process-end-element").html())          
+        this.canvas.addNode('start', 0, 1, 150, 300, 'start-element', {}, $(".agent-process-start-element").html())
+        this.canvas.addNode('end', 1, 0, 600, 300, 'start-element', {}, $(".agent-process-end-element").html())          
     }
 
     addProcessStepElement(){
-        this.canvas.addNode('block', 1, 1, 300, 300, 'start-element', {}, $("#agent-process-block-element").html())
+        this.canvas.addNode('block', 1, 1, 300, 300, 'start-element', {}, $(".agent-process-block-element").html())
     }
 
     
@@ -185,5 +269,26 @@ class ModelProcessController extends AbstractPhase{
 
         return 0
     }
+}
+
+class CustomDrawFlow extends Drawflow {
+    //prevent deletion of start or end nodes
+    removeNodeId(id) {
+        id = id.slice(5)
+
+        if(["start", "end"].indexOf(this.getNodeFromId(id).name) >= 0){
+            return
+        }
+
+        var moduleName = this.getModuleFromNodeId(id)
+        if(this.module === moduleName) {
+            document.getElementById("node-"+id).remove();
+        }
+
+        delete this.drawflow.drawflow[moduleName].data[id];
+        this.dispatch('nodeRemoved', id);
+        this.removeConnectionNodeId(id);
+     
+   }
 }
 

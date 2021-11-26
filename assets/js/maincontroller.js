@@ -1,7 +1,5 @@
 class MainController{
     constructor(){
-        this.mandatoryConditions = mandatoryConditions
-
         this.intro = new IntroductionController(this)
         this.agents = new AgentTypesController(this)
         this.editor = new CodeEditor()
