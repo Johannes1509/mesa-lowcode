@@ -6,7 +6,7 @@
     background-color: #f0f2f5 !important;
 }
 
-.bg-python-code{
+.bg-editor{
     background-color: #ccebff !important;
 }
 
@@ -43,4 +43,8 @@
 
 .mandatory-fields-badge-main{
     float: right
+}
+
+.block-text{
+    text-align: justify;
 }

@@ -19,19 +19,19 @@ class ModelConditionsController extends AbstractPhase{
         this.tourSteps  = [{
                 "element": $("#model-conditions-container button")[0],
                 "title": 'Model scheduler',
-                "intro": '',
+                "intro": 'The scheduler of a model determines the order in which the agent activities (phase "Model process") are executed within a model step.',
                 "position": "right"
             },
             {
                 "element": $("#model-conditions-container button")[1],
                 "title": 'Model space type',
-                "intro": '',
+                "intro": 'The space type determines whether and how the space concept of the model is defined. For example, the "Single Grid" space type can be used to model two-dimensional grids in which each field can only be occupied by one agent.',
                 "position": "right"
             },
             {
                 "element": $("#model-conditions-container div.card-body")[1],
                 "title": 'Agent placement',
-                "intro": '',
+                "intro": 'If you have selected a room type, you can also influence the initial placement of the agents. To do this, they can choose between random placement and placement by Python code.',
                 "position": "bottom"
             }
         ]
@@ -143,6 +143,12 @@ class ModelConditionsController extends AbstractPhase{
 
         $(element).parent().parent().find("a").removeClass("active")
         $(element).addClass("active")
+
+        if($(element).attr("space") == "none"){
+            $("#model-conditions-agent-placement").addClass("invisible")
+        }else{
+            $("#model-conditions-agent-placement").removeClass("invisible")
+        }
     }
 
     changeAgentPlacement(element){

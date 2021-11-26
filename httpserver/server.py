@@ -10,16 +10,17 @@ import os
 class FrontendServer(Application):
     def __init__(self):
         super().__init__([
-        (r"/index.html", StartPage),
+        (r".*((.css)|(.js)|(.woff2)|(.woff)|(.ttf)|(.svg))", AssetsHandler),
+        (r"/", StartPage),
+        (r"/modelid=[0-9]{5}", StartPage),
         (r"/server", WebSocketConnector),
-        (r"/resultfiles", ResultFilesHandler),
-        (r".*((.css)|(.js)|(.woff2)|(.woff)|(.ttf)|(.svg))", AssetsHandler)])
+        (r"/resultfiles", ResultFilesHandler)])
 
         assetsPath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../assets")
         AssetsHandler.setAssetsPath(assetsPath)
 
         http_server = HTTPServer(self)
-        http_server.listen(8888)
-        print("Listening on http://localhost:8888/index.html")
+        http_server.listen(7700)
+        print("Listening on http://localhost:7700/index.html")
         IOLoop.current().start()
 

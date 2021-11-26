@@ -20,31 +20,31 @@ class AgentTypesController extends AbstractPhase{
             this.tourSteps = [{
                     "element": $(".agent-type[agentid='0']")[0],
                     "title": 'Agent type',
-                    "intro": '',
+                    "intro": 'Each of these elements represents a set of equal agents - an agent type. An agent type can represent, for example, groups of people or organisations that have the same characteristics and behaviour.',
                     "position": "right"
                 },
                 {
                     "element": $(".agent-type[agentid='0'] .agent-type-name")[0],
                     "title": 'Agent type name',
-                    "intro": '',
+                    "intro": 'Give each type a unique and descriptive name.',
                     "position": "bottom"
                 },
                 {
                     "element": $(".agent-type[agentid='0'] .agent-property .row")[0],
                     "title": 'Agent type property',
-                    "intro": '',
+                    "intro": "Each agent type has properties, e.g. a person's account balance or number of children. Give each property a name and define its type. You can also initialise each property via Python code (right field).\n\nDouble-click the right field to open a code editor (this applies to all fields of this colour).",
                     "position": "bottom"
                 },
                 {
                     "element": $(".agent-type[agentid='0'] .agent-type-add-property")[0],
-                    "title": 'Add Agent type properties',
-                    "intro": '',
+                    "title": 'Add agent type properties',
+                    "intro": 'Further properties can be added to an agent type via this button',
                     "position": "bottom"
                 },
                 {
                     "element": $("#add-agent-button").find("a")[0],
-                    "title": 'Add new Agent types',
-                    "intro": '',
+                    "title": 'Add new agent types',
+                    "intro": 'You can create further agent types via this button',
                     "position": "left"
                 }
             ]

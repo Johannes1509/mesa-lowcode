@@ -21,23 +21,23 @@
 <script src="../js/ace-src/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
 
 <!--Drawflow-->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
+<link rel="stylesheet" href="../css/drawflow/drawflow.min.css">
 <link href="../css/drawflow/custom-theme.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
+<script src="../js/drawflow/drawflow.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/jquery/jquery.mousewheel.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- Underscore.js -->
-<script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+<script src="../js/underscore/underscore-umd-min.js"></script>
 
 <!-- Custom Stylesheet -->
 <link href="../css/style.css" rel="stylesheet">
 
 <!-- Intro.js -->
-<script src="https://cdn.jsdelivr.net/npm/intro.js@4.3.0/intro.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@4.3.0/introjs.min.css">
+<script src="../js/introjs/intro.min.js"></script>
+<link rel="stylesheet" href="../css/introjs/introjs.min.css">
 
 <!-- Cookie handler-->
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script src="../js/cookiejs/js.cookie.min.js"></script>
 </head>
 
 <body>
@@ -108,6 +108,15 @@
       <div class="col-9 bg-light-90 phases">
         <div id="intro-container" class="row phase-active" phase="intro">
           <div class="card m-4 col-11">
+            <div class="pt-3 px-3">
+              <h4 class="card-title mb-3 text-left">Getting started</h4>
+              <div class="card-body">
+                <p class="block-text">Welcome to "Low-Code MESA" a software platform that enables the simple, initial creation of agent-based simulation models.</p>
+                <p class="block-text">This software is aimed at beginners. With the help of the software, simulation models can be created with graphical support and then exported into Python code based on the <a href="https://mesa.readthedocs.io/en/master/" target="_blank">MESA framework</a>. This can be used to carry out more in-depth implementations. During the creation process, some elements can also be extended with Python code.</p>
+              </div>
+            </div>
+          </div>
+          <div class="card m-4 mt-2 col-11">
             <div class="pt-3 px-3">
               <h4 class="card-title mb-3 text-left">Tool options</h4>
               <h5 class="card-title mb-3 text-left">Guided tour</h5>
@@ -185,6 +194,7 @@
                   Choose a space type
                 </button>
                 <ul class="dropdown-menu">
+                  <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="none">No space</a></li>
                   <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="single">Single grid</a></li>
                   <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="multi">Multi grid</a></li>
                   <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="hex">Hex grid</a></li>
@@ -192,9 +202,9 @@
                   <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="continuous">Continuous space</a></li>
                 </ul>
               </div>
-              <hr>
             </div>
-            <div class="card-body pt-0">
+            <div class="card-body pt-0" id="model-conditions-agent-placement">
+              <hr>
               <h5 class="card-title mb-3 text-left">Agent placement</h5>
               <p>Set the initial placement of the agents per type</p>
               <div class="model-space-agent-placement-container">
@@ -206,7 +216,7 @@
               <h5 class="card-title mb-3 text-left">Model description</h5>
             </div>
             <div class="card-body pt-0">
-              <textarea class="form-control textarea-non-resize" id="model-description-value" placeholder="Add a model description" ondblclick="main.editor.open(this, true)" rows="3"></textarea>
+              <textarea class="form-control bg-editor textarea-non-resize" id="model-description-value" placeholder="Add a model description" ondblclick="main.editor.open(this, true)" rows="3"></textarea>
             </div>
           </div>
         </div>
@@ -303,7 +313,7 @@
         </a>
       </li>
     </ul>
-    <textarea class="form-control bg-python-code textarea-non-resize agent-space-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom code" rows="1"></textarea>
+    <textarea class="form-control bg-editor textarea-non-resize agent-space-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom code" rows="1"></textarea>
   </div>
 
   <!--Agent type template -->
@@ -330,7 +340,7 @@
       <div class="card-body pt-0">
         <h5 class="card-title mb-3 text-center">Description</h5>
         <div class="agent-type-description-container">
-          <textarea class="form-control textarea-non-resize agent-description-value" placeholder="Add a description" ondblclick="main.editor.open(this, true)" rows="1"></textarea>
+          <textarea class="form-control bg-editor textarea-non-resize agent-description-value" placeholder="Add a description" ondblclick="main.editor.open(this, true)" rows="1"></textarea>
         </div>
       </div>
     </div>
@@ -368,7 +378,7 @@
           </li>
         </ul>
         <input type="text" class="form-control agent-property-name" placeholder="Name"/>
-        <textarea class="form-control bg-python-code textarea-non-resize agent-property-value" placeholder="Value" ondblclick="main.editor.open(this)" rows="1"></textarea>
+        <textarea class="form-control bg-editor textarea-non-resize agent-property-value" placeholder="Value" ondblclick="main.editor.open(this)" rows="1"></textarea>
       </div>
     </div>
     <div class="col-2">
@@ -403,13 +413,13 @@
     Python code
   </div>
   <div class="col-12">
-    <textarea class="form-control bg-python-code textarea-non-resize agent-process-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom python code" rows="1"></textarea>
+    <textarea class="form-control bg-editor textarea-non-resize agent-process-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom python code" rows="1"></textarea>
   </div>
   <div class="col-12 mt-1">
     Description
   </div>
   <div class="col-12">
-    <textarea class="form-control textarea-non-resize process-step-description" placeholder="Add a description" ondblclick="main.editor.open(this, true)" rows="1"></textarea>
+    <textarea class="form-control bg-editor textarea-non-resize process-step-description" placeholder="Add a description" ondblclick="main.editor.open(this, true)" rows="1"></textarea>
   </div>
 </div>
 <!--Agent type change process element-->
@@ -456,7 +466,7 @@ function sendContent(){
 }
 
 
-var connection = new WebSocket('ws://localhost:8888/server');
+var connection = new WebSocket('ws://localhost:7700/server');
 connection.onopen = function () {
   //Senden von Nachrichten bei Verbindungsaufbau
 };

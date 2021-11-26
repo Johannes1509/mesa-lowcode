@@ -94,13 +94,13 @@ class ModelProcessController extends AbstractPhase{
             {
                 "element": $("#model-process-agent-types-select-button")[0],
                 "title": 'Agent type selection',
-                "intro": '',
+                "intro": 'Select the agent type whose behaviour you want to model. The modelled sequence is executed in each model step during model execution.',
                 "position": "top"
             },
             {
                 "element": $("#process-add-step")[0],
                 "title": 'Process steps',
-                "intro": '',
+                "intro": 'Once an agent type has been selected, you can use this to add new process steps',
                 "position": "top"
             }
         ]
