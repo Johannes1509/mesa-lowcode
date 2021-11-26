@@ -1,13 +1,14 @@
 class MainController{
     constructor(){
+        this.introJs = introJs()
         this.intro = new IntroductionController(this)
         this.agents = new AgentTypesController(this)
         this.editor = new CodeEditor()
         this.conditions = new ModelConditionsController(this)
         this.process = new ModelProcessController(this)
         this.export = new CodeExportController(this)
-        this.mandatoryFieldsCheck = true
-        this.guidedTour = true
+        this.mandatoryFieldsCheck = this.__getMandatoryFieldCheckValueFromCookie()
+        this.guidedTour =this.__getGuidedTourCheckValueFromCookie()
 
         this.data = {
             "model":{
@@ -106,6 +107,42 @@ class MainController{
         return phase
     }
 
+    __getMandatoryFieldCheckValueFromCookie(){
+        let val = Cookies.get('mandatoryFieldCheck')
+
+        if(val == undefined){
+            Cookies.set("mandatoryFieldCheck", 1)
+            $("#mandatory-fields-requiered").prop("checked", 1)
+            return true
+        }else{
+            val = Boolean(parseInt(val))
+            if(val == false){
+                $("#mandatory-fields-requiered").prop("checked", false)
+            }else{
+                $("#mandatory-fields-requiered").prop("checked", true)
+            }
+            return val
+        }
+    }
+
+    __getGuidedTourCheckValueFromCookie(){
+        let val = Cookies.get('guidedTourChecked')
+
+        if(val == undefined){
+            Cookies.set("guidedTourChecked", 1)
+            $("#show-guided-tour").prop("checked", true)
+            return true
+        }else{
+            val = Boolean(parseInt(val))
+            if(val == false){
+                $("#show-guided-tour").prop("checked", false)
+            }else{
+                $("#show-guided-tour").prop("checked", true)
+            }
+            return val
+        }
+    }
+
     getAgentIndexById(agentId){
         for(let i = 0; i < main.data.agents.length; i++){
             if(parseInt(main.data.agents[i].id) == parseInt(agentId)){
@@ -117,10 +154,14 @@ class MainController{
 
     switchGuidedTourState(element){
         main.guidedTour = element.checked
+        let cookieVal = element.checked ? 1 : 0
+        Cookies.set("guidedTourChecked", cookieVal)
     }
 
     switchMandatoryFieldsCheck(element){
         main.mandatoryFieldsCheck = element.checked
+        let cookieVal = element.checked ? 1 : 0
+        Cookies.set("mandatoryFieldCheck", cookieVal)
     }
 
     

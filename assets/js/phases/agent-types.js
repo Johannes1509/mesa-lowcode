@@ -15,7 +15,40 @@ class AgentTypesController extends AbstractPhase{
     }
 
     startPhase(){
-
+        if(this.firstStart){
+            this.addAgentType()
+            this.tourSteps = [{
+                    "element": $(".agent-type[agentid='0']")[0],
+                    "title": 'Agent type',
+                    "intro": '',
+                    "position": "right"
+                },
+                {
+                    "element": $(".agent-type[agentid='0'] .agent-type-name")[0],
+                    "title": 'Agent type name',
+                    "intro": '',
+                    "position": "bottom"
+                },
+                {
+                    "element": $(".agent-type[agentid='0'] .agent-property .row")[0],
+                    "title": 'Agent type property',
+                    "intro": '',
+                    "position": "bottom"
+                },
+                {
+                    "element": $(".agent-type[agentid='0'] .agent-type-add-property")[0],
+                    "title": 'Add Agent type properties',
+                    "intro": '',
+                    "position": "bottom"
+                },
+                {
+                    "element": $("#add-agent-button").find("a")[0],
+                    "title": 'Add new Agent types',
+                    "intro": '',
+                    "position": "left"
+                }
+            ]
+        }
     }
 
     stopPhase(){

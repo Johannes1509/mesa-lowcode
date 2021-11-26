@@ -89,6 +89,21 @@ class ModelProcessController extends AbstractPhase{
                 }
             }
         ]
+
+        this.tourSteps = [
+            {
+                "element": $("#model-process-agent-types-select-button")[0],
+                "title": 'Agent type selection',
+                "intro": '',
+                "position": "top"
+            },
+            {
+                "element": $("#process-add-step")[0],
+                "title": 'Process steps',
+                "intro": '',
+                "position": "top"
+            }
+        ]
         
         this.canvas = new CustomDrawFlow($("#process-canvas")[0]);
         this.canvas.start()

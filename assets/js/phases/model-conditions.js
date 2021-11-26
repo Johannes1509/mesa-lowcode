@@ -15,6 +15,26 @@ class ModelConditionsController extends AbstractPhase{
                 }
             }
         ]
+
+        this.tourSteps  = [{
+                "element": $("#model-conditions-container button")[0],
+                "title": 'Model scheduler',
+                "intro": '',
+                "position": "right"
+            },
+            {
+                "element": $("#model-conditions-container button")[1],
+                "title": 'Model space type',
+                "intro": '',
+                "position": "right"
+            },
+            {
+                "element": $("#model-conditions-container div.card-body")[1],
+                "title": 'Agent placement',
+                "intro": '',
+                "position": "bottom"
+            }
+        ]
     }
 
     startPhase(dataModel){

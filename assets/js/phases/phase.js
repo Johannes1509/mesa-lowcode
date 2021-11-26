@@ -1,6 +1,7 @@
 class AbstractPhase{
     constructor(mainRef){
         this.mainRef = mainRef
+        this.tourSteps = []
         this.phaseMandatories = []
         this.init()
         if(this.phaseName == undefined){
@@ -8,6 +9,7 @@ class AbstractPhase{
         }
         this.currentConditionNumber = 0
         this.activeConditionChecker = undefined
+        this.firstStart = true
     }
 
     init(){
@@ -16,17 +18,26 @@ class AbstractPhase{
 
     beginPhase(dataModel){
         if(this.phaseMandatories.length == 0){
-            $("#mandatory-fields-container").addClass("d-none")
+            $("#mandatory-fields-container").addClass("invisible")
         }else{
-            $("#mandatory-fields-container").removeClass("d-none")
+            $("#mandatory-fields-container").removeClass("invisible")
             this.activeConditionChecker = setInterval(this.checkMandatoryConditions.bind(this), 2000)
         }
         this.startPhase(dataModel)
         this.__addMandatoryConditions()
+        
+        if(this.tourSteps.length > 0 && this.mainRef.guidedTour && this.firstStart){
+            this.mainRef.introJs = introJs()
+            this.mainRef.introJs.setOptions({"steps": this.tourSteps})
+            this.mainRef.introJs.start() 
+        }
+
+        this.firstStart = false
     }
 
     endPhase(dataModel){
         clearInterval(this.activeConditionChecker)
+        this.mainRef.introJs.exit(true)
         this.stopPhase(dataModel)
         this.currentConditionNumber = 0
         return this.getJSONData(dataModel)
