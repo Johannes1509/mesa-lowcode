@@ -51,6 +51,7 @@
       </a>
   
       <div class="text-end">
+        <button type="button" id="save-content" class="btn btn-primary mx-1" title="To the last step" onclick="main.sendModelDataToServer()"><i class="ri-save-3-line"></i> Save model</button>
         <button type="button" id="last-step-button" class="btn btn-primary mx-1" title="To the last step" onclick="main.changePhase(false)" disabled><i class="ri-arrow-left-line h4"></i></button>
         <button type="button" id="next-step-button" class="btn btn-primary" title="To the next step" onclick="main.changePhase(true)"><i class="ri-arrow-right-line h4"></i></button>
       </div>
@@ -452,23 +453,10 @@
 
 <script>
 
-var main = new MainController()
-
-function sendContent(){
-    var content = editor.getValue();
-
-    var sendObject = {
-        "type": "code",
-        "content": content
-    }
-
-    connection.send(JSON.stringify(sendObject))
-}
-
 
 var connection = new WebSocket('ws://localhost:7700/server');
 connection.onopen = function () {
-  //Senden von Nachrichten bei Verbindungsaufbau
+  main.__loadModelFromServer()
 };
 
 // Log errors
@@ -478,10 +466,18 @@ connection.onerror = function (error) {
 
 // Log messages from the server
 connection.onmessage = function (e) {
+  let serverData = JSON.parse(e.data)
+  if(serverData.type == "loadedmodel"){
+    main.__getModelDataFromServer(serverData.data)
+  }
   console.log('Server: ' + e.data);
 };
 
+window.onbeforeunload = function(){
+  main.sendModelDataToServer()
+}
 
 
+var main = new MainController()
 </script>
 

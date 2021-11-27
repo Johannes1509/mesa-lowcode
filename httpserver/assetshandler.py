@@ -3,9 +3,10 @@ import os
 
 class AssetsHandler(RequestHandler):
     @classmethod
-    def setAssetsPath(currentClass, path):
+    def setAssetsPath(currentClass, path, stripPath):
     
         currentClass.assetsPath = path
+        currentClass.stripPath = stripPath
 
     def prepare(self):
         requestType = os.path.splitext(self.request.uri)[1]
@@ -24,8 +25,10 @@ class AssetsHandler(RequestHandler):
 
     def get(self, *args):
         requestPath = self.request.uri[1:] if (self.request.uri[0] in (r"/", r"\\")) else self.request.uri
+        requestPath = requestPath[(1+len(AssetsHandler.stripPath)):] if requestPath.startswith(AssetsHandler.stripPath) else requestPath 
+
         destinationPath = os.path.join(AssetsHandler.assetsPath, requestPath)
-        requestPrefix, requestType = os.path.splitext(self.request.uri)
+        _, requestType = os.path.splitext(self.request.uri)
 
         if(requestType in (".css", ".js")):
             self.render(destinationPath)

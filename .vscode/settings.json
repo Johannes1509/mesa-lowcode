@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 500,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:mesa-lowcode}/assets/modelstorage/models.db",
+            "name": "ModelStorage"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

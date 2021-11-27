@@ -1,5 +1,6 @@
 class MainController{
     constructor(){
+        this.modelId = this.__getModelId()
         this.introJs = introJs()
         this.intro = new IntroductionController(this)
         this.agents = new AgentTypesController(this)
@@ -15,10 +16,12 @@ class MainController{
                 "scheduler": undefined,
                 "space": undefined,
                 "drawflow": undefined,
-                "description": undefined
+                "description": undefined,
+                "id": this.modelId
             },
             "agents": []
         }
+
         this.agent = {
             "id" : undefined,
             "name": undefined,
@@ -162,6 +165,50 @@ class MainController{
         main.mandatoryFieldsCheck = element.checked
         let cookieVal = element.checked ? 1 : 0
         Cookies.set("mandatoryFieldCheck", cookieVal)
+    }
+
+    sendModelDataToServer(generate){
+        let type = "save"
+        if(generate){
+            type = "generate"
+        }
+
+        let sendObject = {
+            "type": type,
+            "data": this.data
+        }
+        console.log("saved Link "+JSON.stringify(sendObject))
+        connection.send(JSON.stringify(sendObject))
+    }
+
+    __loadModelFromServer(){
+        let sendObject = {
+            "type": "load",
+            "data": {
+                "modelId": this.modelId
+            }
+        }
+        connection.send(JSON.stringify(sendObject))
+    }
+
+    __getModelDataFromServer(serverModelData){
+        if(serverModelData){
+            console.info("Loaded model data from server: "+serverModelData)
+            main.data = JSON.parse(serverModelData) 
+        }else{
+            console.info("No model data found on server.")
+        }
+    }
+
+    __getModelId(){
+        let path = window.location.pathname
+        
+        if(path[path.length-1] == "/"){
+            path = path.substr(0, path.length-1)
+        }
+
+        let modelId = path.substr(path.lastIndexOf("/")+1)
+        return parseInt(modelId)
     }
 
     

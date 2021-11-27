@@ -2,23 +2,35 @@ from tornado.websocket import WebSocketHandler
 import json, time
 import codegeneration.maingenerator as codegenerator
 class WebSocketConnector(WebSocketHandler):
-    def __init__(self, *args):
-        super().__init__(*args)
-        self.codeGenerator = codegenerator.CodeGenerator()
+    def initialize(self, refObj):
+        self.mainServer = refObj 
 
     def open(self):
         print("New client connected")
-        self.write_message("You are connected")
+        self.write_message('{"type":"welcome","data":"client connected successfully"}')
 
 
     def on_message(self, message):
         print("Message ist:", message)
 
         try:
+            initMessage = message
             message = json.loads(message)
 
-            if(message["type"] == "modelData"):
-                self.codeGenerator.generateModel(dict2obj(message["data"]))
+            if(message["type"] == "load"):
+
+                modelCode = self.mainServer.dbConnector.getModelCode(message["data"]["modelId"])
+                writeMessage = {
+                    "type": "loadedmodel",
+                    "data": modelCode
+                }
+                self.write_message(json.dumps(writeMessage))
+
+            if(message["type"] == "save"):
+                self.mainServer.dbConnector.saveModelCode(message["data"]["model"]["id"], json.dumps(message["data"]))
+
+            if(message["type"] == "generate"):
+                self.mainServer.codeGenerator.generateModel(dict2obj(message["data"]))
             
             
 
@@ -26,11 +38,14 @@ class WebSocketConnector(WebSocketHandler):
             raise e
 
         print("received message {}".format(message))
-        self.write_message("You said {}".format(message))
-        self.last = time.time()
+        writeMessage = {
+                    "type": "you_said",
+                    "data": message
+                }
+        self.write_message(json.dumps(writeMessage))
     
     def on_close(self):
-        print("connection is closed")
+        print("connection is closed", self.close_code, self.close_reason)
 
 class dict2obj(dict):
     def __init__(self, dict_):
