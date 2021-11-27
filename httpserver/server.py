@@ -27,6 +27,6 @@ class FrontendServer(Application):
 
         http_server = HTTPServer(self)
         http_server.listen(7700)
-        print("Listening on http://localhost:7700/index.html")
+        print("Listening on http://localhost:7700/")
         IOLoop.current().start()
 
