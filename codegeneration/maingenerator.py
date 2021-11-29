@@ -1,7 +1,7 @@
-from codegeneration.agentgenerator import AgentGenerator
-from codegeneration.modelgenerator import ModelGenerator
+from agentgenerator import AgentGenerator
+from modelgenerator import ModelGenerator
 from jinja2 import Environment, FileSystemLoader
-import os, shutil
+import os, shutil, json
 class CodeGenerator():
     def __init__(self):
         self.destinationFolder = "resultfiles"
@@ -16,12 +16,17 @@ class CodeGenerator():
         #generate python files
         files = []
 
+        #generate every agent
         for agent in data.agents:
             agentResult = self.agentGenerator.generate(agent)
 
+        #generate the model
+        
+        #generate the main file
+
+        #deliver generated content to frontend
+        
         return
-        for agent in data.agents:
-            agentResult = self.agentGenerator.generate(agent)
 
         result = self.modelGenerator.generate(data, agentResult)
         self.exportModelToFilesystem(result)
@@ -33,3 +38,36 @@ class CodeGenerator():
 
     def exportModelToFilesystem(self, result):
         pass
+
+
+#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
+#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
+#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
+#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
+#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
+#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
+#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
+#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
+
+##macht die klasse überhaupt was???????
+class dict2obj(dict):
+    def __init__(self, dict_):
+        super(dict2obj, self).__init__(dict_)
+        for key in self:
+            item = self[key]
+            if isinstance(item, list):
+                for idx, it in enumerate(item):
+                    if isinstance(it, dict):
+                        item[idx] = dict2obj(it)
+            elif isinstance(item, dict):
+                self[key] = dict2obj(item)
+
+    def __getattr__(self, key):
+        return self[key]
+
+codeGen = CodeGenerator()
+f = open('codegeneration/testfile.json')
+jsonInput = json.load(f)
+
+codeGen.generateModel(dict2obj(jsonInput))
+

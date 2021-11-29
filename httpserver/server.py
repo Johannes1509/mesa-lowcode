@@ -10,7 +10,7 @@ from httpserver.dbconnector import DBConnector
 from codegeneration.maingenerator import CodeGenerator
 import os
 
-class FrontendServer(Application):
+class AppServer(Application):
     def __init__(self):
         super().__init__([
         (r".*((.css)|(.js)|(.woff2)|(.woff)|(.ttf)|(.svg))", AssetsHandler),
@@ -23,7 +23,7 @@ class FrontendServer(Application):
         AssetsHandler.setAssetsPath(assetsPath, "model")
 
         self.dbConnector = DBConnector("assets/modelstorage/models.db")
-        self.codeGenerator = CodeGenerator
+        self.codeGenerator = CodeGenerator()
 
         http_server = HTTPServer(self)
         http_server.listen(7700)
