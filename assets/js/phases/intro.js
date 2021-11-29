@@ -1,4 +1,6 @@
 class IntroductionController extends AbstractPhase{
+    //Phase of the first page including an introduction text and tool options
+
     init(){
         this.phaseName = "intro"
         this.tourSteps  = [{
@@ -35,7 +37,6 @@ class IntroductionController extends AbstractPhase{
     }
 
     startPhase(){
-
     }
 
     stopPhase(){

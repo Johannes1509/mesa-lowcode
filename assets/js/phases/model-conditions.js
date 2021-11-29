@@ -1,6 +1,9 @@
 class ModelConditionsController extends AbstractPhase{
+    //Phase of determing model conditions e. g. space and scheduler of the model
     init(){
         this.phaseName = "conditions"
+
+        //these conditions are mandatory conditions for the completion of the model creation phase
         this.phaseMandatories = [
             {
                 "title": "The model scheduler type was chosen",
@@ -16,6 +19,7 @@ class ModelConditionsController extends AbstractPhase{
             }
         ]
 
+        //the steps are displayed within the guided tour
         this.tourSteps  = [{
                 "element": $("#model-conditions-container button")[0],
                 "title": 'Model scheduler',
@@ -39,14 +43,15 @@ class ModelConditionsController extends AbstractPhase{
 
     startPhase(dataModel){
         //init model scheduler
+        if(dataModel.model.scheduler != undefined){
+            this.changeScheduler($(".model-scheduler-type[scheduler='"+dataModel.model.scheduler+"']")[0])
+        }
+
         $('.scheduler-sort tbody').empty()
         let orderElement = $(".scheduler-order-element.template").clone()
         orderElement.removeClass("template")
 
-
-        //hier muss hinzufügen nach orderNum erfolgen, falls gesetzt
         let agentsInOrder = _.sortBy(JSON.parse(JSON.stringify(dataModel.agents)), "orderNum");
-
         for(var i = 0; i < agentsInOrder.length; i++){
             let currentOrderElement = orderElement.clone()
             currentOrderElement.children().next().text(agentsInOrder[i]["name"])
@@ -59,6 +64,10 @@ class ModelConditionsController extends AbstractPhase{
         });
 
         //init model space
+        if(dataModel.model.space != undefined){
+            this.changeSpace($(".model-space-type[space='"+dataModel.model.space+"']")[0])
+        }
+
         $('.model-space-agent-placement-container').empty()
         let spacePlacementElement = $(".model-space-agent-conf").clone()
         for(var i = 0; i < dataModel.agents.length; i++){
@@ -76,6 +85,11 @@ class ModelConditionsController extends AbstractPhase{
             if(dataModel.agents[i].placement != undefined && dataModel.agents[i].placement.type != undefined){
                 this.changeAgentPlacement($(".model-space-agent-conf[agent-type-id='"+dataModel.agents[i].id+"']").find("a[agent-placement='"+dataModel.agents[i].placement.type+"']")[0])
             }
+        }
+
+        //init model description
+        if(dataModel.model.description != undefined){
+            $("#model-description-value").val(dataModel.model.description)
         }
     }
 
@@ -120,6 +134,7 @@ class ModelConditionsController extends AbstractPhase{
             }
         }
 
+        //model description
         dataModel.model.description = $("#model-description-value").val()
 
         return dataModel

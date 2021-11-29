@@ -1,6 +1,8 @@
 class ModelProcessController extends AbstractPhase{
     init(){
         this.phaseName = "process"
+
+        //these conditions are mandatory conditions for the completion of the model creation phase
         this.phaseMandatories = [
             {
                 "title": "Für jeden Agententyp ist mindestens ein Prozessschritt definiert",
@@ -90,6 +92,7 @@ class ModelProcessController extends AbstractPhase{
             }
         ]
 
+        //the steps are displayed within the guided tour
         this.tourSteps = [
             {
                 "element": $("#model-process-agent-types-select-button")[0],
@@ -105,12 +108,15 @@ class ModelProcessController extends AbstractPhase{
             }
         ]
         
+        //init external componenten for process modelling
         this.canvas = new CustomDrawFlow($("#process-canvas")[0]);
         this.canvas.start()
         this.canvas.addModule("dummy")
         this.canvas.changeModule("dummy")
         this.currentAgentId = undefined
 
+
+        //added horizontal scrolling for model area
         $(function() {
             $("#process-canvas-container").mousewheel(function(event, delta) {
                this.scrollLeft -= (delta * 90);
@@ -122,6 +128,8 @@ class ModelProcessController extends AbstractPhase{
     }
 
     startPhase(dataModel){      
+
+        //add agents types to view selection
         for(var i = 0; i < dataModel.agents.length; i++){
             let curAgentId = dataModel.agents[i]["id"]
             let currentAgentTypeElement = $("#agent-type-element-process").clone()
@@ -150,7 +158,6 @@ class ModelProcessController extends AbstractPhase{
 
     stopPhase(){
         $('#model-process-agent-types-select').empty()
-        
     }
 
     getJSONData(dataModel){
@@ -171,6 +178,7 @@ class ModelProcessController extends AbstractPhase{
 
         this.canvas.clear()
         $('#model-process-agent-types-select-button').text("Select Agent type to model agent process")
+
         this.currentAgentId = undefined
         return dataModel
     }
@@ -237,7 +245,15 @@ class ModelProcessController extends AbstractPhase{
             $("#node-"+nodeId).find(".process-step-description").val(nodeData[nodeId]["description"])
         }
     }
-    
+
+    connectionCheck(){
+        this.canvas.on('connectionCreated', function(connectionData) {
+            if(main.process.__getNodeConnectionsCount(connectionData.input_id, "input") > 1 || main.process.__getNodeConnectionsCount(connectionData.output_id, "output") > 1){
+                main.process.canvas.removeSingleConnection(connectionData.output_id, connectionData.input_id, connectionData.output_class, connectionData.input_class)
+            }
+        })
+    }
+
     __getStepNumbers(resultData){
         if(!jQuery.isEmptyObject(resultData)){
             for(let nodeId in resultData){
@@ -261,14 +277,6 @@ class ModelProcessController extends AbstractPhase{
             }
         }
         return resultData
-    }
-
-    connectionCheck(){
-        this.canvas.on('connectionCreated', function(connectionData) {
-            if(main.process.__getNodeConnectionsCount(connectionData.input_id, "input") > 1 || main.process.__getNodeConnectionsCount(connectionData.output_id, "output") > 1){
-                main.process.canvas.removeSingleConnection(connectionData.output_id, connectionData.input_id, connectionData.output_class, connectionData.input_class)
-            }
-        })
     }
 
     __getNodeConnectionsCount(nodeId, checkType){

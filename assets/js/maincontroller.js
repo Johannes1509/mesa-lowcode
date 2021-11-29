@@ -1,5 +1,5 @@
 class MainController{
-    constructor(){
+    constructor(){        
         this.modelId = this.__getModelId()
         this.introJs = introJs()
         this.intro = new IntroductionController(this)
@@ -11,7 +11,7 @@ class MainController{
         this.mandatoryFieldsCheck = this.__getMandatoryFieldCheckValueFromCookie()
         this.guidedTour =this.__getGuidedTourCheckValueFromCookie()
 
-        this.data = {
+        this.dataRef = {
             "model":{
                 "scheduler": undefined,
                 "space": undefined,
@@ -86,6 +86,46 @@ class MainController{
        
     }
 
+    getAgentIndexById(agentId){
+        for(let i = 0; i < main.data.agents.length; i++){
+            if(parseInt(main.data.agents[i].id) == parseInt(agentId)){
+                return i
+            }
+        }
+        return undefined
+    }
+
+    switchGuidedTourState(element){
+        main.guidedTour = element.checked
+        let cookieVal = element.checked ? 1 : 0
+        Cookies.set("guidedTourChecked", cookieVal)
+    }
+
+    switchMandatoryFieldsCheck(element){
+        main.mandatoryFieldsCheck = element.checked
+        let cookieVal = element.checked ? 1 : 0
+        Cookies.set("mandatoryFieldCheck", cookieVal)
+    }
+
+    sendModelDataToServer(generate){
+        //save model data on server
+
+        console.debug("Sending model data to the server")
+        let type = "save"
+        if(generate){
+            type = "generate"
+        }
+
+        let sendObject = {
+            "type": type,
+            "data": this.__getPhaseByName(
+                $(".phases").find("div.phase-active").attr("phase"))
+                .getJSONData(JSON.parse(JSON.stringify(this.data))
+                )
+        }
+        connection.send(JSON.stringify(sendObject))
+    }
+
     __getPhaseByName(phaseName){
         let phase = undefined
         switch(phaseName){
@@ -111,6 +151,8 @@ class MainController{
     }
 
     __getMandatoryFieldCheckValueFromCookie(){
+        //loads the 'use mandatory fields check'-boolean from website cookie value
+
         let val = Cookies.get('mandatoryFieldCheck')
 
         if(val == undefined){
@@ -129,6 +171,8 @@ class MainController{
     }
 
     __getGuidedTourCheckValueFromCookie(){
+        //loads the 'use guided tour'-boolean from website cookie value
+
         let val = Cookies.get('guidedTourChecked')
 
         if(val == undefined){
@@ -146,42 +190,9 @@ class MainController{
         }
     }
 
-    getAgentIndexById(agentId){
-        for(let i = 0; i < main.data.agents.length; i++){
-            if(parseInt(main.data.agents[i].id) == parseInt(agentId)){
-                return i
-            }
-        }
-        return undefined
-    }
-
-    switchGuidedTourState(element){
-        main.guidedTour = element.checked
-        let cookieVal = element.checked ? 1 : 0
-        Cookies.set("guidedTourChecked", cookieVal)
-    }
-
-    switchMandatoryFieldsCheck(element){
-        main.mandatoryFieldsCheck = element.checked
-        let cookieVal = element.checked ? 1 : 0
-        Cookies.set("mandatoryFieldCheck", cookieVal)
-    }
-
-    sendModelDataToServer(generate){
-        let type = "save"
-        if(generate){
-            type = "generate"
-        }
-
-        let sendObject = {
-            "type": type,
-            "data": this.data
-        }
-        console.log("saved Link "+JSON.stringify(sendObject))
-        connection.send(JSON.stringify(sendObject))
-    }
-
     __loadModelFromServer(){
+        //Requesting the server saved model if it exists
+        console.debug("Request to load model data from server sent")
         let sendObject = {
             "type": "load",
             "data": {
@@ -197,10 +208,12 @@ class MainController{
             main.data = JSON.parse(serverModelData) 
         }else{
             console.info("No model data found on server.")
+            main.data = JSON.parse(JSON.stringify(this.dataRef))
         }
     }
 
     __getModelId(){
+        //returns the model id from the url
         let path = window.location.pathname
         
         if(path[path.length-1] == "/"){

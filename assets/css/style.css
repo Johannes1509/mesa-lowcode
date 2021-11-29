@@ -48,3 +48,9 @@
 .block-text{
     text-align: justify;
 }
+
+.open-editor-icon{
+    position: relative;
+    left: -20px;
+    cursor: pointer;
+}

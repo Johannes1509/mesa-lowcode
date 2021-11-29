@@ -1,4 +1,6 @@
 class AbstractPhase{
+    //Abstract class for phase overall methods
+
     constructor(mainRef){
         this.mainRef = mainRef
         this.tourSteps = []
@@ -10,44 +12,60 @@ class AbstractPhase{
         this.currentConditionNumber = 0
         this.activeConditionChecker = undefined
         this.firstStart = true
+
+        console.debug("Phase "+this.phaseName+" initialized.")
     }
 
     init(){
+        //abstract method, must be implemented by the child classes
         throw new Error("Not implemented")
     }
 
     beginPhase(dataModel){
+        //starts a new phase
         if(this.phaseMandatories.length == 0){
             $("#mandatory-fields-container").addClass("invisible")
         }else{
             $("#mandatory-fields-container").removeClass("invisible")
+            //adds a timer based check for the mandatory phase conditions
             this.activeConditionChecker = setInterval(this.checkMandatoryConditions.bind(this), 2000)
         }
         this.startPhase(dataModel)
         this.__addMandatoryConditions()
         
+        //triggering the guided tour if necessary
         if(this.tourSteps.length > 0 && this.mainRef.guidedTour && this.firstStart){
             this.mainRef.introJs = introJs()
             this.mainRef.introJs.setOptions({"steps": this.tourSteps})
             this.mainRef.introJs.start() 
         }
 
+        console.info("[Phase "+this.phaseName+"]:  Started Phase.")
         this.firstStart = false
     }
 
     endPhase(dataModel){
         clearInterval(this.activeConditionChecker)
-        this.mainRef.introJs.exit(true)
-        this.stopPhase(dataModel)
         this.currentConditionNumber = 0
-        return this.getJSONData(dataModel)
+
+        //closing the guided tour if necessary
+        this.mainRef.introJs.exit(true)
+        
+        let newData =  this.getJSONData(dataModel)
+        this.stopPhase(dataModel)
+        
+        console.info("[Phase "+this.phaseName+"]:  Ended Phase.")
+        
+        return newData
     }
 
     getJSONData(){
+        //abstract method, must be implemented by the child classes
         throw new Error("Not implemented")
     }
 
     checkMandatoryConditions(){
+        //checks the main and all defined mandatory conditions of the current phase
         let allMandatoryResults = []
         for(let i = 0; i < this.phaseMandatories.length; i++){
             let currentConditionResult = this.phaseMandatories[i].condition()
