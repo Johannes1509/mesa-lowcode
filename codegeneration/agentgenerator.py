@@ -1,6 +1,6 @@
 import jinja2
 import os, re
-
+from stringtools import StrTools 
 class AgentGenerator():
     def __init__(self, template, destinationFolder):
         self.template = template
@@ -15,28 +15,26 @@ class AgentGenerator():
     def preprocessAgent(self, agent):
 
         #remove special charaters
-        agent.name = "".join([char for char in agent.name if re.match("[a-zA-Z0-9]", char)])
+        agent.name = StrTools.getClassName(agent.name)
 
+        #init properties
         for prop in agent.properties:
-            prop.value = prop.value.strip()
+            #check if property is custom code
+            if StrTools.isCustomCode(prop.value):
+                #set custom code
+                prop.isCustomCode = True
+                prop.methodCallerStr = StrTools.getCustomCodeMethodName(prop.name, prop.value)
+                prop.value = StrTools.getCustomCodeMethodContent(prop)
+            else:
+                #get basic property value
+                prop.isCustomCode = False
+                prop.value = StrTools.getCastValue(prop.type, prop.value)
 
-            if("type" not in prop.keys()):
-                continue
+        #order number if necessary
+        #
+        #agent placement if necessary
+        #agent steps
 
-            try:
-                if(prop.type == "str"):
-                    prop.value = '"'+prop.value+'"'
-                if(prop.type == "float"):
-                    prop.value = float(prop.value)
-                if(prop.type == "int"):
-                    prop.value = int(prop.value)
-                if(prop.type == "bool"):
-                    if(prop.value.lower() in ("0", "false")):
-                        prop.value = False
-                    elif (prop.value.lower() in ("1", "true")):
-                        prop.value = True
-            except:
-                pass
-            
+
 
         return agent

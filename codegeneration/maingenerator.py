@@ -18,6 +18,7 @@ class CodeGenerator():
 
         #generate every agent
         for agent in data.agents:
+            print("Generating agent file for agent: ", agent.name)
             agentResult = self.agentGenerator.generate(agent)
 
         #generate the model
@@ -69,5 +70,5 @@ codeGen = CodeGenerator()
 f = open('codegeneration/testfile.json')
 jsonInput = json.load(f)
 
-codeGen.generateModel(dict2obj(jsonInput))
-
+codeGen.generateModel(dict2obj(jsonInput["data"]))
+print("Finished")
