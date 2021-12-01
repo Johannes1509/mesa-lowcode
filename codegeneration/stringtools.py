@@ -52,7 +52,7 @@ class StrTools():
         return inputVal
 
     @staticmethod
-    def getCustomCodeMethodName(propName: str, propValue: str):
+    def getCustomCodeMethodName(propName: str):
         return "get_"+StrTools.getVarName(propName)+"()"
     
     @staticmethod
@@ -69,7 +69,37 @@ class StrTools():
         
 
         return values
+
+    @staticmethod
+    def getSpaceInitMethodContent(inputVal: str):
+        methodContent = StrTools.removeMethodHeader(inputVal)
         
+        values = dict()
+        values["methodComment"] = r'"""'+"Initialization placement of agent in model space"+r'"""'
+        values["methodContent"] = methodContent
+
+        for k, v in values.items():
+            values[k] = codecs.decode(values[k], StrTools.stdRawEncoding)
+        
+        return values
+        
+    @staticmethod
+    def getStepMethodName(name: str):
+        return "do_"+StrTools.getVarName(name)+"()"
+
+    @staticmethod
+    def getStepMethodContent(step):
+        methodContent = StrTools.removeMethodHeader(step.stepcode)
+        
+        values = dict()
+        values["methodHeader"] = "def "+step.methodCallerStr[:-2]+"(self):"
+        values["methodComment"] = r'"""'+"Process step <"+step.stepname+">"+r'"""'
+        values["methodContent"] = methodContent
+
+        for k, v in values.items():
+            values[k] = codecs.decode(values[k], StrTools.stdRawEncoding)
+        
+        return values
     
     @staticmethod 
     def removeMethodHeader(inputVal: str):

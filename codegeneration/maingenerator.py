@@ -1,5 +1,6 @@
 from agentgenerator import AgentGenerator
 from modelgenerator import ModelGenerator
+from startupgenerator import StartupGenerator
 from jinja2 import Environment, FileSystemLoader
 import os, shutil, json
 class CodeGenerator():
@@ -9,7 +10,8 @@ class CodeGenerator():
         env = Environment(loader=templateFileLoader)
 
         self.agentGenerator = AgentGenerator(env.get_template('agent.py'), self.destinationFolder)
-        self.modelGenerator = ModelGenerator(env.get_template('model.py'))
+        self.modelGenerator = ModelGenerator(env.get_template('model.py'), self.destinationFolder)
+        self.startupGenerator = StartupGenerator(env.get_template('main.py'), self.destinationFolder)
 
     def generateModel(self, data):
         self.clearResultFolder()
@@ -19,12 +21,15 @@ class CodeGenerator():
         #generate every agent
         for agent in data.agents:
             print("Generating agent file for agent: ", agent.name)
-            agentResult = self.agentGenerator.generate(agent)
+            agentResult = self.agentGenerator.generate(agent, data.model)
 
         #generate the model
-        
-        #generate the main file
+        print("Generating the model file")
+        modelResult = self.modelGenerator.generate( data.model, data.agents)
 
+        #generate the main file
+        print("Generating the startup file")
+        mainResult = self.startupGenerator.generate(data.model, data.agents)
         #deliver generated content to frontend
         
         return
@@ -50,7 +55,7 @@ class CodeGenerator():
 #TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
 #TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
 
-##macht die klasse überhaupt was???????
+
 class dict2obj(dict):
     def __init__(self, dict_):
         super(dict2obj, self).__init__(dict_)

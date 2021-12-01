@@ -2,6 +2,7 @@
     "model": {
     "id": 27,
     "scheduler": "basic",
+    "name": "TestModel1",
     "space": "single",
     "description": "This is a model.",
     "drawflow": {
@@ -213,7 +214,8 @@
         ],
         "process": {},
         "placement": {
-        "type": "random"
+        "type": "custom",
+        "code": "def step():\n    for agent in agents[]:\n        return true"
         },
         "nodes": {
         "5": {

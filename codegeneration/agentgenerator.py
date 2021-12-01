@@ -1,15 +1,16 @@
 import jinja2
 import os, re
 from stringtools import StrTools 
+
 class AgentGenerator():
     def __init__(self, template, destinationFolder):
         self.template = template
         self.destinationFolder = destinationFolder
 
-    def generate(self, agent):
+    def generate(self, agent, model):
         agent = self.preprocessAgent(agent)
-        output = self.template.render(agentName=agent.name, properties=agent.properties)
-        with open(os.path.join(self.destinationFolder, "agents", agent.name+".py"), "w+") as f:
+        output = self.template.render(agent=agent, model=model)
+        with open(os.path.join(self.destinationFolder, "agents", agent.name+".py"), "w+", encoding='utf-8') as f:
             f.write(output)
 
     def preprocessAgent(self, agent):
@@ -23,18 +24,29 @@ class AgentGenerator():
             if StrTools.isCustomCode(prop.value):
                 #set custom code
                 prop.isCustomCode = True
-                prop.methodCallerStr = StrTools.getCustomCodeMethodName(prop.name, prop.value)
+                prop.methodCallerStr = StrTools.getCustomCodeMethodName(prop.name)
                 prop.value = StrTools.getCustomCodeMethodContent(prop)
             else:
                 #get basic property value
                 prop.isCustomCode = False
                 prop.value = StrTools.getCastValue(prop.type, prop.value)
 
-        #order number if necessary
-        #
         #agent placement if necessary
-        #agent steps
+        if agent.placement.type == "custom":
+            agentInitSpaceMethodData = StrTools.getSpaceInitMethodContent(agent.placement.code)
+            agent.placement.methodComment = agentInitSpaceMethodData["methodComment"]
+            agent.placement.methodContent = agentInitSpaceMethodData["methodContent"]
 
+        #agent steps
+        agent.steps = list(agent.nodes.values())
+        agent.steps = sorted(agent.steps, key=lambda step: step.stepnumber)
+
+        for step in agent.steps:
+            step.methodCallerStr = StrTools.getStepMethodName(step.stepname)
+            step.value = StrTools.getStepMethodContent(step)
+            pass
 
 
         return agent
+    
+    
