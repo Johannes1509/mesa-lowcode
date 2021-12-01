@@ -13,6 +13,7 @@ class MainController{
 
         this.dataRef = {
             "model":{
+                "name": undefined,
                 "scheduler": undefined,
                 "space": undefined,
                 "drawflow": undefined,

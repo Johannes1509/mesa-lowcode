@@ -159,6 +159,21 @@
         </div>
         <div id="model-conditions-container" class="d-none row" phase="conditions">
           <div class="card m-4 col-11">
+            <div class="pt-3 mb-3 px-3">
+              <h5 class="card-title mb-3 text-left">Model name</h5>
+              <input type="text" class="form-control model-name" id="model-name" placeholder="Name of the model">
+            </div>
+          </div>
+          <div class="card m-4 mt-0 col-11">
+            <div class="pt-3 px-3">
+              <h5 class="card-title mb-3 text-left">Model description</h5>
+            </div>
+            <div class="card-body pt-0 input-group">
+              <textarea class="form-control bg-editor textarea-non-resize" id="model-description-value" placeholder="Add a model description" ondblclick="main.editor.open(this, true)" rows="3"></textarea>
+              <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev(), true)"></i>
+            </div>
+          </div>
+          <div class="card m-4 mt-0 col-11">
             <div class="pt-3 px-3">
               <h5 class="card-title mb-3 text-left">Model scheduler</h5>
               <div class="dropdown">
@@ -212,15 +227,6 @@
               <p>Set the initial placement of the agents per type</p>
               <div class="model-space-agent-placement-container">
               </div>
-            </div>
-          </div>
-          <div class="card m-4 mt-0 col-11">
-            <div class="pt-3 px-3">
-              <h5 class="card-title mb-3 text-left">Model description</h5>
-            </div>
-            <div class="card-body pt-0 input-group">
-              <textarea class="form-control bg-editor textarea-non-resize" id="model-description-value" placeholder="Add a model description" ondblclick="main.editor.open(this, true)" rows="3"></textarea>
-              <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev(), true)"></i>
             </div>
           </div>
         </div>

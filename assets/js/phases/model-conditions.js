@@ -42,6 +42,17 @@ class ModelConditionsController extends AbstractPhase{
     }
 
     startPhase(dataModel){
+
+        //init model name
+        if(dataModel.model.name != undefined){
+            $("#model-name").val(dataModel.model.name)
+        }
+
+        //init model description
+        if(dataModel.model.description != undefined){
+            $("#model-description-value").val(dataModel.model.description)
+        }
+
         //init model scheduler
         if(dataModel.model.scheduler != undefined){
             this.changeScheduler($(".model-scheduler-type[scheduler='"+dataModel.model.scheduler+"']")[0])
@@ -86,11 +97,6 @@ class ModelConditionsController extends AbstractPhase{
                 this.changeAgentPlacement($(".model-space-agent-conf[agent-type-id='"+dataModel.agents[i].id+"']").find("a[agent-placement='"+dataModel.agents[i].placement.type+"']")[0])
             }
         }
-
-        //init model description
-        if(dataModel.model.description != undefined){
-            $("#model-description-value").val(dataModel.model.description)
-        }
     }
 
     stopPhase(){
@@ -98,7 +104,12 @@ class ModelConditionsController extends AbstractPhase{
         $('.scheduler-sort tbody').sortable('destroy')
     }
 
-    getJSONData(dataModel){        
+    getJSONData(dataModel){      
+        //model name 
+        dataModel.model.name = $("#model-name").val()
+        //model description
+        dataModel.model.description = $("#model-description-value").val()
+
         //model scheduler
         let schedulerType = $(".model-scheduler-type.active").attr("scheduler")
         dataModel.model.scheduler = schedulerType
@@ -133,9 +144,6 @@ class ModelConditionsController extends AbstractPhase{
                 "code": currentAgentPlacementCode
             }
         }
-
-        //model description
-        dataModel.model.description = $("#model-description-value").val()
 
         return dataModel
     }

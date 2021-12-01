@@ -1,9 +1,9 @@
 from tornado.websocket import WebSocketHandler
 import json, time
-import codegeneration.maingenerator as codegenerator
+
 class WebSocketConnector(WebSocketHandler):
     def initialize(self, refObj):
-        self.mainServer = refObj 
+        self.mainServer = refObj #
 
     def open(self):
         print("New client connected")
