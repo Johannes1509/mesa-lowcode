@@ -1,453 +1,459 @@
-{"data": {
-    "model": {
-    "id": 27,
-    "scheduler": "basic",
-    "name": "TestModel1",
-    "space": "single",
-    "description": "This is a model.",
-    "drawflow": {
-        "drawflow": {
-        "Home": {
-            "data": {}
+{
+    "data":{
+        "model": {
+            "id": 45,
+            "name": "Covid Model 2021",
+            "description": "this is a test model for an Corona-Check",
+            "scheduler": "basic",
+            "space": "single",
+            "gridWidth": "100",
+            "gridHeight": "100",
+            "stepsToTake": "125",
+            "drawflow": {
+                "drawflow": {
+                    "Home": {
+                        "data": {}
+                    },
+                    "dummy": {
+                        "data": {}
+                    },
+                    "agent-0": {
+                        "data": {
+                            "1": {
+                                "id": 1,
+                                "name": "start",
+                                "data": {},
+                                "class": "start-element",
+                                "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-play-fill\"></i></td><td class=\"fw-bold\">Start</td></tr></tbody>\n</table>\n",
+                                "typenode": false,
+                                "inputs": {},
+                                "outputs": {
+                                    "output_1": {
+                                        "connections": [
+                                            {
+                                                "node": "5",
+                                                "output": "input_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "pos_x": 57,
+                                "pos_y": 312
+                            },
+                            "2": {
+                                "id": 2,
+                                "name": "end",
+                                "data": {},
+                                "class": "start-element",
+                                "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-stop-fill\"></i></td><td class=\"fw-bold\">End</td></tr></tbody>\n</table>\n",
+                                "typenode": false,
+                                "inputs": {
+                                    "input_1": {
+                                        "connections": [
+                                            {
+                                                "node": "6",
+                                                "input": "output_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "outputs": {},
+                                "pos_x": 745,
+                                "pos_y": 319
+                            },
+                            "5": {
+                                "id": 5,
+                                "name": "block",
+                                "data": {},
+                                "class": "start-element",
+                                "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
+                                "typenode": false,
+                                "inputs": {
+                                    "input_1": {
+                                        "connections": [
+                                            {
+                                                "node": "1",
+                                                "input": "output_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "outputs": {
+                                    "output_1": {
+                                        "connections": [
+                                            {
+                                                "node": "6",
+                                                "output": "input_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "pos_x": 296,
+                                "pos_y": 79
+                            },
+                            "6": {
+                                "id": 6,
+                                "name": "block",
+                                "data": {},
+                                "class": "start-element",
+                                "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
+                                "typenode": false,
+                                "inputs": {
+                                    "input_1": {
+                                        "connections": [
+                                            {
+                                                "node": "5",
+                                                "input": "output_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "outputs": {
+                                    "output_1": {
+                                        "connections": [
+                                            {
+                                                "node": "2",
+                                                "output": "input_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "pos_x": 300,
+                                "pos_y": 300
+                            }
+                        }
+                    },
+                    "agent-1": {
+                        "data": {
+                            "3": {
+                                "id": 3,
+                                "name": "start",
+                                "data": {},
+                                "class": "start-element",
+                                "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-play-fill\"></i></td><td class=\"fw-bold\">Start</td></tr></tbody>\n</table>\n",
+                                "typenode": false,
+                                "inputs": {},
+                                "outputs": {
+                                    "output_1": {
+                                        "connections": [
+                                            {
+                                                "node": "7",
+                                                "output": "input_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "pos_x": 79,
+                                "pos_y": 196
+                            },
+                            "4": {
+                                "id": 4,
+                                "name": "end",
+                                "data": {},
+                                "class": "start-element",
+                                "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-stop-fill\"></i></td><td class=\"fw-bold\">End</td></tr></tbody>\n</table>\n",
+                                "typenode": false,
+                                "inputs": {
+                                    "input_1": {
+                                        "connections": [
+                                            {
+                                                "node": "7",
+                                                "input": "output_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "outputs": {},
+                                "pos_x": 714,
+                                "pos_y": 264
+                            },
+                            "7": {
+                                "id": 7,
+                                "name": "block",
+                                "data": {},
+                                "class": "start-element",
+                                "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
+                                "typenode": false,
+                                "inputs": {
+                                    "input_1": {
+                                        "connections": [
+                                            {
+                                                "node": "3",
+                                                "input": "output_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "outputs": {
+                                    "output_1": {
+                                        "connections": [
+                                            {
+                                                "node": "4",
+                                                "output": "input_1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "pos_x": 300,
+                                "pos_y": 302
+                            }
+                        }
+                    }
+                }
+            }
         },
-        "dummy": {
-            "data": {}
-        },
-        "agent-0": {
-            "data": {
-            "1": {
+        "agents": [
+            {
+                "properties": [
+                    {
+                        "type": "float",
+                        "name": "mobility",
+                        "value": "0,4"
+                    },
+                    {
+                        "type": "int",
+                        "name": "income",
+                        "value": "400"
+                    }
+                ],
+                "process": {},
+                "placement": {
+                    "type": "random"
+                },
+                "nodes": {
+                    "5": {
+                        "stepname": "pruefeUmgebung",
+                        "stepcode": "def getAgents():\n    return self.model.agents.inrange()",
+                        "description": "This a first test step",
+                        "stepnumber": 0
+                    },
+                    "6": {
+                        "stepname": "steckeAnWennMoeglich",
+                        "stepcode": "return 4",
+                        "description": "This a second test step",
+                        "stepnumber": 1
+                    }
+                },
+                "id": 0,
+                "name": "Person",
+                "description": "Test person type",
+                "orderNum": 1,
+                "initNumber": "100",
+                "drawflow-data": {
+                    "data": {
+                        "1": {
+                            "id": 1,
+                            "name": "start",
+                            "data": {},
+                            "class": "start-element",
+                            "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-play-fill\"></i></td><td class=\"fw-bold\">Start</td></tr></tbody>\n</table>\n",
+                            "typenode": false,
+                            "inputs": {},
+                            "outputs": {
+                                "output_1": {
+                                    "connections": [
+                                        {
+                                            "node": "5",
+                                            "output": "input_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "pos_x": 57,
+                            "pos_y": 312
+                        },
+                        "2": {
+                            "id": 2,
+                            "name": "end",
+                            "data": {},
+                            "class": "start-element",
+                            "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-stop-fill\"></i></td><td class=\"fw-bold\">End</td></tr></tbody>\n</table>\n",
+                            "typenode": false,
+                            "inputs": {
+                                "input_1": {
+                                    "connections": [
+                                        {
+                                            "node": "6",
+                                            "input": "output_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "outputs": {},
+                            "pos_x": 745,
+                            "pos_y": 319
+                        },
+                        "5": {
+                            "id": 5,
+                            "name": "block",
+                            "data": {},
+                            "class": "start-element",
+                            "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
+                            "typenode": false,
+                            "inputs": {
+                                "input_1": {
+                                    "connections": [
+                                        {
+                                            "node": "1",
+                                            "input": "output_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "outputs": {
+                                "output_1": {
+                                    "connections": [
+                                        {
+                                            "node": "6",
+                                            "output": "input_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "pos_x": 296,
+                            "pos_y": 79
+                        },
+                        "6": {
+                            "id": 6,
+                            "name": "block",
+                            "data": {},
+                            "class": "start-element",
+                            "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
+                            "typenode": false,
+                            "inputs": {
+                                "input_1": {
+                                    "connections": [
+                                        {
+                                            "node": "5",
+                                            "input": "output_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "outputs": {
+                                "output_1": {
+                                    "connections": [
+                                        {
+                                            "node": "2",
+                                            "output": "input_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "pos_x": 300,
+                            "pos_y": 300
+                        }
+                    }
+                }
+            },
+            {
+                "properties": [
+                    {
+                        "type": "int",
+                        "name": "income",
+                        "value": "3000000"
+                    },
+                    {
+                        "type": "bool",
+                        "name": "powerless",
+                        "value": "return True"
+                    }
+                ],
+                "process": {},
+                "placement": {
+                    "type": "custom",
+                    "code": "def getPosition:\n    return 5"
+                },
+                "nodes": {
+                    "7": {
+                        "stepname": "TestStep1",
+                        "stepcode": "",
+                        "description": "No desc eingefallen",
+                        "stepnumber": 0
+                    }
+                },
                 "id": 1,
-                "name": "start",
-                "data": {},
-                "class": "start-element",
-                "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-play-fill\"></i></td><td class=\"fw-bold\">Start</td></tr></tbody>\n</table>\n",
-                "typenode": false,
-                "inputs": {},
-                "outputs": {
-                "output_1": {
-                    "connections": [
-                    {
-                        "node": "6",
-                        "output": "input_1"
+                "name": "Government",
+                "description": "Test regierierung",
+                "orderNum": 0,
+                "initNumber": "10",
+                "drawflow-data": {
+                    "data": {
+                        "3": {
+                            "id": 3,
+                            "name": "start",
+                            "data": {},
+                            "class": "start-element",
+                            "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-play-fill\"></i></td><td class=\"fw-bold\">Start</td></tr></tbody>\n</table>\n",
+                            "typenode": false,
+                            "inputs": {},
+                            "outputs": {
+                                "output_1": {
+                                    "connections": [
+                                        {
+                                            "node": "7",
+                                            "output": "input_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "pos_x": 79,
+                            "pos_y": 196
+                        },
+                        "4": {
+                            "id": 4,
+                            "name": "end",
+                            "data": {},
+                            "class": "start-element",
+                            "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-stop-fill\"></i></td><td class=\"fw-bold\">End</td></tr></tbody>\n</table>\n",
+                            "typenode": false,
+                            "inputs": {
+                                "input_1": {
+                                    "connections": [
+                                        {
+                                            "node": "7",
+                                            "input": "output_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "outputs": {},
+                            "pos_x": 714,
+                            "pos_y": 264
+                        },
+                        "7": {
+                            "id": 7,
+                            "name": "block",
+                            "data": {},
+                            "class": "start-element",
+                            "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
+                            "typenode": false,
+                            "inputs": {
+                                "input_1": {
+                                    "connections": [
+                                        {
+                                            "node": "3",
+                                            "input": "output_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "outputs": {
+                                "output_1": {
+                                    "connections": [
+                                        {
+                                            "node": "4",
+                                            "output": "input_1"
+                                        }
+                                    ]
+                                }
+                            },
+                            "pos_x": 300,
+                            "pos_y": 302
+                        }
                     }
-                    ]
                 }
-                },
-                "pos_x": 13,
-                "pos_y": 122
-            },
-            "2": {
-                "id": 2,
-                "name": "end",
-                "data": {},
-                "class": "start-element",
-                "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-stop-fill\"></i></td><td class=\"fw-bold\">End</td></tr></tbody>\n</table>\n",
-                "typenode": false,
-                "inputs": {
-                "input_1": {
-                    "connections": [
-                    {
-                        "node": "5",
-                        "input": "output_1"
-                    }
-                    ]
-                }
-                },
-                "outputs": {},
-                "pos_x": 621,
-                "pos_y": 426
-            },
-            "5": {
-                "id": 5,
-                "name": "block",
-                "data": {},
-                "class": "start-element",
-                "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
-                "typenode": false,
-                "inputs": {
-                "input_1": {
-                    "connections": [
-                    {
-                        "node": "6",
-                        "input": "output_1"
-                    }
-                    ]
-                }
-                },
-                "outputs": {
-                "output_1": {
-                    "connections": [
-                    {
-                        "node": "2",
-                        "output": "input_1"
-                    }
-                    ]
-                }
-                },
-                "pos_x": 300,
-                "pos_y": 300
-            },
-            "6": {
-                "id": 6,
-                "name": "block",
-                "data": {},
-                "class": "start-element",
-                "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
-                "typenode": false,
-                "inputs": {
-                "input_1": {
-                    "connections": [
-                    {
-                        "node": "1",
-                        "input": "output_1"
-                    }
-                    ]
-                }
-                },
-                "outputs": {
-                "output_1": {
-                    "connections": [
-                    {
-                        "node": "5",
-                        "output": "input_1"
-                    }
-                    ]
-                }
-                },
-                "pos_x": 245,
-                "pos_y": 50
             }
-            }
-        },
-        "agent-1": {
-            "data": {
-            "3": {
-                "id": 3,
-                "name": "start",
-                "data": {},
-                "class": "start-element",
-                "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-play-fill\"></i></td><td class=\"fw-bold\">Start</td></tr></tbody>\n</table>\n",
-                "typenode": false,
-                "inputs": {},
-                "outputs": {
-                "output_1": {
-                    "connections": [
-                    {
-                        "node": "7",
-                        "output": "input_1"
-                    }
-                    ]
-                }
-                },
-                "pos_x": 106,
-                "pos_y": 153
-            },
-            "4": {
-                "id": 4,
-                "name": "end",
-                "data": {},
-                "class": "start-element",
-                "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-stop-fill\"></i></td><td class=\"fw-bold\">End</td></tr></tbody>\n</table>\n",
-                "typenode": false,
-                "inputs": {
-                "input_1": {
-                    "connections": [
-                    {
-                        "node": "7",
-                        "input": "output_1"
-                    }
-                    ]
-                }
-                },
-                "outputs": {},
-                "pos_x": 699,
-                "pos_y": 383
-            },
-            "7": {
-                "id": 7,
-                "name": "block",
-                "data": {},
-                "class": "start-element",
-                "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
-                "typenode": false,
-                "inputs": {
-                "input_1": {
-                    "connections": [
-                    {
-                        "node": "3",
-                        "input": "output_1"
-                    }
-                    ]
-                }
-                },
-                "outputs": {
-                "output_1": {
-                    "connections": [
-                    {
-                        "node": "4",
-                        "output": "input_1"
-                    }
-                    ]
-                }
-                },
-                "pos_x": 300,
-                "pos_y": 300
-            }
-            }
-        }
-        }
-    }
-    },
-    "agents": [
-    {
-        "properties": [
-        {
-            "type": "int",
-            "name": "mobility",
-            "value": "def getMobility():\n    return random.randint(3,6)"
-        },
-        {
-            "type": "bool",
-            "name": "infect",
-            "value": "false"
-        }
-        ],
-        "process": {},
-        "placement": {
-        "type": "custom",
-        "code": "def step():\n    for agent in agents[]:\n        return true"
-        },
-        "nodes": {
-        "5": {
-            "stepname": "Stecke an wenn in Reichweite",
-            "stepcode": "def step():\n    for agent in agents[]:\n        return true",
-            "description": "Steckt andere an wenn notwendig",
-            "stepnumber": 1
-        },
-        "6": {
-            "stepname": "Suche andere Personen",
-            "stepcode": "",
-            "description": "Suche andere in Reichweite",
-            "stepnumber": 0
-        }
-        },
-        "id": 0,
-        "name": "Person",
-        "description": "This ist a person job.",
-        "orderNum": 1,
-        "drawflow-data": {
-        "data": {
-            "1": {
-            "id": 1,
-            "name": "start",
-            "data": {},
-            "class": "start-element",
-            "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-play-fill\"></i></td><td class=\"fw-bold\">Start</td></tr></tbody>\n</table>\n",
-            "typenode": false,
-            "inputs": {},
-            "outputs": {
-                "output_1": {
-                "connections": [
-                    {
-                    "node": "6",
-                    "output": "input_1"
-                    }
-                ]
-                }
-            },
-            "pos_x": 13,
-            "pos_y": 122
-            },
-            "2": {
-            "id": 2,
-            "name": "end",
-            "data": {},
-            "class": "start-element",
-            "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-stop-fill\"></i></td><td class=\"fw-bold\">End</td></tr></tbody>\n</table>\n",
-            "typenode": false,
-            "inputs": {
-                "input_1": {
-                "connections": [
-                    {
-                    "node": "5",
-                    "input": "output_1"
-                    }
-                ]
-                }
-            },
-            "outputs": {},
-            "pos_x": 621,
-            "pos_y": 426
-            },
-            "5": {
-            "id": 5,
-            "name": "block",
-            "data": {},
-            "class": "start-element",
-            "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
-            "typenode": false,
-            "inputs": {
-                "input_1": {
-                "connections": [
-                    {
-                    "node": "6",
-                    "input": "output_1"
-                    }
-                ]
-                }
-            },
-            "outputs": {
-                "output_1": {
-                "connections": [
-                    {
-                    "node": "2",
-                    "output": "input_1"
-                    }
-                ]
-                }
-            },
-            "pos_x": 300,
-            "pos_y": 300
-            },
-            "6": {
-            "id": 6,
-            "name": "block",
-            "data": {},
-            "class": "start-element",
-            "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
-            "typenode": false,
-            "inputs": {
-                "input_1": {
-                "connections": [
-                    {
-                    "node": "1",
-                    "input": "output_1"
-                    }
-                ]
-                }
-            },
-            "outputs": {
-                "output_1": {
-                "connections": [
-                    {
-                    "node": "5",
-                    "output": "input_1"
-                    }
-                ]
-                }
-            },
-            "pos_x": 245,
-            "pos_y": 50
-            }
-        }
-        }
-    },
-    {
-        "properties": [
-        {
-            "type": "str",
-            "name": "name",
-            "value": "Test"
-        },
-        {
-            "type": "float",
-            "name": "geld",
-            "value": "return random.randint(34,345634)"
-        }
-        ],
-        "process": {},
-        "placement": {
-        "type": "random"
-        },
-        "nodes": {
-        "7": {
-            "stepname": "Maßnahmen umsetzen",
-            "stepcode": "def step():\n    doSth()",
-            "description": "",
-            "stepnumber": 0
-        }
-        },
-        "id": 1,
-        "name": "Regierung",
-        "description": "Test#2",
-        "orderNum": 0,
-        "drawflow-data": {
-        "data": {
-            "3": {
-            "id": 3,
-            "name": "start",
-            "data": {},
-            "class": "start-element",
-            "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-play-fill\"></i></td><td class=\"fw-bold\">Start</td></tr></tbody>\n</table>\n",
-            "typenode": false,
-            "inputs": {},
-            "outputs": {
-                "output_1": {
-                "connections": [
-                    {
-                    "node": "7",
-                    "output": "input_1"
-                    }
-                ]
-                }
-            },
-            "pos_x": 106,
-            "pos_y": 153
-            },
-            "4": {
-            "id": 4,
-            "name": "end",
-            "data": {},
-            "class": "start-element",
-            "html": "\n<table>\n<tbody><tr><td style=\"min-width: 40px;\"><i class=\"ri-stop-fill\"></i></td><td class=\"fw-bold\">End</td></tr></tbody>\n</table>\n",
-            "typenode": false,
-            "inputs": {
-                "input_1": {
-                "connections": [
-                    {
-                    "node": "7",
-                    "input": "output_1"
-                    }
-                ]
-                }
-            },
-            "outputs": {},
-            "pos_x": 699,
-            "pos_y": 383
-            },
-            "7": {
-            "id": 7,
-            "name": "block",
-            "data": {},
-            "class": "start-element",
-            "html": "\n<table>\n<tbody>\n<tr>\n<td style=\"min-width: 40px;\"><i class=\"ri-settings-3-fill\"></i></td>\n<td><input class=\"fw-bold agent-process-custom-name\" style=\"border: 1px #000 solid\" type=\"text\" placeholder=\"Process step name\"></td>\n</tr>\n</tbody>\n</table>\n<div class=\"col-12 mt-3\">\nPython code\n</div>\n<div class=\"col-12\">\n<textarea class=\"form-control bg-editor textarea-non-resize agent-process-custom-code\" ondblclick=\"main.editor.open(this)\" placeholder=\"Custom python code\" rows=\"1\"></textarea>\n</div>\n<div class=\"col-12 mt-1\">\nDescription\n</div>\n<div class=\"col-12 input-group\">\n<textarea class=\"form-control bg-editor textarea-non-resize process-step-description\" placeholder=\"Add a description\" ondblclick=\"main.editor.open(this, true)\" rows=\"1\"></textarea>\n<i class=\"ri-picture-in-picture-exit-line open-editor-icon\" title=\"Click to open fullsize editor\" onclick=\"main.editor.open($(this).prev(), true)\"></i>\n</div>\n",
-            "typenode": false,
-            "inputs": {
-                "input_1": {
-                "connections": [
-                    {
-                    "node": "3",
-                    "input": "output_1"
-                    }
-                ]
-                }
-            },
-            "outputs": {
-                "output_1": {
-                "connections": [
-                    {
-                    "node": "4",
-                    "output": "input_1"
-                    }
-                ]
-                }
-            },
-            "pos_x": 300,
-            "pos_y": 300
-            }
-        }
-        }
-    }
-    ]
+        ]
     }
 }

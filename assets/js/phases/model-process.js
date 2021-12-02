@@ -162,6 +162,9 @@ class ModelProcessController extends AbstractPhase{
 
     stopPhase(){
         $('#model-process-agent-types-select').empty()
+        this.canvas.clear()
+        $('#model-process-agent-types-select-button').text("Select Agent type to model agent process")
+        this.currentAgentId = undefined
     }
 
     getJSONData(dataModel){
@@ -180,10 +183,6 @@ class ModelProcessController extends AbstractPhase{
             dataModel.agents[main.getAgentIndexById(this.currentAgentId)].nodes = this.getCurrentNodeData()
         }
 
-        this.canvas.clear()
-        $('#model-process-agent-types-select-button').text("Select Agent type to model agent process")
-
-        this.currentAgentId = undefined
         return dataModel
     }
 
