@@ -2,7 +2,7 @@ from codegeneration.agentgenerator import AgentGenerator
 from codegeneration.modelgenerator import ModelGenerator
 from codegeneration.startupgenerator import StartupGenerator
 from jinja2 import Environment, FileSystemLoader
-import os, shutil, json
+import os, shutil, json, pathlib
 class CodeGenerator():
     def __init__(self):
         self.mainDestinationFolder = "resultfiles"
@@ -14,7 +14,9 @@ class CodeGenerator():
         self.startupGenerator = StartupGenerator(env.get_template('main.py'))
 
     def generateModel(self, data, modelId):
-        destinationFolder = os.path.join(os.path.sep, self.mainDestinationFolder, str(modelId))
+        destinationFolder = os.path.join(self.mainDestinationFolder, str(modelId))
+        pathlib.Path(destinationFolder).mkdir(parents=True, exist_ok=True)    
+        
         self.clearResultFolder(destinationFolder)
         #generate python files
         files = []
@@ -49,6 +51,7 @@ class CodeGenerator():
 
 
     def clearResultFolder(self, destinationFolder):
+
         shutil.rmtree(destinationFolder)
         os.mkdir(destinationFolder)
         os.mkdir(os.path.join(destinationFolder, "agents"))
