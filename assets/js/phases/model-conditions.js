@@ -16,7 +16,20 @@ class ModelConditionsController extends AbstractPhase{
                 "condition": function(){
                     return ($(".model-space-type.active").attr("space") != undefined)
                 }
-            }
+            },
+            {
+                "title": "If a grid space type is selected, the grid sizes are set",
+                "condition": function(){
+                    if($(".model-space-type.active").attr("space") != undefined && $(".model-space-type.active").attr("space") != "none"){
+                        if($("#model-grid-size-height").val() != "" && $("#model-grid-size-width").val() != ""){
+                            return true
+                        }else{
+                            return false
+                        }
+                    }
+                    return true
+                }
+            },
         ]
 
         //the steps are displayed within the guided tour
@@ -79,6 +92,12 @@ class ModelConditionsController extends AbstractPhase{
             this.changeSpace($(".model-space-type[space='"+dataModel.model.space+"']")[0])
         }
 
+        $("#model-grid-size-width").val(dataModel.model.gridWidth)
+        $("#model-grid-size-height").val(dataModel.model.gridHeight)
+
+
+        this.__changeSpaceAdditionalItemsVisisbilty(dataModel.model.space)
+
         $('.model-space-agent-placement-container').empty()
         let spacePlacementElement = $(".model-space-agent-conf").clone()
         for(var i = 0; i < dataModel.agents.length; i++){
@@ -97,6 +116,22 @@ class ModelConditionsController extends AbstractPhase{
                 this.changeAgentPlacement($(".model-space-agent-conf[agent-type-id='"+dataModel.agents[i].id+"']").find("a[agent-placement='"+dataModel.agents[i].placement.type+"']")[0])
             }
         }
+
+        //init model number of agents
+        $('.model-init-number-of-agents').empty()
+        let agentNumElement = $(".model-number-of-agent-conf").clone()
+        for(var i = 0; i < dataModel.agents.length; i++){
+            let newAgentNumConf = agentNumElement.clone()
+            newAgentNumConf.removeClass("template")
+            newAgentNumConf.find(".agent-type-name").text(dataModel.agents[i]["name"])
+            newAgentNumConf.attr("agent-type-id", dataModel.agents[i]["id"])
+            newAgentNumConf.find(".agent-type-initnumber-input").val(dataModel.agents[i]["initNumber"])
+
+            $(".model-init-number-of-agents").append(newAgentNumConf)
+        }
+
+        //init model steps to take
+        $("#model-steps-to-take").val(dataModel.model.stepsToTake)
     }
 
     stopPhase(){
@@ -127,6 +162,8 @@ class ModelConditionsController extends AbstractPhase{
 
         //model space
         dataModel.model.space = $(".model-space-type.active").attr("space")
+        dataModel.model.gridWidth = $("#model-grid-size-width").val()
+        dataModel.model.gridHeight = $("#model-grid-size-height").val()
 
         let agentPlacementsElements = $(".model-space-agent-conf:not(.template)")
 
@@ -144,6 +181,17 @@ class ModelConditionsController extends AbstractPhase{
                 "code": currentAgentPlacementCode
             }
         }
+
+        //model number of agents
+        let agentNumElements = $(".model-number-of-agent-conf:not(.template)")
+        for(var i = 0; i < agentNumElements.length; i++){
+            let currentAgentId = $(agentNumElements[i]).attr("agent-type-id")
+            let currentAgentInitNumber = $(agentNumElements[i]).find(".agent-type-initnumber-input").val()
+            dataModel.agents[main.getAgentIndexById(currentAgentId)].initNumber = currentAgentInitNumber
+        }
+
+        //model steps to take
+        dataModel.model.stepsToTake = $("#model-steps-to-take").val()
 
         return dataModel
     }
@@ -167,16 +215,22 @@ class ModelConditionsController extends AbstractPhase{
         $(element).parent().parent().find("a").removeClass("active")
         $(element).addClass("active")
 
-        if($(element).attr("space") == "none"){
-            $("#model-conditions-agent-placement").addClass("invisible")
-        }else{
-            $("#model-conditions-agent-placement").removeClass("invisible")
-        }
+        this.__changeSpaceAdditionalItemsVisisbilty($(element).attr("space"))
     }
 
     changeAgentPlacement(element){
         $(element).parent().parent().parent().find("button").children().attr("class", $($(element).children()[0]).attr("class"))
         $(element).parent().parent().find("a").removeClass("active")
         $(element).addClass("active")
+    }
+
+    __changeSpaceAdditionalItemsVisisbilty(spaceType){
+        if(spaceType == "none" || spaceType == undefined){
+            $("#model-conditions-agent-placement").addClass("invisible")
+            $("#model-conditions-grid-size").addClass("d-none")
+        }else{
+            $("#model-conditions-agent-placement").removeClass("invisible")
+            $("#model-conditions-grid-size").removeClass("d-none")
+        }
     }
 }

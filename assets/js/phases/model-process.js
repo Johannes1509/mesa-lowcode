@@ -5,7 +5,7 @@ class ModelProcessController extends AbstractPhase{
         //these conditions are mandatory conditions for the completion of the model creation phase
         this.phaseMandatories = [
             {
-                "title": "Für jeden Agententyp ist mindestens ein Prozessschritt definiert",
+                "title": "At least one process step is defined for each agent type",
                 "condition": function(){
                     let blockNodes = main.process.canvas.getNodesFromName("block")
                     let moduleWithBlockNodes = {}
@@ -28,6 +28,10 @@ class ModelProcessController extends AbstractPhase{
                         if(moduleWithBlockNodes[moduleName].length == 0){
                             return false
                         }
+                    }
+
+                    if(Object.keys(moduleWithBlockNodes).length < main.data.agents.length){
+                        return false
                     }
     
                     return true
@@ -161,9 +165,9 @@ class ModelProcessController extends AbstractPhase{
     }
 
     getJSONData(dataModel){
-
         let exportData = this.canvas.export()
         dataModel.model.drawflow = exportData
+        
         for(let exportItem in exportData["drawflow"]){
             if(exportItem != "dummy" && exportItem != "Home"){
                 if(dataModel.agents[exportItem.replace('agent-','')] != undefined && !jQuery.isEmptyObject(dataModel.agents[exportItem.replace('agent-','')])){

@@ -160,21 +160,20 @@
         <div id="model-conditions-container" class="d-none row" phase="conditions">
           <div class="card m-4 col-11">
             <div class="pt-3 mb-3 px-3">
-              <h5 class="card-title mb-3 text-left">Model name</h5>
-              <input type="text" class="form-control model-name" id="model-name" placeholder="Name of the model">
+              <h5 class="card-title mb-3 text-left">Model information</h5>
+              <div class="card-body pt-0">
+                <p class="mb-0">Model name</p>
+                <input type="text" class="form-control model-name w-75" id="model-name" placeholder="Name of the model">
+                <p class="mt-1 mb-0">Model description</p>
+                <div class="input-group">
+                  <textarea class="form-control bg-editor textarea-non-resize" id="model-description-value" placeholder="Add a model description" ondblclick="main.editor.open(this, true)" rows="2"></textarea>
+                  <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev(), true)"></i>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card m-4 mt-0 col-11">
-            <div class="pt-3 px-3">
-              <h5 class="card-title mb-3 text-left">Model description</h5>
-            </div>
-            <div class="card-body pt-0 input-group">
-              <textarea class="form-control bg-editor textarea-non-resize" id="model-description-value" placeholder="Add a model description" ondblclick="main.editor.open(this, true)" rows="3"></textarea>
-              <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev(), true)"></i>
-            </div>
-          </div>
-          <div class="card m-4 mt-0 col-11">
-            <div class="pt-3 px-3">
+            <div class="p-3">
               <h5 class="card-title mb-3 text-left">Model scheduler</h5>
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -187,9 +186,9 @@
                   <li><a class="dropdown-item model-scheduler-type" onclick="main.conditions.changeScheduler(this)" scheduler="staged">Staged scheduler</a></li>
                 </ul>
               </div>
-              <hr>
             </div>
             <div class="card-body pt-0 scheduler-order d-none">
+              <hr>
               <h5 class="card-title mb-3 text-left">Order of agent activation</h5>
               <p>Top agent is activated first.</p>
               <table class="table scheduler-sort">
@@ -221,11 +220,55 @@
                 </ul>
               </div>
             </div>
+            <div class="card-body pt-3" id="model-conditions-grid-size">
+              <div class="row">
+                <div class="col-4">
+                  <p class="mb-0">Number of fields in width</p>
+                </div>
+                <div class="col-8">
+                  <input type="number" class="form-control model-name w-25" id="model-grid-size-width" value="100">
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-4">
+                  <p class="mb-0">Number of fields in height</p>
+                </div>
+                <div class="col-8">
+                  <input type="number" class="form-control model-name w-25" id="model-grid-size-height" value="100">
+                </div>
+              </div>
+            </div>
             <div class="card-body pt-0" id="model-conditions-agent-placement">
               <hr>
               <h5 class="card-title mb-3 text-left">Agent placement</h5>
               <p>Set the initial placement of the agents per type</p>
               <div class="model-space-agent-placement-container">
+              </div>
+            </div>
+          </div>
+          <div class="card m-4 mt-0 col-11">
+            <div class="p-3">
+              <h5 class="card-title text-left">Number of agents in the model [optional]</h5>
+            </div>
+            <div class="card-body pt-0">
+              <p>Set the number of agents in the model per agent type</p>
+              <div class="model-init-number-of-agents">
+              </div>
+            </div>
+          </div>
+          <div class="card m-4 mt-0 col-11">
+            <div class="p-3">
+              <h5 class="card-title text-left">Number of model steps [optional]</h5>
+            </div>
+            <div class="card-body pt-0">
+              <p>Set the number of steps the model will take when being executed</p>
+              <div class="row">
+                <div class="col-3">
+                  <p class="mb-0">Model steps</p>
+                </div>
+                <div class="col-9">
+                  <input type="number" class="form-control model-stepNumber w-25" id="model-steps-to-take" value="50">
+                </div>
               </div>
             </div>
           </div>
@@ -324,7 +367,16 @@
       </li>
     </ul>
     <textarea class="form-control bg-editor textarea-non-resize agent-space-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom code" rows="1"></textarea>
+    <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev(), true)"></i>
   </div>
+
+   <!-- Model number of agent type template-->
+   <div class="input-group pt-3 model-number-of-agent-conf template">
+    <span class="input-group-text agent-type-name"></span>
+    <textarea class="form-control bg-editor textarea-non-resize agent-type-initnumber-input" ondblclick="main.editor.open(this)" placeholder="Number or custom code" value="10" rows="1" value="10"></textarea>
+    <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev(), true)"></i>
+  </div>
+   
 
   <!--Agent type template -->
     <div class="card m-4 col-5 agent-type template">
@@ -356,7 +408,7 @@
       </div>
     </div>
 
-<!-- Agent type template -->
+<!-- Agent type property template -->
 <div class="mb-2 agent-property template">
   <div class="row">
     <div class="col-10">
