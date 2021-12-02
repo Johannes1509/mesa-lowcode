@@ -1,22 +1,24 @@
 import jinja2
 import os, re
-from stringtools import StrTools 
+from codegeneration.stringtools import StrTools 
 
 class AgentGenerator():
-    def __init__(self, template, destinationFolder):
+    def __init__(self, template):
         self.template = template
-        self.destinationFolder = destinationFolder
 
-    def generate(self, agent, model):
+    def generate(self, agent, model, destinationFolder):
         agent = self.preprocessAgent(agent)
         output = self.template.render(agent=agent, model=model)
-        with open(os.path.join(self.destinationFolder, "agents", agent.name+".py"), "w+", encoding='utf-8') as f:
+        with open(os.path.join(destinationFolder, "agents", agent.fileName), "w+", encoding='utf-8') as f:
             f.write(output)
+        
+        return output
 
     def preprocessAgent(self, agent):
 
         #remove special charaters
         agent.name = StrTools.getClassName(agent.name)
+        agent.fileName = agent.name.lower()+".py"
 
         #init properties
         for prop in agent.properties:

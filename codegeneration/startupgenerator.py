@@ -1,18 +1,23 @@
 import jinja2
 import os, re
-from stringtools import StrTools 
+from codegeneration.stringtools import StrTools 
 
 class StartupGenerator():
-    def __init__(self, template, destinationFolder):
+    def __init__(self, template):
         self.template = template
-        self.destinationFolder = destinationFolder
 
-    def generate(self, model, agents):
-        output = self.template.render(agent=agents, model=model)
-        with open(os.path.join(self.destinationFolder, "main.py"), "w+", encoding='utf-8') as f:
+    def generate(self, model, agents, destinationFolder):
+        self.preprocessMainFile(model, agents)
+        output = self.template.render(agents=agents, model=model)
+        with open(os.path.join(destinationFolder, "main.py"), "w+", encoding='utf-8') as f:
             f.write(output)
+            
+        return output
     
-    def preprocessModel(self, model, agents):
-        pass
+    def preprocessMainFile(self, model, agents):
+        if hasattr(model, "stepsToTake"):
+            model.stepsCount = model.stepsToTake
+        else:
+            model.stepsCount = None
     
 

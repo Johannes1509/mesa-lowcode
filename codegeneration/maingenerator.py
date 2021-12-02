@@ -1,79 +1,58 @@
-from agentgenerator import AgentGenerator
-from modelgenerator import ModelGenerator
-from startupgenerator import StartupGenerator
+from codegeneration.agentgenerator import AgentGenerator
+from codegeneration.modelgenerator import ModelGenerator
+from codegeneration.startupgenerator import StartupGenerator
 from jinja2 import Environment, FileSystemLoader
 import os, shutil, json
 class CodeGenerator():
     def __init__(self):
-        self.destinationFolder = "resultfiles"
+        self.mainDestinationFolder = "resultfiles"
         templateFileLoader = FileSystemLoader('assets/templates')
         env = Environment(loader=templateFileLoader)
 
-        self.agentGenerator = AgentGenerator(env.get_template('agent.py'), self.destinationFolder)
-        self.modelGenerator = ModelGenerator(env.get_template('model.py'), self.destinationFolder)
-        self.startupGenerator = StartupGenerator(env.get_template('main.py'), self.destinationFolder)
+        self.agentGenerator = AgentGenerator(env.get_template('agent.py'))
+        self.modelGenerator = ModelGenerator(env.get_template('model.py'))
+        self.startupGenerator = StartupGenerator(env.get_template('main.py'))
 
-    def generateModel(self, data):
-        self.clearResultFolder()
+    def generateModel(self, data, modelId):
+        destinationFolder = os.path.join(os.path.sep, self.mainDestinationFolder, str(modelId))
+        self.clearResultFolder(destinationFolder)
         #generate python files
         files = []
 
         #generate every agent
         for agent in data.agents:
-            print("Generating agent file for agent: ", agent.name)
-            agentResult = self.agentGenerator.generate(agent, data.model)
+            print("Generating the agent file for agent: ", agent.name)
+            agentResult = self.agentGenerator.generate(agent, data.model, destinationFolder)
+            files.append({
+                "name": agent.fileName,
+                "code": agentResult
+            })
 
         #generate the model
         print("Generating the model file")
-        modelResult = self.modelGenerator.generate( data.model, data.agents)
+        modelResult = self.modelGenerator.generate( data.model, data.agents, destinationFolder)
+        files.insert(0, {
+            "name": "model.py",
+            "code": modelResult
+        })
 
         #generate the main file
         print("Generating the startup file")
-        mainResult = self.startupGenerator.generate(data.model, data.agents)
-        #deliver generated content to frontend
+        mainResult = self.startupGenerator.generate(data.model, data.agents, destinationFolder)
+        files.insert(0, {
+            "name": "main.py",
+            "code": mainResult
+        })
         
-        return
+        #deliver generated content to frontend
+        return files
 
-        result = self.modelGenerator.generate(data, agentResult)
-        self.exportModelToFilesystem(result)
 
-    def clearResultFolder(self):
-        shutil.rmtree(self.destinationFolder)
-        os.mkdir(self.destinationFolder)
-        os.mkdir(os.path.join(self.destinationFolder, "agents"))
+    def clearResultFolder(self, destinationFolder):
+        shutil.rmtree(destinationFolder)
+        os.mkdir(destinationFolder)
+        os.mkdir(os.path.join(destinationFolder, "agents"))
 
     def exportModelToFilesystem(self, result):
         pass
 
-
-#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
-#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
-#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
-#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
-#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
-#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
-#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
-#TEST INIT AND USAGE FOR DEV/TEST ONLY!!!!!!!!
-
-
-class dict2obj(dict):
-    def __init__(self, dict_):
-        super(dict2obj, self).__init__(dict_)
-        for key in self:
-            item = self[key]
-            if isinstance(item, list):
-                for idx, it in enumerate(item):
-                    if isinstance(it, dict):
-                        item[idx] = dict2obj(it)
-            elif isinstance(item, dict):
-                self[key] = dict2obj(item)
-
-    def __getattr__(self, key):
-        return self[key]
-
-codeGen = CodeGenerator()
-f = open('codegeneration/testfile.json')
-jsonInput = json.load(f)
-
-codeGen.generateModel(dict2obj(jsonInput["data"]))
-print("Finished")

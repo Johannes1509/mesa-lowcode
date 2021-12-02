@@ -7,7 +7,7 @@ from httpserver.websockethandler import WebSocketConnector
 from httpserver.resultfiles import ResultFilesHandler
 from httpserver.assetshandler import AssetsHandler
 from httpserver.dbconnector import DBConnector
-#from codegeneration.maingenerator import CodeGenerator
+from codegeneration.maingenerator import CodeGenerator
 import os
 
 class AppServer(Application):
@@ -23,7 +23,7 @@ class AppServer(Application):
         AssetsHandler.setAssetsPath(assetsPath, "model")
 
         self.dbConnector = DBConnector("assets/modelstorage/models.db")
-       # self.codeGenerator = CodeGenerator()
+        self.codeGenerator = CodeGenerator()
 
         http_server = HTTPServer(self)
         http_server.listen(7700)

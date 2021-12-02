@@ -18,7 +18,7 @@ class ModelConditionsController extends AbstractPhase{
                 }
             },
             {
-                "title": "If a grid space type is selected, the grid sizes are set",
+                "title": "If a space type is selected, the sizes are set",
                 "condition": function(){
                     if($(".model-space-type.active").attr("space") != undefined && $(".model-space-type.active").attr("space") != "none"){
                         if($("#model-grid-size-height").val() != "" && $("#model-grid-size-width").val() != ""){
@@ -92,8 +92,8 @@ class ModelConditionsController extends AbstractPhase{
             this.changeSpace($(".model-space-type[space='"+dataModel.model.space+"']")[0])
         }
 
-        $("#model-grid-size-width").val(dataModel.model.gridWidth)
-        $("#model-grid-size-height").val(dataModel.model.gridHeight)
+        $("#model-grid-size-width").val(dataModel.model.spaceWidth)
+        $("#model-grid-size-height").val(dataModel.model.spaceHeight)
 
 
         this.__changeSpaceAdditionalItemsVisisbilty(dataModel.model.space)
@@ -162,8 +162,8 @@ class ModelConditionsController extends AbstractPhase{
 
         //model space
         dataModel.model.space = $(".model-space-type.active").attr("space")
-        dataModel.model.gridWidth = $("#model-grid-size-width").val()
-        dataModel.model.gridHeight = $("#model-grid-size-height").val()
+        dataModel.model.spaceWidth = $("#model-grid-size-width").val()
+        dataModel.model.spaceHeight = $("#model-grid-size-height").val()
 
         let agentPlacementsElements = $(".model-space-agent-conf:not(.template)")
 
@@ -231,6 +231,13 @@ class ModelConditionsController extends AbstractPhase{
         }else{
             $("#model-conditions-agent-placement").removeClass("invisible")
             $("#model-conditions-grid-size").removeClass("d-none")
+            if(spaceType == "continuous"){
+                $("#model-space-width-text").text("Max x-position of an agent")
+                $("#model-space-height-text").text("Max y-position of an agent")
+            }else{
+                $("#model-space-width-text").text("Number of fields in width")
+                $("#model-space-height-text").text("Number of fields in height")
+            }
         }
     }
 }

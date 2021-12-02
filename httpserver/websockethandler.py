@@ -3,7 +3,7 @@ import json, time
 
 class WebSocketConnector(WebSocketHandler):
     def initialize(self, refObj):
-        self.mainServer = refObj #
+        self.mainServer = refObj 
 
     def open(self):
         print("New client connected")
@@ -11,10 +11,9 @@ class WebSocketConnector(WebSocketHandler):
 
 
     def on_message(self, message):
-        print("Message ist:", message)
-
+        print("received message {}".format(message))
+        
         try:
-            initMessage = message
             message = json.loads(message)
 
             if(message["type"] == "load"):
@@ -30,18 +29,21 @@ class WebSocketConnector(WebSocketHandler):
                 self.mainServer.dbConnector.saveModelCode(message["data"]["model"]["id"], json.dumps(message["data"]))
 
             if(message["type"] == "generate"):
-                self.mainServer.codeGenerator.generateModel(dict2obj(message["data"]))
-            
+                generatedCode = self.mainServer.codeGenerator.generateModel(dict2obj(message["data"]), message["data"]["model"]["id"])
+                writeMessage = {
+                    "type": "generatedcode",
+                    "data": generatedCode
+                }
+                self.write_message(json.dumps(writeMessage))
             
 
         except Exception as e:
             raise e
 
-        print("received message {}".format(message))
         writeMessage = {
-                    "type": "you_said",
-                    "data": message
-                }
+            "type": "you_said",
+            "data": message
+        }
         self.write_message(json.dumps(writeMessage))
     
     def on_close(self):

@@ -182,8 +182,6 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><a class="dropdown-item model-scheduler-type" onclick="main.conditions.changeScheduler(this)" scheduler="basic">Basic/Ordered scheduler</a></li>
                   <li><a class="dropdown-item model-scheduler-type" onclick="main.conditions.changeScheduler(this)" scheduler="random">Random scheduler</a></li>
-                  <li><a class="dropdown-item model-scheduler-type" onclick="main.conditions.changeScheduler(this)" scheduler="simultaneous">Simultaneous scheduler</a></li>
-                  <li><a class="dropdown-item model-scheduler-type" onclick="main.conditions.changeScheduler(this)" scheduler="staged">Staged scheduler</a></li>
                 </ul>
               </div>
             </div>
@@ -214,8 +212,6 @@
                   <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="none">No space</a></li>
                   <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="single">Single grid</a></li>
                   <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="multi">Multi grid</a></li>
-                  <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="hex">Hex grid</a></li>
-                  <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="network">Network grid</a></li>
                   <li><a class="dropdown-item model-space-type" onclick="main.conditions.changeSpace(this)" space="continuous">Continuous space</a></li>
                 </ul>
               </div>
@@ -223,7 +219,7 @@
             <div class="card-body pt-3" id="model-conditions-grid-size">
               <div class="row">
                 <div class="col-4">
-                  <p class="mb-0">Number of fields in width</p>
+                  <p class="mb-0" id="model-space-width-text">Number of fields in width</p>
                 </div>
                 <div class="col-8">
                   <input type="number" class="form-control model-name w-25" id="model-grid-size-width" value="100">
@@ -231,7 +227,7 @@
               </div>
               <div class="row mt-1">
                 <div class="col-4">
-                  <p class="mb-0">Number of fields in height</p>
+                  <p class="mb-0" id="model-space-height-text">Number of fields in height</p>
                 </div>
                 <div class="col-8">
                   <input type="number" class="form-control model-name w-25" id="model-grid-size-height" value="100">
@@ -299,22 +295,38 @@
         </div>
         <div id="code-export-container" class="d-none" phase="export">
           <div class="card m-4 col-11">
-            <div class="card-body pt-3 px-3">
+            <div class="card-body pt-3 px-3" id="generate-code-card">
               <button class="btn btn-primary" type="button" onclick="main.export.generateCode()">
                 Generate the model code
               </button>
-              <p class="show-generating-message d-none">Please wait. Generating code files...</p>
             </div>
           </div>
-          <div class="card m-4 col-11 code-download-card d-none">
+          <div class="card m-4 col-11 code-ready-card d-none">
             <div class="card-body pt-3 px-3">
               <a class="btn btn-success code-download-button" href="">Download code files</a>
+            </div>
+          </div>
+          <div class="card m-4 col-11 code-ready-card d-none">
+            <div class="card-body pt-3 px-3">
+              <h5>Generated result files</h5>
+              <div class="row">
+                <div class="col-4">
+                  <div class="list-group" id="code-files-container">
+                  </div>
+                </div>
+                <div class="col-8">
+                  <textarea class="form-control textarea-non-resize overflow-scroll" id="code-display" placeholder="Results are displayed here as soon as the server has generated the code" rows="20" readonly></textarea>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Template for code file -->
+  <a onclick="main.export.switchFile(this)" class="list-group-item list-group-item-action template d-none code-file-link"></a>
 
   <!--Code editor-->
   <div class="modal" tabindex="-1" role="dialog" id="code-editor-modal">

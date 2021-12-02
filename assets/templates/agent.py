@@ -22,9 +22,6 @@ self.{{ prop.name }} = {{ prop.value }}
 {%- if "orderNum" in agent %}
 self.orderNum = {{agent.orderNum}}
 {%- endif %}
-{%- if model.space != "none" %}
-self.placement = self.model.space.place_agent({%- if agent.placement.type == "custom" %}self.initSpacePosition(){%- endif %})
-{%- endif %}
 {%- endfilter %}
 
 def step(self):
@@ -43,20 +40,24 @@ self.{{ step.methodCallerStr }}
 {%- endfilter %}
 {%- endif %}
 {%- endfor %}
+{%- if model.space != "none" %}
+
+def initPlacement(self):
+    self.placement = self.model.space.place_agent({%- if agent.placement.type == "custom" %}self.initSpacePosition(){%- endif %})
+{%- endif %}
 {% if model.space != "none" and agent.placement.type == "custom" %}
 def initSpacePosition(self):
-{% endif %}
 {%- filter indent(width=4) %}
-{%- if model.space != "none" and agent.placement.type == "custom" %}
 {{agent.placement.methodComment}}
 {{agent.placement.methodContent}}
-{% endif %}
 {%- endfilter %}
+{% endif %}
 {% for step in agent.steps -%}
 {{ step.value["methodHeader"] }} 
 {%- filter indent(width=4) %}
 {{ step.value["methodComment"] }} 
 {{ step.value["methodContent"] }} 
+
 {% endfilter %}
 {%- endfor %}
 {%- endfilter -%}

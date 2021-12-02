@@ -1,8 +1,7 @@
 /*
-
 Websocket connection - basic functions
-
 */
+
 var connection = new WebSocket('ws://localhost:7700/server');
 connection.onopen = function () {
   main.__loadModelFromServer()
@@ -18,6 +17,8 @@ connection.onmessage = function (e) {
   let serverData = JSON.parse(e.data)
   if(serverData.type == "loadedmodel"){
     main.__getModelDataFromServer(serverData.data)
+  }else if(serverData.type == "generatedcode"){
+    main.export.displayGeneratedCode(serverData.data)
   }
   console.log('Server: ' + e.data);
 };
