@@ -111,6 +111,30 @@ class ModelProcessController extends AbstractPhase{
                 "position": "top"
             }
         ]
+
+        //these tips are displayed when the code editor is open
+        this.codeEditorTips = [
+            {
+                "target": undefined,
+                "tip-text": "Following module is already imported:",
+                "tip-code": "random"
+            },
+            {
+                "target": undefined,
+                "tip-text": "Allowed custom code structure:",
+                "tip-code": "def [METHODNAME]():\n    [CODE]\n    return [VALUE]"
+            },
+            {
+                "target": undefined,
+                "tip-text": "Access the agent type via:",
+                "tip-code": "self"
+            },
+            {
+                "target": undefined,
+                "tip-text": "Access the model via:",
+                "tip-code": "self.model"
+            }
+        ]
         
         //init external componenten for process modelling
         this.canvas = new CustomDrawFlow($("#process-canvas")[0]);

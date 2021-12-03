@@ -1,9 +1,11 @@
 import random
 from mesa import Model
 from mesa.time import {{model.schedulerType}}
-from mesa.time import {{model.spaceType}}
-{%- for agent in agents -%}
-from agents.{{agent.fileName}} import {{agent.name}}
+{%- if model.space != "none" %}
+from mesa.space import {{model.spaceType}}
+{%- endif %}
+{%- for agent in agents %}
+from agents.{{agent.fileNameShort}} import {{agent.name}}
 {%- endfor %}
 
 class {{model.name}}(Model):

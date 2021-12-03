@@ -6,6 +6,12 @@ class ModelConditionsController extends AbstractPhase{
         //these conditions are mandatory conditions for the completion of the model creation phase
         this.phaseMandatories = [
             {
+                "title": "The model name is set",
+                "condition": function(){
+                    return ($("#model-name").val() != "")
+                }
+            },
+            {
                 "title": "The model scheduler type was chosen",
                 "condition": function(){
                     return ($(".model-scheduler-type.active").attr("scheduler") != undefined)
@@ -46,10 +52,49 @@ class ModelConditionsController extends AbstractPhase{
                 "position": "right"
             },
             {
-                "element": $("#model-conditions-container div.card-body")[1],
+                "element": $("#model-conditions-agent-placement")[0],
                 "title": 'Agent placement',
                 "intro": 'If you have selected a room type, you can also influence the initial placement of the agents. To do this, they can choose between random placement and placement by Python code.',
                 "position": "bottom"
+            }
+        ]
+
+        //these tips are displayed when the code editor is open
+        this.codeEditorTips = [
+            {
+                "target": "agent-placement",
+                "tip-text": "Following module is already imported:",
+                "tip-code": "random"
+            },
+            {
+                "target": "agent-placement",
+                "tip-text": "Allowed custom code structure:",
+                "tip-code": "def [METHODNAME]():\n    [CODE]\n    return [VALUE]"
+            },
+            {
+                "target": "agent-placement",
+                "tip-text": "Access the agent type via:",
+                "tip-code": "self"
+            },
+            {
+                "target": "agent-placement",
+                "tip-text": "Access the model via:",
+                "tip-code": "self.model"
+            },
+            {
+                "target": "agent-init-number",
+                "tip-text": "Following module is already imported:",
+                "tip-code": "random"
+            },
+            {
+                "target": "agent-init-number",
+                "tip-text": "Allowed custom code structure:",
+                "tip-code": "lambda: [LAMBDA-EXPRESSION]"
+            },
+            {
+                "target": "agent-init-number",
+                "tip-text": "Access a dict (key= Agent type name [without special chars and first char upper-case]; value=Initial number of this agent type) via:",
+                "tip-code": "modelAgentNums"
             }
         ]
     }

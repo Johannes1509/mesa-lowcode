@@ -111,6 +111,20 @@ class MainController{
         Cookies.set("mandatoryFieldCheck", cookieVal)
     }
 
+    getCurrentEditorTips(codeEditorElement){
+        //loads the matching editor tips from the current phase
+        let currentPhase = this.__getPhaseByName($(".phases").children(".phase-active").attr("phase"))
+        let codeEditorTips = []
+
+        for(let i = 0; i < currentPhase.codeEditorTips.length; i++){
+            if(currentPhase.codeEditorTips[i]["target"] == codeEditorElement){
+                codeEditorTips.push(currentPhase.codeEditorTips[i])
+            }
+        }
+
+        return codeEditorTips
+    }
+
     sendModelDataToServer(generate){
         //save model data on server
 

@@ -2,9 +2,13 @@ from codegeneration.agentgenerator import AgentGenerator
 from codegeneration.modelgenerator import ModelGenerator
 from codegeneration.startupgenerator import StartupGenerator
 from jinja2 import Environment, FileSystemLoader
-import os, shutil, json, pathlib, tempfile
+import os, shutil, json, pathlib, tempfile, logging
+
+logger = logging.getLogger(__name__)
 
 class CodeGenerator():
+    """Main class for code generation"""
+
     def __init__(self):
         self.resultFilesDirName = "raw_result"
         self.resultZIPName = "result"
@@ -17,6 +21,8 @@ class CodeGenerator():
         self.startupGenerator = StartupGenerator(env.get_template('main.py'))
 
     def generateModel(self, data, modelId):
+        logger.info("Generating model files")
+        
         destinationFolderFiles = os.path.join(self.tempDir.name, str(modelId), self.resultFilesDirName)
         pathlib.Path(destinationFolderFiles).mkdir(parents=True, exist_ok=True)   
 
@@ -55,15 +61,14 @@ class CodeGenerator():
         shutil.make_archive(os.path.join(self.tempDir.name, str(modelId), self.resultZIPName), "zip", destinationFolderFiles)
         
         #deliver generated content to frontend
+        logger.info("Generating model files completed.")
         return files
 
 
     def clearResultFolder(self, destinationFolder):
-
+        """clearing the model result folder with the result files to add new result files"""
         shutil.rmtree(destinationFolder)
         os.mkdir(destinationFolder)
         os.mkdir(os.path.join(destinationFolder, "agents"))
 
-    def exportModelToFilesystem(self, result):
-        pass
 

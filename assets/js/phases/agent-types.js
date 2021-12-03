@@ -14,6 +14,24 @@ class AgentTypesController extends AbstractPhase{
                 "condition": function(){
                     return ($(".agent-type:not(.template)")[0] != undefined)
                 }
+            },
+            {
+                "title": "All created agent types have a unique name",
+                "condition": function(){
+                    let agentTypes = $(".agent-type:not(.template)")
+                    let agentTypesNames = []
+                    for(let i = 0; i < agentTypes.length; i++){
+                        if($(agentTypes[i]).find(".agent-type-name").val() == "" || $(agentTypes[i]).find(".agent-type-name").val() == undefined){
+                            return false
+                        }
+                        agentTypesNames.push($(agentTypes[i]).find(".agent-type-name").val().toLowerCase())
+                    }
+                    let agentTypesNamesSet = new Set(agentTypesNames)
+                    if(agentTypesNames.length > agentTypesNamesSet.size){
+                        return false
+                    }
+                    return true
+                }
             }
         ]
 
@@ -47,6 +65,30 @@ class AgentTypesController extends AbstractPhase{
                 "title": 'Add new agent types',
                 "intro": 'You can create further agent types via this button',
                 "position": "left"
+            }
+        ]
+
+        //these tips are displayed when the code editor is open
+        this.codeEditorTips = [
+            {
+                "target": "property",
+                "tip-text": "Following module is already imported:",
+                "tip-code": "random"
+            },
+            {
+                "target": "property",
+                "tip-text": "Allowed custom code structure:",
+                "tip-code": "def [METHODNAME]():\n    [CODE]\n    return [VALUE]"
+            },
+            {
+                "target": "property",
+                "tip-text": "Access the agent type via:",
+                "tip-code": "self"
+            },
+            {
+                "target": "property",
+                "tip-text": "Access the model via:",
+                "tip-code": "self.model"
             }
         ]
     }

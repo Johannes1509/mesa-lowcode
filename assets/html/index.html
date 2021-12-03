@@ -330,14 +330,23 @@
 
   <!--Code editor-->
   <div class="modal" tabindex="-1" role="dialog" id="code-editor-modal">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="ace-editor-title">Python code editor</h5>
         </div>
         <div class="modal-body">
-          <div class="w-75 mx-auto d-block">
-            <div id="ace-editor" style="height: 300px"></div>
+          <div class="mx-auto d-block">
+            <div class="row">
+              <div class="col-6">
+                <div id="ace-editor"></div>
+              </div>
+              <div class="col-6 code-editor-tips-col">
+                <h5>Editor tips</h5>
+                <div id="code-editor-tips-container">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -346,6 +355,14 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Code editor tip element -->
+  <div class="row m-1 d-none template code-editor-tip" style="border: 1px solid #ddd">
+    <p class="mb-1 code-editor-tip-text">Access the model like this in ypur code:</p>
+    <pre class="code-editor-tips-pre ms-1 mb-0 w-75" style="background-color: #eee;">
+      <code class="code-editor-tip-code">self.model</code>
+    </pre>
   </div>
 
   <!--Scheduler order element-->
@@ -378,14 +395,14 @@
         </a>
       </li>
     </ul>
-    <textarea class="form-control bg-editor textarea-non-resize agent-space-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom code" rows="1"></textarea>
+    <textarea class="form-control bg-editor textarea-non-resize agent-space-custom-code" code-target="agent-placement" ondblclick="main.editor.open(this)" placeholder="Custom code" rows="1"></textarea>
     <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev(), true)"></i>
   </div>
 
    <!-- Model number of agent type template-->
    <div class="input-group pt-3 model-number-of-agent-conf template">
     <span class="input-group-text agent-type-name"></span>
-    <textarea class="form-control bg-editor textarea-non-resize agent-type-initnumber-input" ondblclick="main.editor.open(this)" placeholder="Number or custom code" value="10" rows="1" value="10"></textarea>
+    <textarea class="form-control bg-editor textarea-non-resize agent-type-initnumber-input"  code-target="agent-init-number" ondblclick="main.editor.open(this)" placeholder="Number or custom code" value="10" rows="1" value="10"></textarea>
     <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev(), true)"></i>
   </div>
    
@@ -453,7 +470,7 @@
           </li>
         </ul>
         <input type="text" class="form-control agent-property-name" placeholder="Name"/>
-        <textarea class="form-control bg-editor textarea-non-resize agent-property-value" placeholder="Value" ondblclick="main.editor.open(this)" rows="1"></textarea>
+        <textarea class="form-control bg-editor textarea-non-resize agent-property-value" code-target="property" placeholder="Value" ondblclick="main.editor.open(this)" rows="1"></textarea>
         <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev())"></i>
       </div>
     </div>
@@ -489,7 +506,7 @@
     Python code
   </div>
   <div class="col-12">
-    <textarea class="form-control bg-editor textarea-non-resize agent-process-custom-code" ondblclick="main.editor.open(this)" placeholder="Custom python code" rows="1"></textarea>
+    <textarea class="form-control bg-editor textarea-non-resize agent-process-custom-code" code-target="process-block-step" ondblclick="main.editor.open(this)" placeholder="Custom python code" rows="1"></textarea>
   </div>
   <div class="col-12 mt-1">
     Description

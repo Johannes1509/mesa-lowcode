@@ -54,3 +54,18 @@
     left: -20px;
     cursor: pointer;
 }
+
+#code-display{
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: scroll;
+}
+
+#ace-editor{
+    height: 600px;
+    border: 1px solid #aaa
+}
+
+.code-editor-tips-col{
+    border: 1px solid #aaa
+}

@@ -1,6 +1,8 @@
 import re, codecs
 
 class GenTools():
+    """Tools for code reorganization or method name generation; string/regex-based"""
+    
     nonSpecialCharsRegEx = r"[^a-zA-Z0-9]"
     genericMethodPattern = 'def {methodName}(self):\n"""{methodComment}"""{methodContent}'
     methodHeaderRegEx = r".*\s*(def).*\(.*\):"
@@ -37,6 +39,9 @@ class GenTools():
         """returns the casted value if the type is known"""
         inputVal = inputVal.strip()
 
+        if not inputVal:
+            return ""
+
         if(inputType == "str"):
             inputVal = '"'+''.join([char for char in inputVal if char not in ("'", "'", "`", "´")])+'"'
         if(inputType == "float"):
@@ -48,6 +53,7 @@ class GenTools():
                 inputVal = False
             elif (inputVal.lower() in ("1", "true")):
                 inputVal = True
+        
 
         return inputVal
 

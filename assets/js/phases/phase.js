@@ -5,6 +5,7 @@ class AbstractPhase{
         this.mainRef = mainRef
         this.tourSteps = []
         this.phaseMandatories = []
+        this.codeEditorTips = []
         this.init()
         if(this.phaseName == undefined){
             throw new Error("Phase name not defined!")

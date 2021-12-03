@@ -2,6 +2,8 @@ from tornado.web import RequestHandler
 import os
 
 class AssetsHandler(RequestHandler):
+    """Handler for css/js/icon files for the frontend"""
+
     @classmethod
     def setAssetsPath(currentClass, path, stripPath):
     
@@ -33,6 +35,7 @@ class AssetsHandler(RequestHandler):
         if(requestType in (".css", ".js")):
             self.render(destinationPath)
         else:
+            #for svg-icons
             if("?" in destinationPath):
                 destinationPath = destinationPath.split("?")[0]
             destinationPath = destinationPath

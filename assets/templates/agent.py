@@ -12,10 +12,12 @@ def __init__(self, uniqueId, model):
 
 super().__init__(uniqueId, model)
 {%- for prop in agent.properties %}
+{%- if prop.name != "" %}
 {%- if prop.isCustomCode %}
 self.{{ prop.name }} = self.{{ prop.methodCallerStr }}
 {%- else %}
 self.{{ prop.name }} = {{ prop.value }}
+{%- endif %}
 {%- endif %}
 {%- endfor %}
 
