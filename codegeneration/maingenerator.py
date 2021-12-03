@@ -70,5 +70,3 @@ class CodeGenerator():
         shutil.rmtree(destinationFolder)
         os.mkdir(destinationFolder)
         os.mkdir(os.path.join(destinationFolder, "agents"))
-
-
