@@ -1,8 +1,9 @@
 from tornado.httpserver import HTTPServer
 from tornado.web import Application
 from tornado.ioloop import IOLoop
-from httpserver.startpage import StartPage
-from httpserver.modelpage import ModelPage
+from httpserver.startpage import StartPageHandler
+from httpserver.modelpage import ModelPageHandler
+from httpserver.downloadhandler import DownloadHandler
 from httpserver.websockethandler import WebSocketConnector
 from httpserver.resultfiles import ResultFilesHandler
 from httpserver.assetshandler import AssetsHandler
@@ -14,8 +15,9 @@ class AppServer(Application):
     def __init__(self):
         super().__init__([
         (r".*((.css)|(.js)|(.woff2)|(.woff)|(.ttf)|(.svg))", AssetsHandler),
-        (r"/", StartPage, {"refObj": self}),
-        (r"/model/([0-9]+)\/?", ModelPage, {"refObj": self}),
+        (r"/", StartPageHandler, {"refObj": self}),
+        (r"/model/([0-9]+)\/?", ModelPageHandler, {"refObj": self}),
+        (r"/model/([0-9]+)\/download\/?", DownloadHandler, {"refObj": self}),
         (r"/server", WebSocketConnector, {"refObj": self}),
         (r"/resultfiles", ResultFilesHandler)])
 

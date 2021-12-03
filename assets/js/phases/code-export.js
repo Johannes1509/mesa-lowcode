@@ -15,6 +15,7 @@ class CodeExportController extends AbstractPhase{
         $("#code-display").val("")
         $(".code-files-container").empty()
         $("#generate-code-card").removeClass("d-none")
+        $(".code-download-button").attr("href", "#")
         this.generatedCode = undefined
     }
 
@@ -33,6 +34,8 @@ class CodeExportController extends AbstractPhase{
 
     displayGeneratedCode(generatedCode){
         this.generatedCode = generatedCode
+        
+        $(".code-download-button").attr("href", "http://"+serverUrl+"/model/"+main.data.model.id+"/download")
         $("#code-display").val("")
         $("#code-files-container").empty()
         $("#generate-code-card").addClass("d-none")

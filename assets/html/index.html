@@ -532,7 +532,7 @@ window.onbeforeunload = function(){
   main.sendModelDataToServer()
 }
 
-
-var main = new MainController('ws://localhost:7700/server')
+var serverUrl = "localhost:7700"
+var main = new MainController('ws://'+serverUrl+'/server')
 </script>
 

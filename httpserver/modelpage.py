@@ -1,6 +1,6 @@
 from tornado.web import RequestHandler
 
-class ModelPage(RequestHandler):
+class ModelPageHandler(RequestHandler):
     def initialize(self, refObj):
         self.mainServer = refObj
 

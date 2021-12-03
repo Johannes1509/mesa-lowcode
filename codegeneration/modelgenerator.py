@@ -1,6 +1,6 @@
 import jinja2
 import os, re
-from codegeneration.stringtools import StrTools 
+from codegeneration.gentools import GenTools 
 
 class ModelGenerator():
     def __init__(self, template):
@@ -25,7 +25,7 @@ class ModelGenerator():
     
     def preprocessModel(self, model, agents):
         #decode model name
-        model.name = StrTools.getClassName(model.name)
+        model.name = GenTools.getClassName(model.name)
 
         #add model scheduler
         if model.scheduler in self.schedulerTypes.keys():

@@ -1,6 +1,6 @@
 import jinja2
 import os, re
-from codegeneration.stringtools import StrTools 
+from codegeneration.gentools import GenTools 
 
 class StartupGenerator():
     def __init__(self, template):
