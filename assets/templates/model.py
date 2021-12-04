@@ -11,16 +11,23 @@ from agents.{{agent.fileNameShort}} import {{agent.name}}
 class {{model.name}}(Model):
     def __init__(self, numAgentTypes):
         self.schedule = {{model.schedulerType}}(self)
+        self.numAgentTypes = numAgentTypes
+        self.currentStep = 0
         self.agents = list()
         
         #add agents to the model
 {%- filter indent(width=8) %}
-for AgentType, agentTypeNum in numAgentTypes.items():
+for agentType, agentTypeNum in self.numAgentTypes.items():
 {%- filter indent(width=4) %}
-for i in agentTypeNum:
+for i in range(agentTypeNum):
 {%- filter indent(width=4) %}
-newAgent = AgentType(i, self)
-self.agents.add(newAgent)
+{%- for agent in agents %}
+if agentType == "{{agent.name}}":
+{%- filter indent(width=4) %}
+newAgent = {{agent.name}}(i, self)
+{%- endfilter -%}
+{%- endfor %}
+self.agents.append(newAgent)
 {%- if model.scheduler == "random" %}
 self.schedule.add(newAgent)
 {%- endif %}
@@ -33,17 +40,21 @@ for agent in self.agents():
 self.schedule.add(agent)
 {%- endfilter -%}
 {%- endif %}
+print("Initializing agents completed.")
 {% if model.space != "none" %}
 #add agents to model space
 self.space = {{model.spaceType}}({{model.spaceWidth}}, {{model.spaceHeight}}, False)
 for agent in self.agents:
     agent.initPlacement()
+print("Placing agents completed.")
 {%- endif %}
 {%- endfilter %}
 
 
     def step(self):
+        print("Model step <"+str(self.currentStep)+">:")
         self.schedule.step()  
+        self.currentStep = self.currentStep +1
 
 {%- if model.scheduler == "basic" %}
 

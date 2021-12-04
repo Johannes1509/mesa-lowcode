@@ -69,7 +69,7 @@ class ModelConditionsController extends AbstractPhase{
             {
                 "target": "agent-placement",
                 "tip-text": "Allowed custom code structure:",
-                "tip-code": "def [METHODNAME]():\n    [CODE]\n    return [VALUE]"
+                "tip-code": "def [METHODNAME]():\n    [CODE]\n    return [X_POS_VALUE], [Y_POS_VALUE]"
             },
             {
                 "target": "agent-placement",
@@ -137,11 +137,9 @@ class ModelConditionsController extends AbstractPhase{
             this.changeSpace($(".model-space-type[space='"+dataModel.model.space+"']")[0])
         }
 
+        this.__changeSpaceAdditionalItemsVisisbilty(dataModel.model.space)
         $("#model-grid-size-width").val(dataModel.model.spaceWidth)
         $("#model-grid-size-height").val(dataModel.model.spaceHeight)
-
-
-        this.__changeSpaceAdditionalItemsVisisbilty(dataModel.model.space)
 
         $('.model-space-agent-placement-container').empty()
         let spacePlacementElement = $(".model-space-agent-conf").clone()

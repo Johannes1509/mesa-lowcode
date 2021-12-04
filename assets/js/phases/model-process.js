@@ -131,6 +131,36 @@ class ModelProcessController extends AbstractPhase{
             },
             {
                 "target": undefined,
+                "tip-text": "Access the agent position tuple (xpos, ypos) via:",
+                "tip-code": "self.pos"
+            },
+            {
+                "target": undefined,
+                "tip-text": "Access the model via:",
+                "tip-code": "self.model"
+            },
+            {
+                "target": "process-block-step",
+                "tip-text": "Following module is already imported:",
+                "tip-code": "random"
+            },
+            {
+                "target": "process-block-step",
+                "tip-text": "Allowed custom code structure:",
+                "tip-code": "def [METHODNAME]():\n    [CODE]"
+            },
+            {
+                "target": "process-block-step",
+                "tip-text": "Access the agent type via:",
+                "tip-code": "self"
+            },
+            {
+                "target": "process-block-step",
+                "tip-text": "Access the agent position tuple (xpos, ypos) via:",
+                "tip-code": "self.pos"
+            },
+            {
+                "target": "process-block-step",
                 "tip-text": "Access the model via:",
                 "tip-code": "self.model"
             }

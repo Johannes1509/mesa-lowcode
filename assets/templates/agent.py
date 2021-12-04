@@ -1,6 +1,5 @@
 from mesa import Agent
 import random
-from random import randrage, randint, choice
 
 class {{agent.name}}(Agent):
 {%- filter indent(width=4) %}
@@ -33,7 +32,7 @@ def step(self):
 self.{{ step.methodCallerStr }}
 {%- endfor -%}
 {%- endfilter %}
-{% for prop in agent.properties -%}
+{% for prop in agent.properties %}
 {% if prop.isCustomCode %}
 {{ prop.value["methodHeader"] }} 
 {%- filter indent(width=4) %}
@@ -45,7 +44,21 @@ self.{{ step.methodCallerStr }}
 {%- if model.space != "none" %}
 
 def initPlacement(self):
-    self.placement = self.model.space.place_agent({%- if agent.placement.type == "custom" %}self.initSpacePosition(){%- endif %})
+{%- filter indent(width=4) %}
+{%- if model.space == "single" %}
+self.model.space.position_agent(self{%- if agent.placement.type == "custom" %}, self.initSpacePosition(){%- endif %})
+{%- endif %}
+{%- if model.space == "multi" %}
+xPos = random.randInt(self.model.space.width)
+yPos = random.randInt(self.model.space.height)
+self.model.space.place_agent(self{%- if agent.placement.type == "custom" %}, self.initSpacePosition(){%- endif %}{%- if agent.placement.type != "custom" %}, (xPos, yPos){%- endif %})
+{%- endif %}
+{%- if model.space == "continuous" %}
+xPos = random.uniform(self.model.space.width)
+yPos = random.uniform(self.model.space.height)
+self.model.space.place_agent(self{%- if agent.placement.type == "custom" %}, self.initSpacePosition(){%- endif %}{%- if agent.placement.type != "custom" %}, (xPos, yPos){%- endif %})
+{%- endif %}
+{%- endfilter %} 
 {%- endif %}
 {% if model.space != "none" and agent.placement.type == "custom" %}
 def initSpacePosition(self):
@@ -60,6 +73,6 @@ def initSpacePosition(self):
 {{ step.value["methodComment"] }} 
 {{ step.value["methodContent"] }} 
 
-{% endfilter %}
+{%- endfilter %}
 {%- endfor %}
 {%- endfilter -%}

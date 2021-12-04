@@ -74,4 +74,10 @@ class GenTools():
     
     @staticmethod 
     def removeMethodHeader(inputVal: str):
-        return re.sub(GenTools.methodHeaderRegEx, "", inputVal).strip()
+        removedHeaderString = re.sub(GenTools.methodHeaderRegEx, "", inputVal)
+        #remove unnecessary indent
+        removedHeaderStringSplitted = removedHeaderString.split("\n")[1:]
+        for index, line in enumerate(removedHeaderStringSplitted):
+            removedHeaderStringSplitted[index] = line[4:]
+        removedHeaderString = "\n".join(removedHeaderStringSplitted)
+        return removedHeaderString

@@ -87,6 +87,11 @@ class AgentTypesController extends AbstractPhase{
             },
             {
                 "target": "property",
+                "tip-text": "Access the agent unique id via:",
+                "tip-code": "self.unique_id"
+            },
+            {
+                "target": "property",
                 "tip-text": "Access the model via:",
                 "tip-code": "self.model"
             }
