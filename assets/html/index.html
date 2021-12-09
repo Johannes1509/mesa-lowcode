@@ -505,8 +505,9 @@
   <div class="col-12 mt-3">
     Python code
   </div>
-  <div class="col-12">
+  <div class="col-12 input-group">
     <textarea class="form-control bg-editor textarea-non-resize agent-process-custom-code" code-target="process-block-step" ondblclick="main.editor.open(this)" placeholder="Custom python code" rows="1"></textarea>
+    <i class="ri-picture-in-picture-exit-line open-editor-icon" title="Click to open fullsize editor" onclick="main.editor.open($(this).prev())"></i>
   </div>
   <div class="col-12 mt-1">
     Description

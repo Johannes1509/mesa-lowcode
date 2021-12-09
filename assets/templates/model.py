@@ -17,6 +17,7 @@ class {{model.name}}(Model):
         
         #add agents to the model
 {%- filter indent(width=8) %}
+currentAgentId = 0
 for agentType, agentTypeNum in self.numAgentTypes.items():
 {%- filter indent(width=4) %}
 for i in range(agentTypeNum):
@@ -24,10 +25,11 @@ for i in range(agentTypeNum):
 {%- for agent in agents %}
 if agentType == "{{agent.name}}":
 {%- filter indent(width=4) %}
-newAgent = {{agent.name}}(i, self)
+newAgent = {{agent.name}}(currentAgentId, self)
 {%- endfilter -%}
 {%- endfor %}
 self.agents.append(newAgent)
+currentAgentId = currentAgentId + 1
 {%- if model.scheduler == "random" %}
 self.schedule.add(newAgent)
 {%- endif %}
@@ -35,7 +37,7 @@ self.schedule.add(newAgent)
 {%- endfilter -%}
 {% if model.scheduler == "basic" %}
 self.agents = self.__getOrderedAgents(self.agents)
-for agent in self.agents():
+for agent in self.agents:
 {%- filter indent(width=4) %}
 self.schedule.add(agent)
 {%- endfilter -%}
@@ -58,6 +60,6 @@ print("Placing agents completed.")
 
 {%- if model.scheduler == "basic" %}
 
-    def __getOrderedAgents(agents):
+    def __getOrderedAgents(self, agents):
         return sorted(agents, key=lambda agent: agent.orderNum)
 {%- endif -%}

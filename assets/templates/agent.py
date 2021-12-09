@@ -22,9 +22,8 @@ self.{{ prop.name }} = {{ prop.value }}
 
 {%- if "orderNum" in agent %}
 self.orderNum = {{agent.orderNum}}
-{%- endif %}
+{% endif %}
 {%- endfilter %}
-
 def step(self):
 {%- filter indent(width=4) %}
 """Main step function of the agent type <{{agent.name}}>"""
@@ -32,7 +31,7 @@ def step(self):
 self.{{ step.methodCallerStr }}
 {%- endfor -%}
 {%- endfilter %}
-{% for prop in agent.properties %}
+{%- for prop in agent.properties %}
 {% if prop.isCustomCode %}
 {{ prop.value["methodHeader"] }} 
 {%- filter indent(width=4) %}
@@ -60,19 +59,21 @@ self.model.space.place_agent(self{%- if agent.placement.type == "custom" %}, sel
 {%- endif %}
 {%- endfilter %} 
 {%- endif %}
-{% if model.space != "none" and agent.placement.type == "custom" %}
+{%- if model.space != "none" and agent.placement.type == "custom" %}
+
 def initSpacePosition(self):
 {%- filter indent(width=4) %}
 {{agent.placement.methodComment}}
 {{agent.placement.methodContent}}
 {%- endfilter %}
-{% endif %}
+{%- endif %}
+
 {% for step in agent.steps -%}
 {{ step.value["methodHeader"] }} 
 {%- filter indent(width=4) %}
 {{ step.value["methodComment"] }} 
 {{ step.value["methodContent"] }} 
 
-{%- endfilter %}
+{% endfilter %}
 {%- endfor %}
 {%- endfilter -%}

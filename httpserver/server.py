@@ -29,7 +29,7 @@ class AppServer(Application):
         assetsPath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../assets")
         AssetsHandler.setAssetsPath(assetsPath, "model")
 
-        #connect tools for webservice connector
+        #connect tools for websocket actions
         self.dbConnector = DBConnector("assets/modelstorage/models.db")
         self.codeGenerator = CodeGenerator()
 

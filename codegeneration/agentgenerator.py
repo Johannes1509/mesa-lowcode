@@ -47,7 +47,7 @@ class AgentGenerator():
 
         #agent placement if necessary
         logger.debug("Preprocessing agent type placement for agent: "+agent.name)
-        if agent.placement:
+        if agent.placement and hasattr(agent.placement, "type"):
             logger.debug("Agent placement type: "+agent.placement.type)
             if agent.placement.type == "custom":
                 agentInitSpaceMethodData = GenTools.getCustomMethodContent(agent.placement.code, "", "Initialization placement of agent in model space")
