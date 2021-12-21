@@ -1,4 +1,4 @@
-import re, codecs
+import re
 
 class GenTools():
     """Tools for code reorganization or method name generation; string/regex-based"""

@@ -2,7 +2,7 @@ from codegeneration.agentgenerator import AgentGenerator
 from codegeneration.modelgenerator import ModelGenerator
 from codegeneration.startupgenerator import StartupGenerator
 from jinja2 import Environment, FileSystemLoader
-import os, shutil, json, pathlib, tempfile, logging
+import os, shutil, pathlib, tempfile, logging
 
 logger = logging.getLogger(__name__)
 

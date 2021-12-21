@@ -1,5 +1,4 @@
-import jinja2
-import os, re
+import os
 from codegeneration.gentools import GenTools 
 import logging
 logger = logging.getLogger(__name__)
