@@ -14,7 +14,7 @@ sqlClearTable = """
 DELETE FROM `agentmodels`;
 """
 
-connection = sqlite3.connect("assets/modelstorage/models.db")
+connection = sqlite3.connect("src/assets/modelstorage/models.db")
 cursor = connection.cursor()
 
 

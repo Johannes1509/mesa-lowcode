@@ -16,14 +16,14 @@ Nach Abschluss der Modellerstellung im Webclient, kann das konfigurierte Modell 
 GETESTET MIT:
     Python-Version:                 3.9.5 64Bit on win32
     Benötigte Python-Bibliotheken:      asyncio, io, jinja2, json, os, pathlib, re, shutil, sqlite3, tempfile, time traceback, tornado.httpserver, tornado.ioloop, 
-                                    tornado.web, tornado.websocket
+                                    tornado.web, tornado.websocket, unittest
     Web-Client:                     Google Chrome Version 96.0.4664.110 (Offizieller Build) (64-Bit) oder Edge Version 96.0.1054.62 (Offizielles Build) (64-Bit)
 
 
 3. Projekt starten/Programm starten
 -- 
-1. Um die Serveranwendung zu starten, zunächst per Konsole in dieses Projektverzeichnis wechseln. 
-2. Dann mit dem Befehl "python main.py" die Serversoftware starten. 
+1. Um die Serveranwendung zu starten, zunächst per Konsole in den "mesa-lowcode"-Ordner dieses Projektverzeichnis wechseln. 
+2. Dann mit dem Befehl "python src/main.py" die Serversoftware starten. 
 3. Die Clientanwendung steht wenige Sekunden später unter der Adresse "http://localhost:7700/" zur Verfügung.
 
 

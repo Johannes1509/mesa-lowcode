@@ -13,7 +13,7 @@ class CodeGenerator():
         self.resultFilesDirName = "raw_result"
         self.resultZIPName = "result"
         self.tempDir = tempfile.TemporaryDirectory()
-        templateFileLoader = FileSystemLoader('assets/templates')
+        templateFileLoader = FileSystemLoader('src/assets/templates')
         env = Environment(loader=templateFileLoader)
 
         self.agentGenerator = AgentGenerator(env.get_template('agent.py'))

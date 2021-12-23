@@ -30,7 +30,7 @@ class AppServer(Application):
         AssetsHandler.setAssetsPath(assetsPath, "model")
 
         #connect tools for websocket actions
-        self.dbConnector = DBConnector("assets/modelstorage/models.db")
+        self.dbConnector = DBConnector("src/assets/modelstorage/models.db")
         self.codeGenerator = CodeGenerator()
 
         #start the webserver
