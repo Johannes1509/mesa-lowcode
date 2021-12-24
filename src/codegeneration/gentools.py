@@ -14,7 +14,7 @@ class GenTools():
         if not inputName:
             return ""
         else:
-            return GenTools.getStrNonSepcialChars(inputName).lower()
+            return GenTools.getStrNonSpecialChars(inputName).lower()
 
     @staticmethod
     def getClassName(inputName: str):
@@ -22,10 +22,10 @@ class GenTools():
         if not inputName:
             return ""
         else:
-            return "".join(GenTools.getStrNonSepcialChars(inputName)[0].upper()+GenTools.getStrNonSepcialChars(inputName)[1:])
+            return "".join(GenTools.getStrNonSpecialChars(inputName)[0].upper()+GenTools.getStrNonSpecialChars(inputName)[1:])
 
     @staticmethod
-    def getStrNonSepcialChars(inputStr: str):
+    def getStrNonSpecialChars(inputStr: str):
         """removes all special chars from string"""
         return re.sub(GenTools.nonSpecialCharsRegEx, "", inputStr)
 
