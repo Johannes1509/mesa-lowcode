@@ -218,7 +218,7 @@ class TestCodeGenerators(unittest.TestCase):
     ]
 
     def testAgentCodeGeneration(self):
-        templateFileLoader = FileSystemLoader('src/assets/templates')
+        templateFileLoader = FileSystemLoader(os.path.join(PROJECT_START_PATH, "src/assets/templates"))
         env = Environment(loader=templateFileLoader)
         agentGen = AgentGenerator(env.get_template('agent.py'))
 
@@ -230,7 +230,7 @@ class TestCodeGenerators(unittest.TestCase):
 
 
     def testModelCodeGeneration(self):
-        templateFileLoader = FileSystemLoader('src/assets/templates')
+        templateFileLoader = FileSystemLoader(os.path.join(PROJECT_START_PATH, "src/assets/templates"))
         env = Environment(loader=templateFileLoader)
         modelGen = ModelGenerator(env.get_template('model.py'))
 
@@ -241,7 +241,7 @@ class TestCodeGenerators(unittest.TestCase):
             self.fail("Preprocessing model failed, because an exception occured: "+e)
 
     def testStartupCodeGeneration(self): 
-        templateFileLoader = FileSystemLoader('src/assets/templates')
+        templateFileLoader = FileSystemLoader(os.path.join(PROJECT_START_PATH, "src/assets/templates"))
         env = Environment(loader=templateFileLoader)
         startUpGen = StartupGenerator(env.get_template('main.py'))
 
