@@ -10,12 +10,14 @@ import json
 from jinja2 import Environment, FileSystemLoader
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(SCRIPT_DIR)), "src"))
-from src.codegeneration.gentools import GenTools
-from src.codegeneration.agentgenerator import AgentGenerator
-from src.codegeneration.startupgenerator import StartupGenerator
-from src.codegeneration.modelgenerator import ModelGenerator
+PROJECT_START_PATH = os.path.dirname(SCRIPT_DIR)
+sys.path.append(os.path.join(PROJECT_START_PATH, "src"))
+sys.path.append(PROJECT_START_PATH)
+
+from codegeneration.gentools import GenTools
+from codegeneration.agentgenerator import AgentGenerator
+from codegeneration.startupgenerator import StartupGenerator
+from codegeneration.modelgenerator import ModelGenerator
 
 class TestGenTools(unittest.TestCase):
     allowedChars = r"[0-9a-zA-Z]+"
@@ -46,7 +48,7 @@ class TestGenTools(unittest.TestCase):
 
     def testSpecialCharsRemovement(self):
         inputStr = self.__generateRandomString()
-        result = GenTools.getStrNonSepcialChars(inputStr)
+        result = GenTools.getStrNonSpecialChars(inputStr)
         self.assertRegex(result, TestGenTools.allowedChars, self.__getFailureMessage(inputStr, result))
 
     def __generateRandomString(self):
@@ -65,7 +67,7 @@ class TestWebSocketConnection(unittest.TestCase):
         ws = websocket.WebSocket()
         ws.connect("ws://localhost:7700/server")
         ws.recv()
-        ws.send(json.dumps({"type": "load", "data": {"modelId": 1}}))
+        ws.send(json.dumps({"type": "load", "data": {"modelId": 0}}))
         response = json.loads(ws.recv())
         result = False
         try:
@@ -83,20 +85,20 @@ class TestWebSocketConnection(unittest.TestCase):
     def testSaveModel(self):
         serverProcess = self.__startServer()
 
-        #saving a new model with the id 99
+        #saving a new model with the id 0
         ws = websocket.WebSocket()
         ws.connect("ws://localhost:7700/server")
         ws.recv()
-        ws.send(json.dumps({"type": "save", "data": {"model": {"id": 99, "content": "AUTOMATICTEST"}}}))
+        ws.send(json.dumps({"type": "save", "data": {"model": {"id": 0, "content": "AUTOMATICTEST"}}}))
         ws.recv()
 
-        #loading the model with the id 99
-        ws.send(json.dumps({"type": "load", "data": {"modelId": 99}}))
+        #loading the model with the id 0
+        ws.send(json.dumps({"type": "load", "data": {"modelId": 0}}))
         response = json.loads(ws.recv())
         result = False
         try:
             loadedModel = json.loads(response["data"])
-            result = True if int(loadedModel["model"]["id"]) == 99 else False
+            result = True if int(loadedModel["model"]["id"]) == 0 else False
         except Exception as e:
             print(e)
 
@@ -105,8 +107,7 @@ class TestWebSocketConnection(unittest.TestCase):
         self.__stopServer(serverProcess)
 
     def __startServer(self):
-        projectStartPath = os.path.dirname(os.path.dirname(SCRIPT_DIR))
-        serverProcess = subprocess.Popen("python src/main.py", cwd=projectStartPath)
+        serverProcess = subprocess.Popen("python src/main.py", cwd=PROJECT_START_PATH)
         return serverProcess
     
     def __stopServer(self, serverProcess):
@@ -254,9 +255,8 @@ class TestCodeGenerators(unittest.TestCase):
 class TestMainSoftwareStartup(unittest.TestCase):
     
     def testWebserverStarted(self):
-        projectStartPath = os.path.dirname(os.path.dirname(SCRIPT_DIR))
-        serverProcess = subprocess.Popen("python src/main.py", cwd=projectStartPath)
-        result = urllib.request.urlopen("http://localhost:7700/model/99").getcode()
+        serverProcess = subprocess.Popen("python src/main.py", cwd=PROJECT_START_PATH)
+        result = urllib.request.urlopen("http://localhost:7700/model/0").getcode()
         self.assertEqual(result, 200, "Server http code is: "+str(result))
         serverProcess.kill()
         serverProcess.wait()

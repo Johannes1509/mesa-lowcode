@@ -24,6 +24,7 @@ self.{{ prop.name }} = {{ prop.value }}
 self.orderNum = {{agent.orderNum}}
 {% endif %}
 {%- endfilter %}
+
 def step(self):
 {%- filter indent(width=4) %}
 """Main step function of the agent type <{{agent.name}}>"""

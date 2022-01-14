@@ -16,7 +16,7 @@ Nach Abschluss der Modellerstellung im Webclient, kann das konfigurierte Modell 
 GETESTET MIT:
     Python-Version:                 3.9.5 64Bit on win32
     Benötigte Python-Bibliotheken:      asyncio, io, jinja2, json, os, pathlib, re, shutil, sqlite3, tempfile, time traceback, tornado.httpserver, tornado.ioloop, 
-                                    tornado.web, tornado.websocket, unittest
+                                    tornado.web, tornado.websocket, unittest, websocket-client
     Web-Client:                     Google Chrome Version 96.0.4664.110 (Offizieller Build) (64-Bit) oder Edge Version 96.0.1054.62 (Offizielles Build) (64-Bit)
 
 
