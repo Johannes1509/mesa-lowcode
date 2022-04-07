@@ -1,30 +1,30 @@
-1. Projektbeschreibung
-2. Voraussetzungen
-3. Projekt starten/Programm starten
+1. project description
+2. requirements
+3. start project/start programme
 
 
-1. Projektbeschreibung
+1. project description
 --
-Das "Mesa - Low Code"-Projekt ist Teil der Bachelor-Thesis "Konzeption und prototypische Implementierung einer Low-Code-Entwicklungsplattform zur Erstellung agentenbasierter Modellierungen" von Johannes Müller. 
-Der Softwareprototyp ermöglicht die geführte, visuell-unterstützte Erstellung agentenbasierter Simulationsmodelle auf Basis des Python-Frameworks "Mesa". 
-Hierzu ist eine Client-Weboberfläche sowie eine Python-Serversoftware implementiert. 
-Nach Abschluss der Modellerstellung im Webclient, kann das konfigurierte Modell als Python-Mesa-Programm geniert und exportiert werden. 
+The "Mesa - Low Code" project is part of the bachelor thesis "Conception and prototypical implementation of a low-code development platform for the creation of agent-based modelling" by me. 
+The software prototype enables the guided, visually-supported creation of agent-based simulation models based on the Python framework "Mesa". 
+A client web interface and Python server software are implemented for this purpose. 
+After completing the model creation in the web client, the configured model can be generated and exported as a Python Mesa programme. 
 
 
-2. Voraussetzungen
+2. requirements
 --
-GETESTET MIT:
-    Python-Version:                 3.9.5 64Bit on win32
-    Benötigte Python-Bibliotheken:      asyncio, io, jinja2, json, os, pathlib, re, shutil, sqlite3, tempfile, time traceback, tornado.httpserver, tornado.ioloop, 
+TESTED WITH:
+    Python version: 3.9.5 64Bit on win32
+    Python libraries required: asyncio, io, jinja2, json, os, pathlib, re, shutil, sqlite3, tempfile, time traceback, tornado.httpserver, tornado.ioloop, 
                                     tornado.web, tornado.websocket, unittest, websocket-client
-    Web-Client:                     Google Chrome Version 96.0.4664.110 (Offizieller Build) (64-Bit) oder Edge Version 96.0.1054.62 (Offizielles Build) (64-Bit)
+    Web client: Google Chrome version 96.0.4664.110 (Official Build) (64-bit) or Edge version 96.0.1054.62 (Official Build) (64-bit)
 
 
-3. Projekt starten/Programm starten
+3. start project/start programme
 -- 
-1. Um die Serveranwendung zu starten, zunächst per Konsole in den "mesa-lowcode"-Ordner dieses Projektverzeichnis wechseln. 
-2. Dann mit dem Befehl "python src/main.py" die Serversoftware starten. 
-3. Die Clientanwendung steht wenige Sekunden später unter der Adresse "http://localhost:7700/" zur Verfügung.
+1. To start the server application, first change to the "mesa-lowcode" folder of this project directory via console. 
+2. Then start the server software with the command "python src/main.py". 
+3. The client application is available a few seconds later at the address "http://localhost:7700/".
 
 
 
